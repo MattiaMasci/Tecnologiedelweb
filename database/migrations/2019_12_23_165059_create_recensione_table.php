@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModellohasmaterialeTable extends Migration
+class CreateRecensioneTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateModellohasmaterialeTable extends Migration
      */
     public function up()
     {
-        Schema::create('modellohasmateriale', function (Blueprint $table) {
+        Schema::create('recensione', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('utente_id');
+            $table->foreign('utente_id')->references('id')->on('utente');
             $table->unsignedBigInteger('modello_id');
             $table->foreign('modello_id')->references('id')->on('modello');
-            $table->unsignedBigInteger('materiale_id');
-            $table->foreign('materiale_id')->references('id')->on('materiale');
+            $table->integer('voto');
+            $table->string('descrizione');
         });
     }
 
@@ -29,6 +31,6 @@ class CreateModellohasmaterialeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('modellohasmateriale');
+        Schema::dropIfExists('recensione');
     }
 }

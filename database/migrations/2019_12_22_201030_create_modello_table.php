@@ -16,9 +16,10 @@ class CreateModelloTable extends Migration
         Schema::create('modello', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome',30);
-            $table->string('spedizione', 10);
+            $table->string('descrizione');
             $table->date('datauscita');
             $table->integer('sconto');
+            $table->integer('giudizio');
             $table->unsignedBigInteger('collezione_id');
             $table->foreign('collezione_id')->references('id')->on('collezione');
             $table->unsignedBigInteger('categoria_id');

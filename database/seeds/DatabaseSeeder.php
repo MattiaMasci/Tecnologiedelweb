@@ -18,14 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call('CategoriaTableSeeder');
         $this->call('CollezioneTableSeeder');
         $this->call('ColoreTableSeeder');
-        $this->call('FasciadetaTableSeeder');
         $this->call('FotoTableSeeder');
         $this->call('GruppohasservizioTableSeeder');
         $this->call('GruppoTableSeeder');
         $this->call('MacrocategoriaTableSeeder');
         $this->call('MarcaTableSeeder');
-        $this->call('MaterialeTableSeeder');
-        $this->call('ModellohasmaterialeTableSeeder');
         $this->call('ModelloTableSeeder');
         $this->call('OrdineTableSeeder');
         $this->call('PreferitoTableSeeder');
@@ -39,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call('TagliaTableSeeder');
         $this->call('UtentehasgruppoTableSeeder');
         $this->call('UtenteTableSeeder');
+        $this->call('RecensioneTableSeeder');
     }
 }

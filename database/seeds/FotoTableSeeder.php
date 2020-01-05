@@ -10,7 +10,8 @@ class FotoTableSeeder extends Seeder {
         DB::table('foto')->delete();
 
         DB::table('foto')->insert([
-            'modello_id' => ''
+            'modello_id' => '',
+            'link' => ''
         ]);
     }
 

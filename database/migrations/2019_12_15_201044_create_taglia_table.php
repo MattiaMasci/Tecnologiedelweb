@@ -16,8 +16,6 @@ class CreateTagliaTable extends Migration
         Schema::create('taglia', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('numero', 5);
-            $table->unsignedBigInteger('fasciadeta_id');
-            $table->foreign('fasciadeta_id')->references('id')->on('fasciadeta');
         });
     }
 

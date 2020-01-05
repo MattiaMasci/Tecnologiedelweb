@@ -15,9 +15,10 @@ class ModelloTableSeeder extends Seeder {
             'marca_id' => '',
             'stile_id' => '',
             'nome' => '',
-            'spedizione' => '',
             'datauscita' => '',
-            'sconto' => ''
+            'sconto' => '',
+            'descrizione' => '',
+            'giudizio' => ''
         ]);
     }
 
