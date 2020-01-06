@@ -19,7 +19,6 @@ class CreateModelloTable extends Migration
             $table->string('descrizione');
             $table->date('datauscita');
             $table->integer('sconto');
-            $table->integer('giudizio');
             $table->unsignedBigInteger('collezione_id');
             $table->foreign('collezione_id')->references('id')->on('collezione');
             $table->unsignedBigInteger('categoria_id');

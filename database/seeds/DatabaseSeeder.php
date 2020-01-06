@@ -14,28 +14,28 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call('UtenteTableSeeder');
+        $this->call('ProfiloTableSeeder');
         $this->call('CarrelloTableSeeder');
-        $this->call('CategoriaTableSeeder');
-        $this->call('CollezioneTableSeeder');
-        $this->call('ColoreTableSeeder');
-        $this->call('FotoTableSeeder');
-        $this->call('GruppohasservizioTableSeeder');
         $this->call('GruppoTableSeeder');
+        $this->call('UtentehasgruppoTableSeeder');
+        $this->call('ServizioTableSeeder');
+        $this->call('GruppohasservizioTableSeeder');
         $this->call('MacrocategoriaTableSeeder');
+        $this->call('CategoriaTableSeeder');
+        $this->call('SessoTableSeeder');
+        $this->call('TagliaTableSeeder');
+        $this->call('CollezioneTableSeeder');
+        $this->call('StileTableSeeder');
+        $this->call('ColoreTableSeeder');
         $this->call('MarcaTableSeeder');
         $this->call('ModelloTableSeeder');
+        $this->call('FotoTableSeeder');
         $this->call('OrdineTableSeeder');
         $this->call('PreferitoTableSeeder');
-        $this->call('ProfiloTableSeeder');
         $this->call('QuantitaTableSeeder');
         $this->call('ResoTableSeeder');
-        $this->call('ServizioTableSeeder');
         $this->call('SessohasmodelloTableSeeder');
-        $this->call('SessoTableSeeder');
-        $this->call('StileTableSeeder');
-        $this->call('TagliaTableSeeder');
-        $this->call('UtentehasgruppoTableSeeder');
-        $this->call('UtenteTableSeeder');
         $this->call('RecensioneTableSeeder');
     }
 }

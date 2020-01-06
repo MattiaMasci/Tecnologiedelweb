@@ -9,7 +9,7 @@ class ResoTableSeeder extends Seeder {
         //eliminiamo eventuali utenti già presenti
         DB::table('reso')->delete();
 
-        DB::table('reso')->insert([
+        /* DB::table('reso')->insert([
             'modello_id' => '',
             'taglia_id' => '',
             'colore_id' => '',
@@ -19,7 +19,7 @@ class ResoTableSeeder extends Seeder {
             'dataaccettazione' => '',
             'dataspedizione' => '',
             'dataarrivo' => ''
-        ]);
+        ]); */
     }
 
 }

@@ -10,7 +10,15 @@ class MacrocategoriaTableSeeder extends Seeder {
         DB::table('macrocategoria')->delete();
 
         DB::table('macrocategoria')->insert([
-            'nome' => ''
+            [
+                'nome' => 'Scarpe'
+            ],
+            [
+                'nome' => 'Maglie'
+            ],
+            [
+                'nome' => 'Pantaloni'
+            ],
         ]);
     }
 

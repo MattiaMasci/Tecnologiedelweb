@@ -10,7 +10,15 @@ class StileTableSeeder extends Seeder {
         DB::table('stile')->delete();
 
         DB::table('stile')->insert([
-            'nome' => ''
+            [
+                'nome' => 'Casual'
+            ],
+            [
+                'nome' => 'Formale'
+            ],
+            [
+                'nome' => 'Standard'
+            ],
         ]);
     }
 

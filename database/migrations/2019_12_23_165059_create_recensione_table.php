@@ -15,6 +15,7 @@ class CreateRecensioneTable extends Migration
     {
         Schema::create('recensione', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->date('data');
             $table->unsignedBigInteger('utente_id');
             $table->foreign('utente_id')->references('id')->on('utente');
             $table->unsignedBigInteger('modello_id');

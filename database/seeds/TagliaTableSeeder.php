@@ -10,8 +10,33 @@ class TagliaTableSeeder extends Seeder {
         DB::table('taglia')->delete();
 
         DB::table('taglia')->insert([
-            'numero' => '',
-            'fasciadeta_id' => ''
+            [
+                'numero' => 'S',
+            ],
+            [
+                'numero' => 'M',
+            ],
+            [
+                'numero' => 'L',
+            ],
+            [
+                'numero' => 'XL',
+            ],
+            [
+                'numero' => '40',
+            ],
+            [
+                'numero' => '41',
+            ],
+            [
+                'numero' => '42',
+            ],
+            [
+                'numero' => '43',
+            ],
+            [
+                'numero' => '44',
+            ],
         ]);
     }
 

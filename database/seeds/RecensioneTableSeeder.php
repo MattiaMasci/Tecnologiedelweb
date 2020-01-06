@@ -14,11 +14,21 @@ class RecensioneTableSeeder extends Seeder
         //eliminiamo eventuali utenti già presenti
         DB::table('recensione')->delete();
 
-        DB::table('gruppo')->insert([
-            'voto' => '',
-            'descrizione' => '',
-            'utente_id' => '',
-            'modello_id' => ''
+        DB::table('recensione')->insert([
+            [
+                'voto' => '3',
+                'descrizione' => 'Comode e resistenti',
+                'data' => '2020-01-03',
+                'utente_id' => '1',
+                'modello_id' => '1'
+            ],
+            [
+                'voto' => '5',
+                'descrizione' => 'La qualità fa la differenza',
+                'data' => '2020-01-05',
+                'utente_id' => '3',
+                'modello_id' => '5'
+            ],
         ]);
     }
 }

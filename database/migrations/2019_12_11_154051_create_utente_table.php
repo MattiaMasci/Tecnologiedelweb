@@ -15,8 +15,6 @@ class CreateUtenteTable extends Migration
     {
         Schema::create('utente', function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('gruppo_id');
-            $table->foreign('gruppo_id')->references('id')->on('gruppo');
             $table->string( 'nome', 20 );
             $table->string( 'cognome', 20 );
             $table->string( 'username', 20 );

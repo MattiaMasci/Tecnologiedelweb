@@ -12,7 +12,12 @@ class GruppoTableSeeder extends Seeder
     public function run()
     {
         DB::table('gruppo')->insert([
-            'nome' => ''
+            [
+                'nome' => 'Admin'
+            ],
+            [
+            'nome' => 'User'
+            ],
         ]);
     }
 }

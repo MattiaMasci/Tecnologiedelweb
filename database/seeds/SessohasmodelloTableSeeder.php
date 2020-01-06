@@ -10,8 +10,26 @@ class SessohasmodelloTableSeeder extends Seeder {
         DB::table('sessohasmodello')->delete();
 
         DB::table('sessohasmodello')->insert([
-            'sesso_id' => '',
-            'modello_id' => ''
+            [
+                'sesso_id' => '1',
+                'modello_id' => '1'
+            ],
+            [
+                'sesso_id' => '1',
+                'modello_id' => '2'
+            ],
+            [
+                'sesso_id' => '1',
+                'modello_id' => '3'
+            ],
+            [
+                'sesso_id' => '1',
+                'modello_id' => '4'
+            ],
+            [
+                'sesso_id' => '1',
+                'modello_id' => '5'
+            ],
         ]);
     }
 

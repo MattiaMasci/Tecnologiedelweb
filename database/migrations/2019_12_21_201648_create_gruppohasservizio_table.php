@@ -15,8 +15,8 @@ class CreateGruppohasservizioTable extends Migration
     {
         Schema::create('gruppohasservizio', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('utente_id');
-            $table->foreign('utente_id')->references('id')->on('utente');
+            $table->unsignedBigInteger('gruppo_id');
+            $table->foreign('gruppo_id')->references('id')->on('gruppo');
             $table->unsignedBigInteger('servizio_id');
             $table->foreign('servizio_id')->references('id')->on('servizio');
         });
