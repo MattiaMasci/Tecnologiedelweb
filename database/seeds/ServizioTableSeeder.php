@@ -10,7 +10,12 @@ class ServizioTableSeeder extends Seeder {
         DB::table('servizio')->delete();
 
         DB::table('servizio')->insert([
-            'tipo' => ''
+            [
+                'tipo' => 'Amministrazione'
+            ],
+            [
+                'tipo' => 'Utilizzo'
+            ],
         ]);
     }
 

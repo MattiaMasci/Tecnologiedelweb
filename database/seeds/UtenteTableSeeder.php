@@ -15,13 +15,27 @@ class UtenteTableSeeder extends Seeder
         DB::table('utente')->delete();
 
         DB::table('utente')->insert([
-            'nome' => '',
-            'cognome' => '',
-            'username' => '',
-            'password' => '',
-            'email' => '',
-            'gruppo_id' => ''
+            [
+                'nome' => 'Mattia',
+                'cognome' => 'Masci',
+                'username' => 'mattiamasc',
+                'password' => 'mattiamasc',
+                'email' => 'mascimattia@gmail.com'
+            ],
+            [
+                'nome' => 'Davide',
+                'cognome' => 'Barbagrigia',
+                'username' => 'dabarba',
+                'password' => 'dabarba',
+                'email' => 'babagrigiadavide@gmail.com'
+            ],
+            [
+                'nome' => 'Giovanni',
+                'cognome' => 'Spaziani',
+                'username' => 'giospa',
+                'password' => 'giospa',
+                'email' => 'giovanni.spaziani@gmail.com'
+            ],
         ]);
-
     }
 }

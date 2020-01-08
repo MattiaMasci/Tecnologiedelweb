@@ -10,7 +10,21 @@ class MarcaTableSeeder extends Seeder {
         DB::table('marca')->delete();
 
         DB::table('marca')->insert([
-            'nome' => ''
+            [
+                'nome' => 'Nike'
+            ],
+            [
+                'nome' => 'Ralph Loren'
+            ],
+            [
+                'nome' => 'Denim'
+            ],
+            [
+                'nome' => 'Adidas'
+            ],
+            [
+                'nome' => 'Woolrich'
+            ],
         ]);
     }
 

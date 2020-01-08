@@ -10,7 +10,21 @@ class ColoreTableSeeder extends Seeder {
         DB::table('colore')->delete();
 
         DB::table('colore')->insert([
-            'nome' => ''
+            [
+                'nome' => 'Multicolor'
+            ],
+            [
+                'nome' => 'Blu'
+            ],
+            [
+                'nome' => 'Giallo'
+            ],
+            [
+                'nome' => 'Verde'
+            ],
+            [
+                'nome' => 'Rosso'
+            ],
         ]);
     }
 

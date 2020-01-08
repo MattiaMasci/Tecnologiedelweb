@@ -15,6 +15,7 @@ class CreateFotoTable extends Migration
     {
         Schema::create('foto', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('link');
             $table->unsignedBigInteger('modello_id');
             $table->foreign('modello_id')->references('id')->on('modello');
         });

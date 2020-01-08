@@ -9,10 +9,10 @@ class PreferitoTableSeeder extends Seeder {
         //eliminiamo eventuali utenti già presenti
         DB::table('preferito')->delete();
 
-        DB::table('preferito')->insert([
+        /* DB::table('preferito')->insert([
             'utente_id' => '',
             'modello_id' => ''
-        ]);
+        ]); */
     }
 
 }

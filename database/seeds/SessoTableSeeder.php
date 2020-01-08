@@ -10,7 +10,12 @@ class SessoTableSeeder extends Seeder {
         DB::table('sesso')->delete();
 
         DB::table('sesso')->insert([
-            'genere' => ''
+            [
+                'genere' => 'Maschio'
+            ],
+            [
+                'genere' => 'Femmina'
+            ],
         ]);
     }
 

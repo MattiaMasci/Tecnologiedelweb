@@ -10,11 +10,23 @@ class CategoriaTableSeeder extends Seeder {
         DB::table('categoria')->delete();
 
         DB::table('categoria')->insert([
-            'nome' => '',
-            'macrocategoria_id' => ''
+            [
+                'nome' => 'T-shirt',
+                'macrocategoria_id' => '2'
+            ],
+            [
+                'nome' => 'Jeans',
+                'macrocategoria_id' => '3'
+            ],
+            [
+                'nome' => 'Sneakers',
+                'macrocategoria_id' => '1'
+            ],
+            [
+                'nome' => 'Trousers',
+                'macrocategoria_id' => '3'
+            ],
         ]);
-
-
     }
 
 }

@@ -15,14 +15,14 @@ class CreateProfiloTable extends Migration
     {
         Schema::create('profilo', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('cittaspedizione', 20);
-            $table->string('viaspedizione', 20);
-            $table->string('numerocspedizione', 20);
-            $table->string('capspedizione', 20);
-            $table->string('cittafatturazione', 20);
-            $table->string('viafatturazione', 20);
-            $table->string('numerocfatturazione', 20);
-            $table->string('capfatturazione', 20);
+            $table->string('cittaspedizione', 40);
+            $table->string('viaspedizione', 40);
+            $table->string('numerocspedizione', 40);
+            $table->string('capspedizione', 40);
+            $table->string('cittafatturazione', 40);
+            $table->string('viafatturazione', 40);
+            $table->string('numerocfatturazione', 40);
+            $table->string('capfatturazione', 40);
             $table->unsignedBigInteger('utente_id');
             $table->foreign('utente_id')->references('id')->on('utente');
         });

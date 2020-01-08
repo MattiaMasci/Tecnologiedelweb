@@ -10,8 +10,14 @@ class GruppohasservizioTableSeeder extends Seeder {
         DB::table('gruppohasservizio')->delete();
 
         DB::table('gruppohasservizio')->insert([
-            'utente_id' => '',
-            'servizio_id' => ''
+            [
+                'gruppo_id' => '1',
+                'servizio_id' => '1'
+            ],
+            [
+                'gruppo_id' => '2',
+                'servizio_id' => '2'
+            ],
         ]);
     }
 

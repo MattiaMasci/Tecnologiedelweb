@@ -10,7 +10,18 @@ class CollezioneTableSeeder extends Seeder {
         DB::table('collezione')->delete();
 
         DB::table('collezione')->insert([
-            'nome' => ''
+            [
+                'nome' => 'Jeans Collection'
+            ],
+            [
+                'nome' => 'Men Collection'
+            ],
+            [
+                'nome' => 'Shoes Collection'
+            ],
+            [
+                'nome' => 'Exclusive Collection'
+            ],
         ]);
     }
 
