@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessohasmodelloTable extends Migration
+class CreateGenerehasmodelloTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateSessohasmodelloTable extends Migration
      */
     public function up()
     {
-        Schema::create('sessohasmodello', function (Blueprint $table) {
+        Schema::create('generehasmodello', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('sesso_id');
-            $table->foreign('sesso_id')->references('id')->on('sesso');
+            $table->float('prezzo');
+            $table->unsignedBigInteger('genere_id');
+            $table->foreign('genere_id')->references('id')->on('genere');
             $table->unsignedBigInteger('modello_id');
             $table->foreign('modello_id')->references('id')->on('modello');
         });
@@ -29,6 +30,6 @@ class CreateSessohasmodelloTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sessohasmodello');
+        Schema::dropIfExists('generehasmodello');
     }
 }

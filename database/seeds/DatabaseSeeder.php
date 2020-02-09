@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call('GruppohasservizioTableSeeder');
         $this->call('MacrocategoriaTableSeeder');
         $this->call('CategoriaTableSeeder');
-        $this->call('SessoTableSeeder');
+        $this->call('GenereTableSeeder');
         $this->call('TagliaTableSeeder');
         $this->call('CollezioneTableSeeder');
         $this->call('StileTableSeeder');
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call('PreferitoTableSeeder');
         $this->call('QuantitaTableSeeder');
         $this->call('ResoTableSeeder');
-        $this->call('SessohasmodelloTableSeeder');
+        $this->call('GenerehasmodelloTableSeeder');
         $this->call('RecensioneTableSeeder');
         $this->call('AltreTableSeeder');
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSessoTable extends Migration
+class CreateGenereTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSessoTable extends Migration
      */
     public function up()
     {
-        Schema::create('sesso', function (Blueprint $table) {
+        Schema::create('genere', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('genere');
+            $table->string('tipo');
         });
     }
 
@@ -26,6 +26,6 @@ class CreateSessoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sesso');
+        Schema::dropIfExists('genere');
     }
 }
