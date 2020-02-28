@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string( 'cognome')->nullable();
             $table->string( 'username')->nullable();
             $table->string( 'password');
+            $table->boolean( 'admin')->default(0);
             $table->string( 'email' )->unique();
             $table->string( 'remember_token', 100 )->nullable(); //Serve per l'opzione 'Ricordami'
             $table->timestamps();

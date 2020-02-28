@@ -11,68 +11,84 @@ class CategoriaTableSeeder extends Seeder {
 
         DB::table('categoria')->insert([
             [
-                'nome' => 'T-shirt&Polo',
-                'macrocategoria_id' => '2'
+                'name' => 'T-shirt&Polo',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Camicie',
-                'macrocategoria_id' => '3'
+                'name' => 'Camicie',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Giacche',
-                'macrocategoria_id' => '1'
+                'name' => 'Giacche',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Pantaloni',
-                'macrocategoria_id' => '3'
+                'name' => 'Pantaloni',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Maglieria&Felpe',
-                'macrocategoria_id' => '3'
+                'name' => 'Maglieria&Felpe',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Jeans',
-                'macrocategoria_id' => '3'
+                'name' => 'Jeans',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Completi&Cravatte',
-                'macrocategoria_id' => '3'
+                'name' => 'Completi&Cravatte',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Sport',
-                'macrocategoria_id' => '3'
+                'name' => 'Sport',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Tutto',
-                'macrocategoria_id' => '3'
+                'name' => 'Tutto',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Vestiti',
-                'macrocategoria_id' => '3'
+                'name' => 'Vestiti',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'T-shirt&Top',
-                'macrocategoria_id' => '3'
+                'name' => 'T-shirt&Top',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Gonne',
-                'macrocategoria_id' => '3'
+                'name' => 'Gonne',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Premium',
-                'macrocategoria_id' => '3'
+                'name' => 'Premium',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Pullover&Cardigan',
-                'macrocategoria_id' => '3'
+                'name' => 'Pullover&Cardigan',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Notte',
-                'macrocategoria_id' => '3'
+                'name' => 'Notte',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
             [
-                'nome' => 'Cardigan',
-                'macrocategoria_id' => '3'
+                'name' => 'Cardigan',
+                'url' => 'T-shirt&Polo',
+                'description' => 'T-shirt&Polo'
             ],
 
         ]);

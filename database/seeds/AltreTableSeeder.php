@@ -17,19 +17,27 @@ class AltreTableSeeder extends Seeder
         DB::table('altre')->insert([
             [
                 'foto_id' => '1',
-                'data' => 'img\women\girl-1.png'
+                'data' => 'img\women\girl-1.png',
+                'tipo' => '',
+                'posizione' => ''
             ],
             [
                 'foto_id' => '2',
-                'data' => 'img\women\girl-2.png'
+                'data' => 'img\women\girl-2.png',
+                'tipo' => '',
+                'posizione' => ''
             ],
             [
                 'foto_id' => '3',
-                'data' => 'img\women\girl-3.png'
+                'data' => 'img\women\girl-3.png',
+                'tipo' => '',
+                'posizione' => ''
             ],
             [
                 'foto_id' => '4',
-                'data' => 'img\women\girl-4.png'
+                'data' => 'img\women\girl-4.png',
+                'tipo' => '',
+                'posizione' => ''
             ],
         ]);
     }

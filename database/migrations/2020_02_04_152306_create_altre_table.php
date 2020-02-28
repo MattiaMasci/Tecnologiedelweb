@@ -15,10 +15,14 @@ class CreateAltreTable extends Migration
     {
         Schema::create('altre', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->binary('data');
+            //$table->binary('data');
+            $table->string('tipo');
+            $table->integer('posizione');
             $table->unsignedBigInteger('foto_id');
             $table->foreign('foto_id')->references('id')->on('foto');
+            $table->timestamps();
         });
+        DB::statement("ALTER TABLE altre ADD data  MEDIUMBLOB");
     }
 
     /**

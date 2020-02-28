@@ -10,5 +10,5 @@ class Foto extends Model
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
+    protected $fillable = ['modello_id', 'data'];
 }

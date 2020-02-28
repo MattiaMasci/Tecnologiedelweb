@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Xenomod | Dettaglio prodotto</title>
-
-    <base href="http://localhost/ProgettoTdWpersonale/public/">
+    <title>Xenomod | Home</title>
 
     <!-- Font awesome -->
-    <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/font-awesome.css') }}" rel="stylesheet">
     <!-- Bootstrap -->
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/bootstrap.css') }}" rel="stylesheet">
     <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-    <link href="{{ asset('css/jquery.smartmenus.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/jquery.smartmenus.bootstrap.css') }}" rel="stylesheet">
     <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.simpleLens.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/jquery.simpleLens.css') }}">
     <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/slick.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/slick.css') }}">
     <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/nouislider.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/nouislider.css') }}">
     <!-- Theme color -->
-    <link id="switcher" href="{{ asset('css/theme-color/default-theme.css') }}" rel="stylesheet">
+    <link id="switcher" href="{{ asset('css/Frontend.css/theme-color/default-theme.css') }}" rel="stylesheet">
+<!--<link id="switcher" href="{{ asset('css/Frontend.css/theme-color/bridge-theme.css') }}" rel="stylesheet"> -->
     <!-- Top Slider CSS -->
-    <link href="{{ asset('css/sequence-theme.modern-slide-in.css') }}" rel="stylesheet" media="all">
+    <link href="{{ asset('css/Frontend.css/sequence-theme.modern-slide-in.css') }}" rel="stylesheet" media="all">
 
     <!-- Main style sheet -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/style.css') }}" rel="stylesheet">
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -36,13 +35,11 @@
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-
-  </head>
-  <body>
+</head>
+<body>
     <!-- wpf loader Two -->
     <div id="wpf-loader-two">
       <div class="wpf-loader-two-inner">
@@ -115,7 +112,7 @@
                 <div class="aa-cartbox-summary">
                   <ul>
                     <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                      <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/Frontend.img/woman-small-2.jpg') }}" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#">Product Name</a></h4>
                         <p>1 x $250</p>
@@ -123,7 +120,7 @@
                       <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
                     </li>
                     <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
+                      <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/Frontend.img/woman-small-1.jpg') }}" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#">Product Name</a></h4>
                         <p>1 x $250</p>
@@ -244,7 +241,7 @@
 
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
+   <img src="{{ asset('img/Frontend.img/fashion/fashion-header-bg-8.jpg') }}" alt="fashion img">
    <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
@@ -274,19 +271,19 @@
                     <div id="demo-1" class="simpleLens-gallery-container">
                       <div class="simpleLens-container">
                         <div class="simpleLens-big-image-container">
-                            <a data-lens-image="img/view-slider/large/polo-shirt-1.png" class="simpleLens-lens-image"><img src="@php echo $foto->data; @endphp" class="simpleLens-big-image"></a></div>
+                            <a data-lens-image="../store-image/fetch-altre/{{ $slider1 }}" class="simpleLens-lens-image"><img src="../store-image/fetch-image/{{ $id }}" class="simpleLens-big-image"></a></div>
                       </div>
                       <div class="simpleLens-thumbnails-container">
-                          <a data-big-image="img/view-slider/medium/polo-shirt-1.png" data-lens-image="img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="img/view-slider/thumbnail/polo-shirt-1.png">
+                          <a data-big-image="../store-image/fetch-image/{{ $id }}" data-lens-image="../store-image/fetch-altre/{{ $slider1 }}" class="simpleLens-thumbnail-wrapper" href="#">
+                            <img src="../store-image/fetch-altre/{{ $thumbnail1 }}">
                           </a>
-                          <a data-big-image="img/view-slider/medium/polo-shirt-3.png" data-lens-image="img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="img/view-slider/thumbnail/polo-shirt-3.png">
+                          <a data-big-image="../store-image/fetch-altre/{{ $normal2 }}" data-lens-image="../store-image/fetch-altre/{{ $slider2 }}" class="simpleLens-thumbnail-wrapper" href="#">
+                            <img src="../store-image/fetch-altre/{{ $thumbnail2 }}">
                           </a>
-                          <a data-big-image="img/view-slider/medium/polo-shirt-4.png" data-lens-image="img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="img/view-slider/thumbnail/polo-shirt-4.png">
-                          </a>
-                      </div>
+                        <a data-big-image="../store-image/fetch-altre/{{ $normal3 }}" data-lens-image="../store-image/fetch-altre/{{ $slider3 }}" class="simpleLens-thumbnail-wrapper" href="#">
+                            <img src="../store-image/fetch-altre/{{ $thumbnail3 }}">
+                        </a>
+                    </div>
                     </div>
                   </div>
                 </div>
@@ -298,7 +295,7 @@
                       <span class="aa-product-view-price">$@php echo $prezzo; @endphp</span>
                       <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis animi, veritatis quae repudiandae quod nulla porro quidem, itaque quis quaerat!</p>
+                    <p>@php echo $descrizione1; @endphp</p>
                     <h4>Size</h4>
                     <div class="aa-prod-view-size">
                       <a href="#">S</a>
@@ -347,16 +344,7 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div class="tab-pane fade in active" id="description">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                  <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor qui eius esse!</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, modi!</li>
-                  </ul>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
+                  <p>@php echo $descrizione2; @endphp</p>
                 </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">
@@ -366,7 +354,7 @@
                         <div class="media">
                           <div class="media-left">
                             <a href="#">
-                              <img class="media-object" src="img/testimonial-img-3.jpg" alt="girl image">
+                              <img class="media-object" src="{{ asset('img/Frontend.img/testimonial-img-3.jpg') }}" alt="girl image">
                             </a>
                           </div>
                           <div class="media-body">
@@ -386,7 +374,7 @@
                         <div class="media">
                           <div class="media-left">
                             <a href="#">
-                              <img class="media-object" src="img/testimonial-img-3.jpg" alt="girl image">
+                              <img class="media-object" src="{{ asset('img/Frontend.img/testimonial-img-3.jpg') }}" alt="girl image">
                             </a>
                           </div>
                           <div class="media-body">
@@ -440,7 +428,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/man/polo-shirt-2.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/man/polo-shirt-2.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                      <figcaption>
                       <h4 class="aa-product-title"><a href="#">Polo T-Shirt</a></h4>
@@ -458,7 +446,7 @@
                  <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/women/girl-2.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/women/girl-2.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">Lorem ipsum doller</a></h4>
@@ -476,7 +464,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/man/t-shirt-1.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/man/t-shirt-1.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                   </figure>
                   <figcaption>
@@ -494,7 +482,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/women/girl-3.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/women/girl-3.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                      <figcaption>
                       <h4 class="aa-product-title"><a href="#">Lorem ipsum doller</a></h4>
@@ -510,7 +498,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/man/polo-shirt-1.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/man/polo-shirt-1.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">Polo T-Shirt</a></h4>
@@ -526,7 +514,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/women/girl-4.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/women/girl-4.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                     <figcaption>
                       <h4 class="aa-product-title"><a href="#">Lorem ipsum doller</a></h4>
@@ -544,7 +532,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/man/polo-shirt-4.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/man/polo-shirt-4.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                      <figcaption>
                       <h4 class="aa-product-title"><a href="#">Polo T-Shirt</a></h4>
@@ -562,7 +550,7 @@
                 <!-- start single product item -->
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="#"><img src="img/women/girl-1.png" alt="polo shirt img"></a>
+                    <a class="aa-product-img" href="#"><img src="{{ asset('img/Frontend.img/women/girl-1.png') }}" alt="polo shirt img"></a>
                     <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                      <figcaption>
                       <h4 class="aa-product-title"><a href="#">This is Title</a></h4>
@@ -592,7 +580,7 @@
                               <div class="simpleLens-container">
                                   <div class="simpleLens-big-image-container">
                                       <a class="simpleLens-lens-image" data-lens-image="img/view-slider/large/polo-shirt-1.png">
-                                          <img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                          <img src="{{ asset('img/Frontend.img/view-slider/medium/polo-shirt-1.png') }}" class="simpleLens-big-image">
                                       </a>
                                   </div>
                               </div>
@@ -600,18 +588,18 @@
                                   <a href="#" class="simpleLens-thumbnail-wrapper"
                                      data-lens-image="img/view-slider/large/polo-shirt-1.png"
                                      data-big-image="img/view-slider/medium/polo-shirt-1.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-1.png">
+                                      <img src="{{ asset('img/Frontend.img/view-slider/thumbnail/polo-shirt-1.png') }}">
                                   </a>
                                   <a href="#" class="simpleLens-thumbnail-wrapper"
                                      data-lens-image="img/view-slider/large/polo-shirt-3.png"
                                      data-big-image="img/view-slider/medium/polo-shirt-3.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-3.png">
+                                      <img src="{{ asset('img/Frontend.img/view-slider/thumbnail/polo-shirt-3.png') }}">
                                   </a>
 
                                   <a href="#" class="simpleLens-thumbnail-wrapper"
                                      data-lens-image="img/view-slider/large/polo-shirt-4.png"
                                      data-big-image="img/view-slider/medium/polo-shirt-4.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-4.png">
+                                      <img src="{{ asset('img/Frontend.img/view-slider/thumbnail/polo-shirt-4.png') }}">
                                   </a>
                               </div>
                             </div>
@@ -826,26 +814,35 @@
 
 
 
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.js"></script>
-  <!-- SmartMenus jQuery plugin -->
-  <script type="text/javascript" src="js/jquery.smartmenus.js"></script>
-  <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>
-  <!-- To Slider JS -->
-  <script src="js/sequence.js"></script>
-  <script src="js/sequence-theme.modern-slide-in.js"></script>
-  <!-- Product view slider -->
-  <script type="text/javascript" src="js/jquery.simpleGallery.js"></script>
-  <script type="text/javascript" src="js/jquery.simpleLens.js"></script>
-  <!-- slick slider -->
-  <script type="text/javascript" src="js/slick.js"></script>
-  <!-- Price picker slider -->
-  <script type="text/javascript" src="js/nouislider.js"></script>
-  <!-- Custom js -->
-  <script src="js/custom.js"></script>
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    @if (count($errors) > 0)
+        <script>
+            $( document ).ready(function() {
+                $('#login-modal').modal('show');
+            });
+        </script>
+    @endif
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{{ asset('js/Frontend.js/bootstrap.js') }}"></script>
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.smartmenus.js') }}"></script>
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.smartmenus.bootstrap.js') }}"></script>
+    <!-- To Slider JS -->
+    <script src="{{ asset('js/Frontend.js/sequence.js') }}"></script>
+    <script src="{{ asset('js/Frontend.js/sequence-theme.modern-slide-in.js') }}"></script>
+    <!-- Product view slider -->
+    <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.simpleGallery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.simpleLens.js') }}"></script>
+    <!-- slick slider -->
+    <script type="text/javascript" src="{{ asset('js/Frontend.js/slick.js') }}"></script>
+    <!-- Price picker slider -->
+    <script type="text/javascript" src="{{ asset('js/Frontend.js/nouislider.js') }}"></script>
+    <!-- Custom js -->
+    <script src="{{ asset('js/Frontend.js/custom.js') }}"></script>
 
   </body>
 </html>

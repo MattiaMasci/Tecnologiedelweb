@@ -18,6 +18,7 @@ class CreateFotoTable extends Migration
             $table->binary('data');
             $table->unsignedBigInteger('modello_id');
             $table->foreign('modello_id')->references('id')->on('modello');
+            $table->timestamps();
         });
     }
 

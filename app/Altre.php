@@ -10,5 +10,5 @@ class Altre extends Model
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
+    protected $fillable = ['foto_id', 'data', 'tipo', 'posizione'];
 }

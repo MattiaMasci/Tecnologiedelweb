@@ -1,8 +1,6 @@
 <?php
 
-Route::get('/', 'FrontController@index');
-
-Route::get('/home', 'FrontController@index')->name('home')->middleware('auth');
+Route::match(['get', 'post'], '/home', 'FrontController@home')->name('home');
 
 Route::get('/cart', 'FrontController@cart');
 
@@ -23,5 +21,7 @@ Route::get('/wishlist', 'FrontController@wishlist')->middleware('auth');
 Route::get('/error', 'FrontController@error');
 
 Route::get('/checkout', 'FrontController@checkout');
+
+Route::get('/order', 'FrontController@orderproducts');
 
 

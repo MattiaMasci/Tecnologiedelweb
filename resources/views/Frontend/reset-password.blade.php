@@ -4,29 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Xenomod | Pagina Account </title>
-
-    <base href="http://localhost/ProgettoTdWpersonale/public/">
+    <title>Xenomod | Home</title>
 
     <!-- Font awesome -->
-    <link href="css/font-awesome.css" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/font-awesome.css') }}" rel="stylesheet">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/bootstrap.css') }}" rel="stylesheet">
     <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-    <link href="css/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/jquery.smartmenus.bootstrap.css') }}" rel="stylesheet">
     <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="css/jquery.simpleLens.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/jquery.simpleLens.css') }}">
     <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="css/slick.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/slick.css') }}">
     <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="css/nouislider.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/nouislider.css') }}">
     <!-- Theme color -->
-    <link id="switcher" href="css/theme-color/default-theme.css" rel="stylesheet">
+    <link id="switcher" href="{{ asset('css/Frontend.css/theme-color/default-theme.css') }}" rel="stylesheet">
+<!--<link id="switcher" href="{{ asset('css/Frontend.css/theme-color/bridge-theme.css') }}" rel="stylesheet"> -->
     <!-- Top Slider CSS -->
-    <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
+    <link href="{{ asset('css/Frontend.css/sequence-theme.modern-slide-in.css') }}" rel="stylesheet" media="all">
 
     <!-- Main style sheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/style.css') }}" rel="stylesheet">
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -39,7 +38,6 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body>
 
@@ -74,11 +72,7 @@
                         <!-- / header top left -->
                         <div class="aa-header-top-right">
                             <ul class="aa-head-top-nav-right">
-                                <li><a href="{{url('account')}}">Il mio account</a></li>
-                                <li class="hidden-xs"><a href="{{url('wishlist')}}">Lista dei desideri</a></li>
-                                <li class="hidden-xs"><a href="{{url('cart')}}">Il mio carrello</a></li>
-                                <li class="hidden-xs"><a href="{{url('checkout')}}">Checkout</a></li>
-                                <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                                <li><a href="{{url('/')}}">Torna alla Home</a></li>
                             </ul>
                         </div>
                     </div>
@@ -105,52 +99,6 @@
                             <!-- <a href="index.html"><img src="img/logo.jpg" alt="logo img"></a> -->
                         </div>
                         <!-- / logo  -->
-                        <!-- cart box -->
-                        <div class="aa-cartbox">
-                            <a class="aa-cart-link" href="#">
-                                <span class="fa fa-shopping-basket"></span>
-                                <span class="aa-cart-title">CARRELLO</span>
-                                <span class="aa-cart-notify">2</span>
-                            </a>
-                            <div class="aa-cartbox-summary">
-                                <ul>
-                                    <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
-                                        <div class="aa-cartbox-info">
-                                            <h4><a href="#">Product Name</a></h4>
-                                            <p>1 x $250</p>
-                                        </div>
-                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                    </li>
-                                    <li>
-                                        <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
-                                        <div class="aa-cartbox-info">
-                                            <h4><a href="#">Product Name</a></h4>
-                                            <p>1 x $250</p>
-                                        </div>
-                                        <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                    </li>
-                                    <li>
-                      <span class="aa-cartbox-total-title">
-                        Total
-                      </span>
-                                        <span class="aa-cartbox-total-price">
-                        $500
-                      </span>
-                                    </li>
-                                </ul>
-                                <a class="aa-cartbox-checkout aa-primary-btn" href="#">Checkout</a>
-                            </div>
-                        </div>
-                        <!-- / cart box -->
-                        <!-- search box -->
-                        <div class="aa-search-box">
-                            <form action="">
-                                <input type="text" name="" id="" placeholder="Cerca qui es. 'uomo' ">
-                                <button type="submit"><span class="fa fa-search"></span></button>
-                            </form>
-                        </div>
-                        <!-- / search box -->
                     </div>
                 </div>
             </div>
@@ -244,7 +192,7 @@
 
 <!-- catg header banner section -->
 <section id="aa-catg-head-banner">
-    <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
+    <img src="{{ asset('img/Frontend.img/fashion/fashion-header-bg-8.jpg') }}" alt="fashion img">
     <div class="aa-catg-head-banner-area">
         <div class="container">
             <div class="aa-catg-head-banner-content">
@@ -490,25 +438,26 @@
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.js"></script>
-<!-- SmartMenus jQuery plugin -->
-<script type="text/javascript" src="js/jquery.smartmenus.js"></script>
-<!-- SmartMenus jQuery Bootstrap Addon -->
-<script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>
-<!-- To Slider JS -->
-<script src="js/sequence.js"></script>
-<script src="js/sequence-theme.modern-slide-in.js"></script>
-<!-- Product view slider -->
-<script type="text/javascript" src="js/jquery.simpleGallery.js"></script>
-<script type="text/javascript" src="js/jquery.simpleLens.js"></script>
-<!-- slick slider -->
-<script type="text/javascript" src="js/slick.js"></script>
-<!-- Price picker slider -->
-<script type="text/javascript" src="js/nouislider.js"></script>
-<!-- Custom js -->
-<script src="js/custom.js"></script>
 
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ asset('js/Frontend.js/bootstrap.js') }}"></script>
+<!-- SmartMenus jQuery plugin -->
+<script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.smartmenus.js') }}"></script>
+<!-- SmartMenus jQuery Bootstrap Addon -->
+<script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.smartmenus.bootstrap.js') }}"></script>
+<!-- To Slider JS -->
+<script src="{{ asset('js/Frontend.js/sequence.js') }}"></script>
+<script src="{{ asset('js/Frontend.js/sequence-theme.modern-slide-in.js') }}"></script>
+<!-- Product view slider -->
+<script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.simpleGallery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.simpleLens.js') }}"></script>
+<!-- slick slider -->
+<script type="text/javascript" src="{{ asset('js/Frontend.js/slick.js') }}"></script>
+<!-- Price picker slider -->
+<script type="text/javascript" src="{{ asset('js/Frontend.js/nouislider.js') }}"></script>
+<!-- Custom js -->
+<script src="{{ asset('js/Frontend.js/custom.js') }}"></script>
 
 </body>
 </html>

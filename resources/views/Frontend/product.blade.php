@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Xenomod | Prodotti</title>
+    <title>Xenomod | Home</title>
 
-    <base href="http://localhost/ProgettoTdWpersonale/public/">
-
-      <!-- Font awesome -->
-    <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet">
+    <!-- Font awesome -->
+    <link href="{{ asset('css/Frontend.css/font-awesome.css') }}" rel="stylesheet">
     <!-- Bootstrap -->
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/bootstrap.css') }}" rel="stylesheet">
     <!-- SmartMenus jQuery Bootstrap Addon CSS -->
-    <link href="{{ asset('css/jquery.smartmenus.bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/jquery.smartmenus.bootstrap.css') }}" rel="stylesheet">
     <!-- Product view slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.simpleLens.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/jquery.simpleLens.css') }}">
     <!-- slick slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/slick.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/slick.css') }}">
     <!-- price picker slider -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/nouislider.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/Frontend.css/nouislider.css') }}">
     <!-- Theme color -->
-    <link id="switcher" href="{{ asset('css/theme-color/default-theme.css') }}" rel="stylesheet">
+    <link id="switcher" href="{{ asset('css/Frontend.css/theme-color/default-theme.css') }}" rel="stylesheet">
+<!--<link id="switcher" href="{{ asset('css/Frontend.css/theme-color/bridge-theme.css') }}" rel="stylesheet"> -->
     <!-- Top Slider CSS -->
-    <link href="{{ asset('css/sequence-theme.modern-slide-in.css') }}" rel="stylesheet" media="all">
+    <link href="{{ asset('css/Frontend.css/sequence-theme.modern-slide-in.css') }}" rel="stylesheet" media="all">
 
     <!-- Main style sheet -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Frontend.css/style.css') }}" rel="stylesheet">
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
@@ -36,11 +35,10 @@
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-  </head>
+</head>
   <!-- !Important notice -->
   <!-- Only for product page body tag have to added .productPage class -->
   <body class="productPage">
@@ -116,7 +114,7 @@
                 <div class="aa-cartbox-summary">
                   <ul>
                     <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-2.jpg" alt="img"></a>
+                      <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/Frontend.img/woman-small-2.jpg') }}" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#">Product Name</a></h4>
                         <p>1 x $250</p>
@@ -124,7 +122,7 @@
                       <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
                     </li>
                     <li>
-                      <a class="aa-cartbox-img" href="#"><img src="img/woman-small-1.jpg" alt="img"></a>
+                      <a class="aa-cartbox-img" href="#"><img src="{{ asset('img/Frontend.img/woman-small-1.jpg') }}" alt="img"></a>
                       <div class="aa-cartbox-info">
                         <h4><a href="#">Product Name</a></h4>
                         <p>1 x $250</p>
@@ -245,7 +243,7 @@
 
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
-   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
+   <img src="{{ asset('img/Frontend.img/fashion/fashion-header-bg-8.jpg') }}" alt="fashion img">
    <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
@@ -269,11 +267,11 @@
               <div class="aa-product-catg-head-left">
                 <form action="" class="aa-sort-form">
                   <label for="">Ordina per</label>
-                  <select name="">
-                    <option value="1" selected="Default">Default</option>
-                    <option value="2">Nome</option>
-                    <option value="3">Prezzo</option>
-                    <option value="4">Data</option>
+                  <select id="ordinaPer" name="">
+                      <option value="1" selected="Default">Default</option>
+                      <option value="2">Nome</option>
+                      <option value="3">Prezzo</option>
+                      <option value="4">Data</option>
                   </select>
                 </form>
                 <form action="" class="aa-show-form">
@@ -291,32 +289,38 @@
               </div>
             </div>
             <div class="aa-product-catg-body">
-              <ul class="aa-product-catg">
+              <ul id="prodotti" class="aa-product-catg">
                 <!-- start single product item -->
-                  @php $i=0;
-                  @endphp
-                @foreach($photo as $photo)
+                  @php $i = 0; @endphp
+                  @foreach($id as $id)
                   <li>
                     <figure>
                       <!--"img/women/girl-1.png"-->
-                      <a class="aa-product-img" href="{{url("product-detail/$genere&&$id[$i]")}}"><img src="@php echo $photo; @endphp" alt="polo shirt img"></a>
-                      <a class="aa-add-card-btn"href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                      <a class="aa-product-img" href="{{url("product-detail/$genere&&$id")}}"><img src="../store-image/fetch-image/{{ $id }}" alt="polo shirt img"></a>
+                      <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                       <figcaption>
-                        <h4 class="aa-product-title"><a href="#">@php echo $modello[$i]; @endphp</a></h4>
-                        <span class="aa-product-price">$@php echo $prezzo[$i]; $i=$i+1; @endphp</span><span class="aa-product-price"><del>$65.50</del></span>
+                        <h4 class="aa-product-title"><a href="#">@php echo "$modello[$i]"; @endphp</a></h4>
+                        <span class="aa-product-price">$@php echo "$prezzo[$i]"; @endphp</span><span class="aa-product-price"><del>$65.50</del></span>
                         <p class="aa-product-descrip">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam accusamus facere iusto, autem soluta amet sapiente ratione inventore nesciunt a, maxime quasi consectetur, rerum illum.</p>
                       </figcaption>
                     </figure>
                     <div class="aa-product-hvr-content">
                       <a href="#" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a>
-                      <a href="#" data-toggle="tooltip" data-placement="top" title="Confronta"><span class="fa fa-exchange"></span></a>
-                      <a href="#" data-toggle2="tooltip" data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                      <a href="#" id="aprimodale" data-toggle2="tooltip"
+                         data-id='{"id":"../store-image/fetch-image/{{ $id }}", "slider1":"../store-image/fetch-altre/{{ $slider1[$i] }}",
+                          "slider2":"../store-image/fetch-altre/{{ $slider2[$i] }}", "slider3":"../store-image/fetch-altre/{{ $slider3[$i] }}",
+                           "thumbnail1":"../store-image/fetch-altre/{{ $thumbnail1[$i] }}", "thumbnail2":"../store-image/fetch-altre/{{ $thumbnail2[$i] }}",
+                            "thumbnail3":"../store-image/fetch-altre/{{ $thumbnail3[$i] }}", "normal2":"../store-image/fetch-altre/{{ $normal2[$i] }}",
+                             "normal3":"../store-image/fetch-altre/{{ $normal3[$i] }}", "prezzo":"{{ $prezzo[$i] }}"}'
+                         data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                     </div>
                     <!-- product badge -->
                     <span class="aa-badge aa-sale" href="#">SALE!</span>
                   </li>
+                      @php $i=$i+1; @endphp
                 @endforeach
               </ul>
+
               <!-- Dai un'occhiata modal -->
               <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -330,27 +334,24 @@
                             <div class="simpleLens-gallery-container" id="demo-1">
                               <div class="simpleLens-container">
                                   <div class="simpleLens-big-image-container">
-                                      <a class="simpleLens-lens-image" data-lens-image="img/view-slider/large/polo-shirt-1.png">
-                                          <img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image">
+                                      <a class="simpleLens-lens-image" id="slider1">
+                                          <img id="normale1" class="simpleLens-big-image">
                                       </a>
                                   </div>
                               </div>
                               <div class="simpleLens-thumbnails-container">
                                   <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-1.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-1.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-1.png">
+                                     id="foto1">
+                                      <img id="thumbnail1">
                                   </a>
                                   <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-3.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-3.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-3.png">
+                                     id="foto2">
+                                      <img id="thumbnail2">
                                   </a>
 
                                   <a href="#" class="simpleLens-thumbnail-wrapper"
-                                     data-lens-image="img/view-slider/large/polo-shirt-4.png"
-                                     data-big-image="img/view-slider/medium/polo-shirt-4.png">
-                                      <img src="img/view-slider/thumbnail/polo-shirt-4.png">
+                                     id="foto3">
+                                      <img id="thumbnail3">
                                   </a>
                               </div>
                             </div>
@@ -361,7 +362,7 @@
                           <div class="aa-product-view-content">
                             <h3>T-Shirt</h3>
                             <div class="aa-price-block">
-                              <span class="aa-product-view-price">$34.99</span>
+                                <span class="aa-product-view-price">$46.98</span>
                               <p class="aa-product-avilability">Disponibilità: <span>In stock</span></p>
                             </div>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis animi, veritatis quae repudiandae quod nulla porro quidem, itaque quis quaerat!</p>
@@ -398,7 +399,9 @@
                   </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
               </div>
-              <!-- / Dai un'occhiata modal -->
+                <!-- / Dai un'occhiata modal -->
+
+
             </div>
             <div class="aa-product-catg-pagination">
               <nav>
@@ -448,7 +451,6 @@
                  <button class="aa-filter-btn" type="submit">Filtro</button>
                </form>
               </div>
-
             </div>
             <!-- single sidebar -->
             <div class="aa-sidebar-widget">
@@ -474,21 +476,21 @@
               <div class="aa-recently-views">
                 <ul>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="{{ asset('img/Frontend.img/woman-small-2.jpg') }}"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">Nome prodotto</a></h4>
                       <p>1 x $250</p>
                     </div>
                   </li>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-1.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="{{ asset('img/Frontend.img/woman-small-1.jpg') }}"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">Nome prodotto</a></h4>
                       <p>1 x $250</p>
                     </div>
                   </li>
                    <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="{{ asset('img/Frontend.img/woman-small-2.jpg') }}"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">Nome prodotto</a></h4>
                       <p>1 x $250</p>
@@ -503,21 +505,21 @@
               <div class="aa-recently-views">
                 <ul>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="{{ asset('img/Frontend.img/woman-small-2.jpg') }}"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">Nome prodotto</a></h4>
                       <p>1 x $250</p>
                     </div>
                   </li>
                   <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-1.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="{{ asset('img/Frontend.img/woman-small-1.jpg') }}"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">Nome prodotto</a></h4>
                       <p>1 x $250</p>
                     </div>
                   </li>
                    <li>
-                    <a href="#" class="aa-cartbox-img"><img alt="img" src="img/woman-small-2.jpg"></a>
+                    <a href="#" class="aa-cartbox-img"><img alt="img" src="{{ asset('img/Frontend.img/woman-small-2.jpg') }}"></a>
                     <div class="aa-cartbox-info">
                       <h4><a href="#">Nome prodotto</a></h4>
                       <p>1 x $250</p>
@@ -695,25 +697,79 @@
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- Include all compiled plugins (below), or include individual files as needed -->
-  <script src="js/bootstrap.js"></script>
-  <!-- SmartMenus jQuery plugin -->
-  <script type="text/javascript" src="js/jquery.smartmenus.js"></script>
-  <!-- SmartMenus jQuery Bootstrap Addon -->
-  <script type="text/javascript" src="js/jquery.smartmenus.bootstrap.js"></script>
-  <!-- To Slider JS -->
-  <script src="js/sequence.js"></script>
-  <script src="js/sequence-theme.modern-slide-in.js"></script>
-  <!-- Product view slider -->
-  <script type="text/javascript" src="js/jquery.simpleGallery.js"></script>
-  <script type="text/javascript" src="js/jquery.simpleLens.js"></script>
-  <!-- slick slider -->
-  <script type="text/javascript" src="js/slick.js"></script>
-  <!-- Price picker slider -->
-  <script type="text/javascript" src="js/nouislider.js"></script>
-  <!-- Custom js -->
-  <script src="js/custom.js"></script>
 
+   @if (count($errors) > 0)
+       <script>
+           $( document ).ready(function() {
+               $('#login-modal').modal('show');
+           });
+       </script>
+   @endif
+
+    <script>
+        $(document).on("click", "#aprimodale", function () {
+            var id = $(this).data('id').id;
+            var slider1 = $(this).data('id').slider1;
+            var thumbnail1 = $(this).data('id').thumbnail1;
+            var thumbnail2 = $(this).data('id').thumbnail2;
+            var thumbnail3 = $(this).data('id').thumbnail3;
+            var normal2 = $(this).data('id').normal2;
+            var normal3 = $(this).data('id').normal3;
+            var slider2 = $(this).data('id').slider2;
+            var slider3 = $(this).data('id').slider3;
+            var prezzo = $(this).data('id').prezzo;
+            $('#normale1').attr('src', id );
+            $('#slider1').attr('data-lens-image', slider1 );
+            $('#thumbnail1').attr('src', thumbnail1 );
+            $('#thumbnail2').attr('src', thumbnail2 );
+            $('#thumbnail3').attr('src', thumbnail3 );
+            $('#foto1').attr('data-lens-image', slider1 ).attr('data-big-image', id );
+            $('#foto2').attr('data-lens-image', slider2 ).attr('data-big-image', normal2 );
+            $('#foto3').attr('data-lens-image', slider3 ).attr('data-big-image', normal3 );
+        });
+    </script>
+
+
+   <script>
+       $( "#ordinaPer" ).change(function() {
+               var val = $(this).val();
+               var id = "<?php echo json_encode($photo); ?>";
+               var genere = "<?php echo "$genere"; ?>";
+
+               $.ajax({
+                   type:'get',
+                   url:'/ProgettoTdWpersonale/public/order',
+                   data:{valore : val, id : id, genere : genere},
+                   success:function(resp){
+                           $("#prodotti").html(resp)
+                   }, error:function(){
+                       alert("Error");
+                   }
+               });
+
+           });
+    </script>
+
+
+
+   <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script src="{{ asset('js/Frontend.js/bootstrap.js') }}"></script>
+   <!-- SmartMenus jQuery plugin -->
+   <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.smartmenus.js') }}"></script>
+   <!-- SmartMenus jQuery Bootstrap Addon -->
+   <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.smartmenus.bootstrap.js') }}"></script>
+   <!-- To Slider JS -->
+   <script src="{{ asset('js/Frontend.js/sequence.js') }}"></script>
+   <script src="{{ asset('js/Frontend.js/sequence-theme.modern-slide-in.js') }}"></script>
+   <!-- Product view slider -->
+   <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.simpleGallery.js') }}"></script>
+   <script type="text/javascript" src="{{ asset('js/Frontend.js/jquery.simpleLens.js') }}"></script>
+   <!-- slick slider -->
+   <script type="text/javascript" src="{{ asset('js/Frontend.js/slick.js') }}"></script>
+   <!-- Price picker slider -->
+   <script type="text/javascript" src="{{ asset('js/Frontend.js/nouislider.js') }}"></script>
+   <!-- Custom js -->
+   <script src="{{ asset('js/Frontend.js/custom.js') }}"></script>
 
   </body>
 </html>

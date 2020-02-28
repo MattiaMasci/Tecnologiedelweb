@@ -16,7 +16,8 @@ class CreateModelloTable extends Migration
         Schema::create('modello', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome',30);
-            $table->string('descrizione');
+            $table->text('descrizione');
+            $table->text('descrizione1');
             $table->date('datauscita');
             $table->integer('sconto');
             $table->unsignedBigInteger('collezione_id');
