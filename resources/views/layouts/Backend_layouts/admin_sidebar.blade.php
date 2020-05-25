@@ -1,13 +1,38 @@
 <!--sidebar-menu-->
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+<div id="sidebar"><a href="{{ url('/admin/dashboard') }}" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
     <ul>
-        <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+        <li class="active"><a href="{{ url('/admin/dashboard') }}"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Categories</span> <span class="label label-important">2</span></a>
             <ul>
                 <li><a href="{{ url('/admin/add-category') }}">Add Category</a></li>
                 <li><a href="{{ url('/admin/view-categories') }}">View Categories</a></li>
             </ul>
         </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Products</span> <span class="label label-important">2</span></a>
+            <ul>
+                <li><a href="{{ url('/admin/add-product') }}">Add Product</a></li>
+                <li><a href="{{ url('/admin/view-products') }}">View Products</a></li>
+            </ul>
+        </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Collections</span> <span class="label label-important">2</span></a>
+            <ul>
+                <li><a href="{{ url('/admin/add-collection') }}">Add Collection</a></li>
+                <li><a href="{{ url('/admin/view-collections') }}">View Collections</a></li>
+            </ul>
+        </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Brands</span> <span class="label label-important">2</span></a>
+            <ul>
+                <li><a href="{{ url('/admin/add-brand') }}">Add Brand</a></li>
+                <li><a href="{{ url('/admin/view-brands') }}">View Brands</a></li>
+            </ul>
+        </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Coupons</span> <span class="label label-important">2</span></a>
+            <ul>
+                <li><a href="{{ url('/admin/add-coupon') }}">Add Coupon</a></li>
+                <li><a href="{{ url('/admin/view-coupons') }}">View Coupons</a></li>
+            </ul>
+        </li>
+        <!--
         <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
         <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a> </li>
         <li><a href="tables.html"><i class="icon icon-th"></i> <span>Tables</span></a></li>
@@ -51,7 +76,7 @@
             </div>
             <span class="percent">87%</span>
             <div class="stat">604.44 / 4000 MB</div>
-        </li>
+        </li> -->
     </ul>
 </div>
 <!--sidebar-menu-->

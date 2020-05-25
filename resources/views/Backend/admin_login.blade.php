@@ -43,22 +43,28 @@
             </div>
         </div>
         <div class="form-actions">
-            <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
+            <span class="pull-left"><a href="javascript:void(0);" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
             <span class="pull-right"><input type="submit" value="Login" href="index.html" class="btn btn-success" /></span>
         </div>
     </form>
-    <form id="recoverform" action="#" class="form-vertical">
+    <form id="recoverform" method="POST" action="{{ route('password.email') }}" class="form-vertical">
+        @csrf
         <p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a password.</p>
 
+        @error('email')
+        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span><br>
+        @enderror
         <div class="controls">
             <div class="main_input_box">
-                <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
+                <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text" id="emailrecover" placeholder="E-mail address" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus/>
             </div>
         </div>
 
         <div class="form-actions">
-            <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">&laquo; Back to login</a></span>
-            <span class="pull-right"><a class="btn btn-info"/>Reecover</a></span>
+            <span class="pull-left"><a href="javascript:void(0);" class="flip-link btn btn-success" id="to-login">&laquo; Back to login</a></span>
+            <span class="pull-right"><button class="btn btn-info" type="submit">{{ __('Submit') }}</button></span>
         </div>
     </form>
 </div>

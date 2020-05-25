@@ -4,7 +4,7 @@
 
 <div id="content">
         <div id="content-header">
-            <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#">Category</a> <a href="#" class="current">View Categories</a> </div>
+            <div id="breadcrumb"> <a href="{{ url('/admin/dashboard') }}" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a>Category</a> <a href="{{ url('/admin/view-categories') }}" class="current">View Categories</a> </div>
             <h1>Categories</h1>
             @if(Session::has('flash_message_error'))
                 <div class="alert alert-error alert-block">
@@ -32,8 +32,9 @@
                                 <thead>
                                 <tr>
                                     <th>Category Id</th>
+                                    <th>Category Reference</th>
                                     <th>Category Name</th>
-                                    <th>Category URL</th>
+                                    <th>Show Home page</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -41,10 +42,11 @@
                                 @foreach ($categories as $category)
                                 <tr class="gradeX">
                                     <td>{{ $category->id }}</td>
+                                    <td>{{ $category->reference }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{ $category->url }}</td>
+                                    <td>{{ $category->stato }}</td>
                                     <td class="center">
-                                        <a href="{{ url("/admin/edit-category/$category->id") }}" class="btn btn-primary btn-mini">Edit</a> <a href="{{ url("/admin/delete-category/$category->id") }}" id="delCat" class="btn btn-danger btn-mini">Delete</a>
+                                        <a href="{{ url("/admin/edit-category/$category->id") }}" class="btn btn-primary btn-mini">Edit</a> <a rel="{{$category->id}}" rel1="delete-category" href="javascript:" class="btn btn-danger btn-mini deleteRecord">Delete</a>
                                     </td>
                                 </tr>
                                     @endforeach
@@ -56,5 +58,6 @@
             </div>
         </div>
     </div>
+
 
 @endsection
