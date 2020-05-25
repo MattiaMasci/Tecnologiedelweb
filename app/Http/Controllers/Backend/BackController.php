@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Gruppo;
 use App\Http\Controllers\Controller;
+use App\Userhasgruppo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -18,7 +20,10 @@ class BackController extends Controller
         else {
             return redirect('/admin')->with('flash_message_error', 'Please login to access');
         }
-        return view('Backend.dashboard');
+
+        $bodyclass = '';
+
+        return view('Backend.dashboard')->with(compact('bodyclass'));
     }
 
     public function logout(){
@@ -33,7 +38,8 @@ class BackController extends Controller
         else {
             return redirect('/admin')->with('flash_message_error', 'Please login to access');
         }
-        return view('Backend.settings');
+        $bodyclass = '';
+        return view('Backend.settings')->with(compact('bodyclass'));
     }
 
     public function updPassword(Request $request){
@@ -66,7 +72,9 @@ class BackController extends Controller
         }
         $data = $request->all();
         $current_password = $data['current_pwd'];
-        $check_password = User::where(['admin' =>'1'])->first();
+        $gruppo = Gruppo::where('nome', 'Admin')->first();
+        $userhasgruppo = Userhasgruppo::where('gruppo_id', $gruppo->id)->first();
+        $check_password = User::find($userhasgruppo->users_id);
         if (Hash::check($current_password, $check_password->password)){
             echo "true";
             die;
@@ -79,14 +87,28 @@ class BackController extends Controller
     public function login(Request $request){
         if ($request->isMethod('post')){
             $data = $request->input();
-            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'], 'admin' => '1'])) {
-                Session::put('adminSession', $data['email']);
-                return redirect('/admin/dashboard');
-            }
-                else {
-                    return redirect('/admin')->with('flash_message_error', 'Invalid Email or Password');
+            //echo "<pre>"; print_r($data); die;
+
+            if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                $user = User::where('email', $data['email'])->first();
+                $admin = Gruppo::where('nome', 'Admin')->first();
+                $userhasgruppo = Userhasgruppo::where('users_id', $user->id)->where('gruppo_id', $admin->id)->get();
+                $count = count($userhasgruppo);
+                if ($count == 1) {
+                    Session::put('adminSession', $data['email']);
+                    return redirect('/admin/dashboard');
+                } else {
+                    return redirect('/admin')->with('flash_message_error', 'You haven\'t Admin Privileges!');
                 }
+            } else {
+                return redirect('/admin')->with('flash_message_error', 'Invalid Email or Password');
+            }
         }
-        return view('Backend.admin_login');
+        if (Session::has('adminSession')){
+            return redirect()->back();
+        }
+        else {
+            return view('Backend.admin_login');
+        }
     }
 }

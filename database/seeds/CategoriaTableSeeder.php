@@ -11,86 +11,101 @@ class CategoriaTableSeeder extends Seeder {
 
         DB::table('categoria')->insert([
             [
-                'name' => 'T-shirt&Polo',
-                'url' => 'T-shirt&Polo',
+                'reference' => 't-shirt&polo',
+                'name' => 'T-shirt & Polo',
+                'stato' => '1',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'camicie',
                 'name' => 'Camicie',
-                'url' => 'T-shirt&Polo',
+                'stato' => '1',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'giacche',
                 'name' => 'Giacche',
-                'url' => 'T-shirt&Polo',
+                'stato' => '1',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'pantaloni',
                 'name' => 'Pantaloni',
-                'url' => 'T-shirt&Polo',
+                'stato' => '1',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Maglieria&Felpe',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'maglieria&felpe',
+                'name' => 'Maglieria & Felpe',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'jeans',
                 'name' => 'Jeans',
-                'url' => 'T-shirt&Polo',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Completi&Cravatte',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'completi&cravatte',
+                'name' => 'Completi & Cravatte',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Sport',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'sport',
+                'name' => 'Abbigliamento Sportivo',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Tutto',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'tutto',
+                'name' => '... Tutti gli Articoli',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'vestiti',
                 'name' => 'Vestiti',
-                'url' => 'T-shirt&Polo',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'T-shirt&Top',
-                'url' => 'T-shirt&Polo',
+                'reference' => 't-shirt&top',
+                'name' => 'T-shirt & Top',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'gonne',
                 'name' => 'Gonne',
-                'url' => 'T-shirt&Polo',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Premium',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'premium',
+                'name' => 'Abbigliamento Premium',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Pullover&Cardigan',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'pullover&cardigan',
+                'name' => 'Pullover & Cardigan',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
-                'name' => 'Notte',
-                'url' => 'T-shirt&Polo',
+                'reference' => 'notte',
+                'name' => 'Per la Notte',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
             ],
             [
+                'reference' => 'cardigan',
                 'name' => 'Cardigan',
-                'url' => 'T-shirt&Polo',
+                'stato' => '0',
                 'description' => 'T-shirt&Polo'
-            ],
-
+            ]
         ]);
     }
 

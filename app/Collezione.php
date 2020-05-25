@@ -10,5 +10,7 @@ class Collezione extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['nome', 'foto', 'stato', 'reference'];
+
     public $timestamps = false;
 }

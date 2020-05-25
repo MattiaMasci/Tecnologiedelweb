@@ -16,7 +16,7 @@ class GruppoTableSeeder extends Seeder
                 'nome' => 'Admin'
             ],
             [
-            'nome' => 'User'
+                'nome' => 'User'
             ],
         ]);
     }

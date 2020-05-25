@@ -15,6 +15,7 @@ class CreateTagliaTable extends Migration
     {
         Schema::create('taglia', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->tinyInteger('adulto');
             $table->string('numero', 5);
         });
     }

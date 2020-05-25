@@ -10,5 +10,7 @@ class Carrello extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['quantita'];
+
     public $timestamps = false;
 }

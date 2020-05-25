@@ -19,7 +19,7 @@ class CreateModelloTable extends Migration
             $table->text('descrizione');
             $table->text('descrizione1');
             $table->date('datauscita');
-            $table->integer('sconto');
+            $table->float('mediavoto')->nullable();
             $table->unsignedBigInteger('collezione_id');
             $table->foreign('collezione_id')->references('id')->on('collezione');
             $table->unsignedBigInteger('categoria_id');

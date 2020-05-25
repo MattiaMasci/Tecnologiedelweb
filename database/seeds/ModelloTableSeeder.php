@@ -16,8 +16,8 @@ class ModelloTableSeeder extends Seeder {
                 'marca_id' => '1',
                 'stile_id' => '3',
                 'nome' => 'Air max 360',
+                'mediavoto' => '3',
                 'datauscita' => '2019-12-21',
-                'sconto' => '0',
                 'descrizione' => 'Scarpe da ginnastica comode e belle.',
                 'descrizione1' => 'Scarpe da ginnastica comode e belle.'
             ],
@@ -27,8 +27,8 @@ class ModelloTableSeeder extends Seeder {
                 'marca_id' => '2',
                 'stile_id' => '1',
                 'nome' => 'Polo',
+                'mediavoto' => '0',
                 'datauscita' => '2019-12-13',
-                'sconto' => '10',
                 'descrizione' => 'T-shirt sempre alla moda.',
                 'descrizione1' => 'T-shirt sempre alla moda.'
             ],
@@ -38,8 +38,8 @@ class ModelloTableSeeder extends Seeder {
                 'marca_id' => '3',
                 'stile_id' => '1',
                 'nome' => 'Jeans j-360',
+                'mediavoto' => '0',
                 'datauscita' => '2019-12-02',
-                'sconto' => '20',
                 'descrizione' => 'Jeans strappati per tutte le evenienze.',
                 'descrizione1' => 'Jeans strappati per tutte le evenienze.'
             ],
@@ -49,8 +49,8 @@ class ModelloTableSeeder extends Seeder {
                 'marca_id' => '4',
                 'stile_id' => '3',
                 'nome' => 'Yeezy boost',
+                'mediavoto' => '0',
                 'datauscita' => '2019-12-24',
-                'sconto' => '0',
                 'descrizione' => 'Scarpe da ginnastica griffate.',
                 'descrizione1' => 'Scarpe da ginnastica griffate.'
             ],
@@ -60,8 +60,8 @@ class ModelloTableSeeder extends Seeder {
                 'marca_id' => '5',
                 'stile_id' => '1',
                 'nome' => 'T-shirt 8080',
+                'mediavoto' => '5',
                 'datauscita' => '2019-12-22',
-                'sconto' => '0',
                 'descrizione' => 'T-shirt Woolrich con logo.',
                 'descrizione1' => 'T-shirt Woolrich con logo.'
             ],

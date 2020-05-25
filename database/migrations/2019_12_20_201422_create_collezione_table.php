@@ -16,6 +16,9 @@ class CreateCollezioneTable extends Migration
         Schema::create('collezione', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome', 20);
+            $table->string('reference', 20);
+            $table->tinyInteger('stato');
+            $table->binary('foto')->nullable();
         });
     }
 

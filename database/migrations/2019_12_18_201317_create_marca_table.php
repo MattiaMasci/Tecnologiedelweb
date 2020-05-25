@@ -16,6 +16,11 @@ class CreateMarcaTable extends Migration
         Schema::create('marca', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nome', 20);
+            $table->string('reference', 20);
+            $table->tinyInteger('top');
+            $table->string('sesso')->nullable();
+            $table->tinyInteger('stato');
+            $table->binary('foto')->nullable();
         });
     }
 

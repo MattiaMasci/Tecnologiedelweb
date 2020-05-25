@@ -16,6 +16,7 @@ class CreateGenereTable extends Migration
         Schema::create('genere', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('tipo');
+            $table->string('reference');
         });
     }
 

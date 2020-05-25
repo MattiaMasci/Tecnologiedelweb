@@ -15,11 +15,12 @@ class CreateCategoriaTable extends Migration
     {
         Schema::create('categoria', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string( 'reference' );
             $table->string( 'name' );
-            $table->string( 'url' );
-            $table->integer( 'parent_id' )->default(0);
+            //$table->integer( 'parent_id' )->default(0);
             $table->text( 'description' );
-            $table->tinyInteger( 'status' )->default(1);
+            $table->tinyInteger('stato');
+            //$table->tinyInteger( 'status' )->default(1);
             $table->rememberToken();
             $table->timestamps();
             /* $table->unsignedBigInteger('macrocategoria_id');

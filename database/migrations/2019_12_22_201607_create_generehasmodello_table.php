@@ -16,6 +16,7 @@ class CreateGenerehasmodelloTable extends Migration
         Schema::create('generehasmodello', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->float('prezzo');
+            $table->integer('sconto');
             $table->unsignedBigInteger('genere_id');
             $table->foreign('genere_id')->references('id')->on('genere');
             $table->unsignedBigInteger('modello_id');

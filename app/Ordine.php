@@ -10,5 +10,5 @@ class Ordine extends Model
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
+    public $timestamps = true;
 }

@@ -13,7 +13,7 @@
 
 Auth::routes();
 
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 //BACKEND
 
@@ -26,4 +26,8 @@ Route::post('store-image/insert-altre', 'StoreImageController@insert_altre');
 Route::get('store-image/fetch-image/{id}', 'StoreImageController@fetch_image');
 
 Route::get('store-image/fetch-altre/{id}', 'StoreImageController@fetch_altre');
+
+Route::get('store-image/fetch-collection-image/{id}', 'StoreImageController@fetch_collection_image');
+
+Route::get('store-image/fetch-brand-image/{id}', 'StoreImageController@fetch_brand_image');
 

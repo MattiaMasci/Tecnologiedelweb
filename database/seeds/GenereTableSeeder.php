@@ -11,16 +11,20 @@ class GenereTableSeeder extends Seeder {
 
         DB::table('genere')->insert([
             [
-                'tipo' => 'Uomo'
+                'tipo' => 'Uomo',
+                'reference' => 'uomo'
             ],
             [
-                'tipo' => 'Donna'
+                'tipo' => 'Donna',
+                'reference' => 'donna'
             ],
             [
-                'tipo' => 'Bambino'
+                'tipo' => 'Bambino',
+                'reference' => 'bambino'
             ],
             [
-                'tipo' => 'Bambina'
+                'tipo' => 'Bambina',
+                'reference' => 'bambina'
             ],
         ]);
     }

@@ -11,19 +11,44 @@ class MarcaTableSeeder extends Seeder {
 
         DB::table('marca')->insert([
             [
-                'nome' => 'Nike'
+                'nome' => 'Nike',
+                'reference' => 'nike',
+                'top' => '1',
+                'stato' => '1',
+                'sesso' => 'Uomo',
+                'foto' => ''
             ],
             [
-                'nome' => 'Ralph Loren'
+                'nome' => 'Ralph Loren',
+                'reference' => 'ralph loren',
+                'top' => '0',
+                'stato' => '1',
+                'sesso' => 'Uomo',
+                'foto' => ''
             ],
             [
-                'nome' => 'Denim'
+                'nome' => 'Denim',
+                'reference' => 'denim',
+                'top' => '0',
+                'stato' => '1',
+                'sesso' => 'Uomo',
+                'foto' => ''
             ],
             [
-                'nome' => 'Adidas'
+                'nome' => 'Adidas',
+                'reference' => 'adidas',
+                'top' => '0',
+                'stato' => '1',
+                'sesso' => 'Uomo',
+                'foto' => ''
             ],
             [
-                'nome' => 'Woolrich'
+                'nome' => 'Woolrich',
+                'reference' => 'woolrich',
+                'top' => '0',
+                'stato' => '1',
+                'sesso' => 'Uomo',
+                'foto' => ''
             ],
         ]);
     }

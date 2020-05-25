@@ -19,6 +19,8 @@ class CreatePreferitoTable extends Migration
             $table->foreign('users_id')->references('id')->on('users');
             $table->unsignedBigInteger('modello_id');
             $table->foreign('modello_id')->references('id')->on('modello');
+            $table->unsignedBigInteger('genere_id');
+            $table->foreign('genere_id')->references('id')->on('genere');
         });
     }
 

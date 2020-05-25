@@ -11,17 +11,23 @@ class CollezioneTableSeeder extends Seeder {
 
         DB::table('collezione')->insert([
             [
-                'nome' => 'Jeans Collection'
+                'nome' => 'Nessuna Collezione',
+                'reference' => 'NessunaCollezione',
+                'stato' => '0',
+                'foto' => ''
             ],
             [
-                'nome' => 'Men Collection'
+                'nome' => 'Collezione Uomo',
+                'reference' => 'CollezioneUomo',
+                'stato' => '1',
+                'foto' => ''
             ],
             [
-                'nome' => 'Shoes Collection'
-            ],
-            [
-                'nome' => 'Exclusive Collection'
-            ],
+                'nome' => 'Collezione Donna',
+                'reference' => 'CollezioneDonna',
+                'stato' => '1',
+                'foto' => ''
+            ]
         ]);
     }
 

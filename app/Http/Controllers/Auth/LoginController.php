@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class LoginController extends Controller
 {
@@ -39,6 +42,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function redirectTo()
+    {
+        if (Session::has('call')) {
+            Session::put('url.intended', '/wishlist');
+            session()->forget('call');
+            return Redirect::to('/wishlist');
+        }
+        Session::put('url.intended', URL::previous());
+        return Redirect::to(Session::get('url.intended'));
+    }
+
     public function check ()
     {
         if (Auth::check()) {
@@ -48,6 +62,8 @@ class LoginController extends Controller
 
     public function logout()
     {
+        $session = Session::get('adminSession');
+        if (!empty($session)) Session::pull('adminSession');
         Auth::logout();
         return redirect('/home');
     }

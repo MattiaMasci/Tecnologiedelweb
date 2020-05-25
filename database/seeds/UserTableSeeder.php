@@ -21,32 +21,28 @@ class UserTableSeeder extends Seeder
                 'cognome' => 'Masci',
                 'username' => 'mattiamasc',
                 'password' => Hash::make('mattiamas'),
-                'email' => 'mascimattia@gmail.com',
-                'admin' => '0'
+                'email' => 'mascimattia@gmail.com'
             ],
             [
                 'name' => 'Paolo',
                 'cognome' => 'Maldini',
                 'username' => 'paolomald',
                 'password' => Hash::make('paolomal'),
-                'email' => 'maldinipaolo@gmail.com',
-                'admin' => '1'
+                'email' => 'maldinipaolo@gmail.com'
             ],
             [
                 'name' => 'Davide',
                 'cognome' => 'Barbagrigia',
                 'username' => 'dabarba',
                 'password' => Hash::make('davideba'),
-                'email' => 'babagrigiadavide@gmail.com',
-                'admin' => '0'
+                'email' => 'babagrigiadavide@gmail.com'
             ],
             [
                 'name' => 'Giovanni',
                 'cognome' => 'Spaziani',
                 'username' => 'giospa',
                 'password' => Hash::make('giovaspa'),
-                'email' => 'giovanni.spaziani@gmail.com',
-                'admin' => '0'
+                'email' => 'giovanni.spaziani@gmail.com'
             ],
         ]);
     }

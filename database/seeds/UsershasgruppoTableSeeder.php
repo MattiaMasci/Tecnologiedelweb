@@ -12,10 +12,6 @@ class UsershasgruppoTableSeeder extends Seeder {
         DB::table('usershasgruppo')->insert([
             [
                 'users_id' => '1',
-                'gruppo_id' => '1'
-            ],
-            [
-                'users_id' => '1',
                 'gruppo_id' => '2'
             ],
             [
@@ -28,12 +24,12 @@ class UsershasgruppoTableSeeder extends Seeder {
             ],
             [
                 'users_id' => '3',
-                'gruppo_id' => '1'
-            ],
-            [
-                'users_id' => '3',
                 'gruppo_id' => '2'
             ],
+            [
+                'users_id' => '4',
+                'gruppo_id' => '2'
+            ]
         ]);
     }
 

@@ -14,17 +14,44 @@ class ColoreTableSeeder extends Seeder {
                 'nome' => 'Multicolor'
             ],
             [
-                'nome' => 'Blu'
+                'nome' => 'Blue'
             ],
             [
-                'nome' => 'Giallo'
+                'nome' => 'Yellow'
             ],
             [
-                'nome' => 'Verde'
+                'nome' => 'Green'
             ],
             [
-                'nome' => 'Rosso'
+                'nome' => 'Red'
             ],
+            [
+                'nome' => 'Pink'
+            ],
+            [
+                'nome' => 'Purple'
+            ],
+            [
+                'nome' => 'Orange'
+            ],
+            [
+                'nome' => 'Gray'
+            ],
+            [
+                'nome' => 'Black'
+            ],
+            [
+                'nome' => 'White'
+            ],
+            [
+                'nome' => 'Cyan'
+            ],
+            [
+                'nome' => 'Olive'
+            ],
+            [
+                'nome' => 'Orchid'
+            ]
         ]);
     }
 

@@ -10,5 +10,7 @@ class Marca extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['nome', 'foto', 'top', 'stato', 'reference'];
+
     public $timestamps = false;
 }

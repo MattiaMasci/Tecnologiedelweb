@@ -13,42 +13,50 @@ class GenerehasmodelloTableSeeder extends Seeder {
             [
                 'genere_id' => '1',
                 'modello_id' => '2',
-                'prezzo' => '13.99'
+                'prezzo' => '13.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '2',
                 'modello_id' => '2',
-                'prezzo' => '21.99'
+                'prezzo' => '21.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '3',
                 'modello_id' => '2',
-                'prezzo' => '26.99'
+                'prezzo' => '26.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '4',
                 'modello_id' => '2',
-                'prezzo' => '35.99'
+                'prezzo' => '35.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '1',
                 'modello_id' => '5',
-                'prezzo' => '13.99'
+                'prezzo' => '13.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '2',
                 'modello_id' => '5',
-                'prezzo' => '21.99'
+                'prezzo' => '21.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '3',
                 'modello_id' => '5',
-                'prezzo' => '26.99'
+                'prezzo' => '26.99',
+                'sconto' => '0',
             ],
             [
                 'genere_id' => '4',
                 'modello_id' => '5',
-                'prezzo' => '35.99'
+                'prezzo' => '35.99',
+                'sconto' => '0',
             ],
         ]);
     }
