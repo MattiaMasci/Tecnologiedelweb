@@ -8,7 +8,7 @@
     <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>Pagina Checkout</h2>
+        <h2>Checkout</h2>
         <ol class="breadcrumb">
           <li><a href="{{url('home')}}">Home</a></li>
           <li class="active">Checkout</li>
@@ -190,23 +190,23 @@
                             <div class="col-md-12">
                               <div class="aa-checkout-single-bill">
                                 <select id="nazionespedizione" name="nazionespedizione">
-                                  <option value="0">Seleziona il tuo paese</option>
-                                  <option value="1">Australia</option>
-                                  <option value="2">Afganistan</option>
-                                  <option value="3">Bangladesh</option>
-                                  <option value="4">Belgio</option>
-                                  <option value="5">Brasile</option>
-                                  <option value="6">Canada</option>
-                                  <option value="7">Cina</option>
-                                  <option value="8">Danimarca</option>
-                                  <option value="9">Egitto</option>
-                                  <option value="14">Emirati Arabi Uniti</option>
-                                  <option value="10">India</option>
-                                  <option value="11">Iran</option>
-                                  <option value="12">Israele</option>
-                                  <option value="13">Messico</option>
-                                  <option value="15">Regno Unito</option>
-                                  <option value="16">Stati Uniti</option>
+                                    <option value="0">Seleziona il tuo paese</option>
+                                    <option value="AUS">Australia</option>
+                                    <option value="AF">Afganistan</option>
+                                    <option value="BGD">Bangladesh</option>
+                                    <option value="BE">Belgio</option>
+                                    <option value="BR">Brasile</option>
+                                    <option value="CAN">Canada</option>
+                                    <option value="CN">Cina</option>
+                                    <option value="DK">Danimarca</option>
+                                    <option value="EG">Egitto</option>
+                                    <option value="EAU">Emirati Arabi Uniti</option>
+                                    <option value="IND">India</option>
+                                    <option value="IRN">Iran</option>
+                                    <option value="IL">Israele</option>
+                                    <option value="MX">Messico</option>
+                                    <option value="UK">Regno Unito</option>
+                                    <option value="USA">Stati Uniti</option>
                                 </select>
                               </div>
                             </div>
@@ -266,8 +266,8 @@
                         </tr>
                          <tr>
                           <th>Totale</th>
-                             <input type="hidden" name="totale" value="{{$totale}}">
-                          <td>${{$totale}}</td>
+                             <input type="hidden" name="totale" value="{{$totale1}}">
+                          <td>${{$totale1}}</td>
                         </tr>
                       </tfoot>
                     </table>

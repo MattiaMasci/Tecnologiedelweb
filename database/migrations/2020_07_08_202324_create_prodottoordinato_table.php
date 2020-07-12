@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResoTable extends Migration
+class CreateProdottoordinatoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateResoTable extends Migration
      */
     public function up()
     {
-        Schema::create('reso', function (Blueprint $table) {
+        Schema::create('prodottoordinato', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('users_id');
+            $table->string('nome');
             $table->integer('modello_id');
+            $table->unsignedBigInteger('ordine_id');
+            $table->foreign('ordine_id')->references('id')->on('ordine');
             $table->integer('taglia_id');
             $table->integer('colore_id');
             $table->integer('quantita');
-            $table->date('datarichiesta');
-            $table->date('dataaccettazione');
-            $table->date('dataspedizione');
-            $table->date('dataarrivo');
+            $table->float('prezzo');
         });
     }
 
@@ -34,6 +33,6 @@ class CreateResoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reso');
+        Schema::dropIfExists('prodottoordinato');
     }
 }

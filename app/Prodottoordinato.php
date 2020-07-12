@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Quantita extends Model
+class Prodottoordinato extends Model
 {
-    protected $table = 'quantita';
+    protected $table = 'prodottoordinato';
 
     protected $primaryKey = 'id';
-
-    protected $fillable = ['quantita'];
 
     public $timestamps = false;
 }

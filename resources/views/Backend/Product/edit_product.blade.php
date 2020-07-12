@@ -112,15 +112,9 @@
                                     </div>
                                 </div>
                                 <div class="control-group">
-                                    <label class="control-label">Brief Description</label>
-                                    <div class="controls">
-                                        <textarea name="brief_description" id="brief_description">{{ $productDetails->descrizione }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="control-group">
                                     <label class="control-label">Description</label>
                                     <div class="controls">
-                                        <textarea name="description" id="description">{{ $productDetails->descrizione1 }}</textarea>
+                                        <textarea name="description" id="description">{{ $productDetails->descrizione }}</textarea>
                                     </div>
                                 </div>
                                 <div class="control-group">

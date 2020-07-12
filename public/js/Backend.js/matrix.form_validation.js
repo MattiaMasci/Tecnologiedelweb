@@ -123,9 +123,6 @@ $(document).ready(function(){
             product_name:{
                 required:true
             },
-            brief_description:{
-                required:true
-            },
             description:{
                 required:true
             },
@@ -166,9 +163,6 @@ $(document).ready(function(){
                 required:true
             },
             product_name:{
-                required:true
-            },
-            brief_description:{
                 required:true
             },
             description:{

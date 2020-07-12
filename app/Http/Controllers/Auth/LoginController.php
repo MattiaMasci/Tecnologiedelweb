@@ -44,10 +44,18 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-        if (Session::has('call')) {
+        if (Session::has('wishlistcall')) {
             Session::put('url.intended', '/wishlist');
-            session()->forget('call');
+            session()->forget('wishlistcall');
             return Redirect::to('/wishlist');
+        } else if (Session::has('accountcall')) {
+            Session::put('url.intended', '/account');
+            session()->forget('accountcall');
+            return Redirect::to('/account');
+        } else if (Session::has('ordercall')) {
+            Session::put('url.intended', '/order');
+            session()->forget('ordercall');
+            return Redirect::to('/order');
         }
         Session::put('url.intended', URL::previous());
         return Redirect::to(Session::get('url.intended'));
@@ -57,7 +65,7 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
         // The user is logged in...
-    }
+        }
     }
 
     public function logout()

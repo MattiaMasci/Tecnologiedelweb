@@ -12,6 +12,7 @@ class ProfiloTableSeeder extends Seeder {
         DB::table('profilo')->insert([
             [
                 'users_id' => '1',
+                'datanascita' => '1996/03/07',
                 'nomefatturazione' => 'Mattia',
                 'cognomefatturazione' => 'Masci',
                 'aziendafatturazione' => '',
@@ -33,6 +34,7 @@ class ProfiloTableSeeder extends Seeder {
             ],
             [
                 'users_id' => '2',
+                'datanascita' => '1996/03/07',
                 'nomefatturazione' => '',
                 'cognomefatturazione' => '',
                 'aziendafatturazione' => '',
@@ -54,6 +56,7 @@ class ProfiloTableSeeder extends Seeder {
             ],
             [
                 'users_id' => '3',
+                'datanascita' => '1996/03/07',
                 'nomefatturazione' => '',
                 'cognomefatturazione' => '',
                 'aziendafatturazione' => '',

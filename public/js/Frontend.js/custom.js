@@ -50,13 +50,35 @@ jQuery(function($){
   /*  3. PRODUCT VIEW SLIDER
   /* ----------------------------------------------------------- */
 
+    if (window.location.href.indexOf("product") > -1) {
+        jQuery('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
+            loading_image: '../img/Frontend.img/view-slider/loading.gif'
+        });
+    } else {
+        jQuery('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
+            loading_image: '../public/img/Frontend.img/view-slider/loading.gif'
+        });
+    }
+
+    if (window.location.href.indexOf("product") > -1) {
+        jQuery('#demo-1 .simpleLens-big-image').simpleLens({
+            loading_image: '../img/Frontend.img/view-slider/loading.gif'
+        });
+    } else {
+        jQuery('#demo-1 .simpleLens-big-image').simpleLens({
+            loading_image: '../public/img/Frontend.img/view-slider/loading.gif'
+        });
+    }
+
+    /*
     jQuery('#demo-1 .simpleLens-thumbnails-container img').simpleGallery({
-        loading_image: '../img/Frontend.img/view-slider/loading.gif'
+        loading_image: '../public/img/Frontend.img/view-slider/loading.gif'
     });
 
     jQuery('#demo-1 .simpleLens-big-image').simpleLens({
-        loading_image: '../img/Frontend.img/view-slider/loading.gif'
+        loading_image: '../public/img/Frontend.img/view-slider/loading.gif'
     });
+     */
 
   /* ----------------------------------------------------------- */
   /*  4. POPULAR PRODUCT SLIDER (SLICK SLIDER)

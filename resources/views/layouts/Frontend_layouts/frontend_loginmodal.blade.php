@@ -34,7 +34,7 @@
 
 
 
-                    <p class="aa-lost-password"><a href="{{url('reset-password')}}">
+                    <p class="aa-lost-password"><a href="{{url('request-password')}}">
                             {{ __('Hai dimenticato la password?') }}
                         </a></p>
 

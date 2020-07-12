@@ -15,6 +15,7 @@ class CreateProfiloTable extends Migration
     {
         Schema::create('profilo', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->date('datanascita')->nullable();
             $table->string('nomefatturazione', 40)->nullable();
             $table->string('cognomefatturazione', 40)->nullable();
             $table->string('aziendafatturazione', 40)->nullable();

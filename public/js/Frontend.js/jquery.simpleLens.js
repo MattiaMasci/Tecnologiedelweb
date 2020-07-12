@@ -231,9 +231,11 @@
 
 
     $(document).on("click", "#aprimodale", function () {
+
         $("#quantity").empty();
         var idphoto = $(this).data('id').idphoto;
         var id = $(this).data('id').id;
+        var idmodello = $(this).data('id').idmodello;
         var categoria = $(this).data('id').categoria;
         var genere = $(this).data('id').genere;
         var nome = $(this).data('id').nome;
@@ -250,17 +252,7 @@
         var stock = $(this).data('id').stock;
         var colore_select = '';
         var size_select = '';
-        $.ajax({
-            type:'get',
-            async: false,
-            url:'/ProgettoTdWpersonale/public/colorselect',
-            data: {idphoto : idphoto, genere : genere},
-            success:function(resp){
-                colore_select = resp;
-            }, error:function(){
-                alert("Error");
-            }
-        });
+
         $.ajax({
             type:'get',
             async: false,
@@ -272,17 +264,28 @@
                 alert("Error");
             }
         });
+
+        $('#size_select').html( size_select );
         if (stock == "Non in stock") {
             $('#quantity').append('<option value="">Non Disponibile</option>');
         }
         else {
-            $('#quantity').append('<option value="0" selected="1">1</option>' +
-            '<option value="1">2</option>' +
-            '<option value="2">3</option>' +
-            '<option value="3">4</option>' +
-            '<option value="4">5</option>' +
-            '<option value="5">6</option>');
+            var taglia = $('#size_select').val();
+            $.ajax({
+                type: 'get',
+                url: '/ProgettoTdWpersonale/public/get-quantita',
+                data: {taglia: taglia, id : idmodello},
+                success: function (resp) {
+                    $('#quantity').append(resp);
+                }, error: function () {
+                    alert("Error");
+                }
+            });
         }
+
+        $('#size_select').attr('data-id' , idmodello);
+        $('#addCart').attr('data-id' , idphoto);
+
         $('#normale1').attr('src', id );
         $('#slider1').attr('data-lens-image', slider1 );
         $('#thumbnail1').attr('src', thumbnail1 );
@@ -291,28 +294,60 @@
         $('#foto1').attr('data-lens-image', slider1 ).attr('data-big-image', id );
         $('#foto2').attr('data-lens-image', slider2 ).attr('data-big-image', normal2 );
         $('#foto3').attr('data-lens-image', slider3 ).attr('data-big-image', normal3 );
+
+        $.ajax({
+            type:'get',
+            async: false,
+            url:'/ProgettoTdWpersonale/public/colorselect',
+            data: {idphoto : idphoto, genere : genere},
+            success:function(resp){
+                colore_select = resp;
+            }, error:function(){
+                alert("Error");
+            }
+        });
+
         $('#prezzo').html( "<span class=\"aa-product-view-price\">$"+prezzo+"</span>" +
             "<p class=\"aa-product-avilability\">Disponibilità: <span>"+stock+"</span></p>" );
         $('#descrizione').html( descrizione );
-        $('#size_select').html( size_select );
         $('#colore_select').html( colore_select );
+        $('#colore_select').attr('data-id' , idmodello);
         $('#categoria').html( categoria );
         $('#nome').html( nome );
+
+        var link = "";
+        if (window.location.href.indexOf("home") > -1) link = "../public/product-details/" + genere + "&&" + idphoto + "";
+        else link = "../product-details/" + genere + "&&" + idphoto + "";
+
+        $('#show_details').attr('href' , link);
     });
 
+    //Alert profilo e stock per product-details
     $( document ).ready(function() {
-        var stock = $('#stockparagraph').text();
+        if (window.location.href.indexOf("product-details") > -1) {
+            var stock = $('#stockparagraph').text();
 
-        if (stock == "Disponibilità: Non in stock") {
-            $('#prod-quantity').append('<option value="">Non Disponibile</option>');
-        }
-        else {
-            $('#prod-quantity').append('<option value="0" selected="1">1</option>' +
-                '<option value="1">2</option>' +
-                '<option value="2">3</option>' +
-                '<option value="3">4</option>' +
-                '<option value="4">5</option>' +
-                '<option value="5">6</option>');
+            if (stock == "Disponibilità: Non in stock") {
+                $('#prod-quantity').append('<option value="">Non Disponibile</option>');
+            }
+            else {
+                var taglia = $('#tagliaSelected').val();
+                var id = $('#prod-quantity').data('id').id;
+                $.ajax({
+                    type: 'get',
+                    url: '/ProgettoTdWpersonale/public/get-quantita',
+                    data: {taglia: taglia, id : id},
+                    success: function (resp) {
+                        $('#prod-quantity').append(resp);
+                    }, error: function () {
+                        alert("Error");
+                    }
+                });
+            }
+        } else if (window.location.href.indexOf("account") > -1) {
+            var val = $('#alert_dati_testo').text();
+           if (val.includes('Dati')) $('#alert_password').remove();
+            else if (val.includes('Password')) $('#alert_dati').remove();
         }
     });
 
@@ -361,7 +396,7 @@
         var marca = $('#marcavalue').val();
         $.ajax({
             type:'get',
-            url:'/ProgettoTdWpersonale/public/order',
+            url:'/ProgettoTdWpersonale/public/order-products',
             data:{valore : val, categoria : categoria, genere : genere, collezione : collezione, marca : marca},
             success:function(resp){
                 $("#prodotti").html(resp)
@@ -386,6 +421,28 @@
         $.ajax({
             type:'get',
             url:'/ProgettoTdWpersonale/public/wishlistuncall',
+            success:function(){
+            }, error:function(){
+                alert("Error");
+            }
+        });
+    });
+    //Account redirect
+    $(document).on("click", "#accountcall", function () {
+        $.ajax({
+            type:'get',
+            url:'/ProgettoTdWpersonale/public/accountcall',
+            success:function(){
+            }, error:function(){
+                alert("Error");
+            }
+        });
+    });
+    //Ordini redirect
+    $(document).on("click", "#ordercall", function () {
+        $.ajax({
+            type:'get',
+            url:'/ProgettoTdWpersonale/public/ordercall',
             success:function(){
             }, error:function(){
                 alert("Error");
@@ -530,57 +587,57 @@
                         for (var index in serveroutputobject) {
                             array.push(serveroutputobject[index]);
                         }
-                        $('#nomefatturazione').val(array[1]);
-                        $('#cognomefatturazione').val(array[2]);
-                        $('#aziendafatturazione').val(array[3]);
-                        $('#emailfatturazione').val(array[4]);
-                        $('#telefonofatturazione').val(array[5]);
-                        $('#indirizzofatturazione').html(array[6]);
+                        $('#nomefatturazione').val(array[2]);
+                        $('#cognomefatturazione').val(array[3]);
+                        $('#aziendafatturazione').val(array[4]);
+                        $('#emailfatturazione').val(array[5]);
+                        $('#telefonofatturazione').val(array[6]);
+                        $('#indirizzofatturazione').html(array[7]);
                         var select = document.getElementById("nazionefatturazione");
-                        if (array[7] == 'USA') select.options[16].selected = true;
-                        else if (array[7] == 'AUS') select.options[1].selected = true;
-                        else if (array[7] == 'AF') select.options[2].selected = true;
-                        else if (array[7] == 'BGD') select.options[3].selected = true;
-                        else if (array[7] == 'BE') select.options[4].selected = true;
-                        else if (array[7] == 'BR') select.options[5].selected = true;
-                        else if (array[7] == 'CAN') select.options[6].selected = true;
-                        else if (array[7] == 'CN') select.options[7].selected = true;
-                        else if (array[7] == 'DK') select.options[8].selected = true;
-                        else if (array[7] == 'EG') select.options[9].selected = true;
-                        else if (array[7] == 'EAU') select.options[10].selected = true;
-                        else if (array[7] == 'IND') select.options[11].selected = true;
-                        else if (array[7] == 'IRN') select.options[12].selected = true;
-                        else if (array[7] == 'IL') select.options[13].selected = true;
-                        else if (array[7] == 'MX') select.options[14].selected = true;
-                        else if (array[7] == 'UK') select.options[15].selected = true;
-                        $('#abitazionefatturazione').val(array[8]);
-                        $('#cittafatturazione').val(array[9]);
+                        if (array[8] == 'USA') select.options[16].selected = true;
+                        else if (array[8] == 'AUS') select.options[1].selected = true;
+                        else if (array[8] == 'AF') select.options[2].selected = true;
+                        else if (array[8] == 'BGD') select.options[3].selected = true;
+                        else if (array[8] == 'BE') select.options[4].selected = true;
+                        else if (array[8] == 'BR') select.options[5].selected = true;
+                        else if (array[8] == 'CAN') select.options[6].selected = true;
+                        else if (array[8] == 'CN') select.options[7].selected = true;
+                        else if (array[8] == 'DK') select.options[8].selected = true;
+                        else if (array[8] == 'EG') select.options[9].selected = true;
+                        else if (array[8] == 'EAU') select.options[10].selected = true;
+                        else if (array[8] == 'IND') select.options[11].selected = true;
+                        else if (array[8] == 'IRN') select.options[12].selected = true;
+                        else if (array[8] == 'IL') select.options[13].selected = true;
+                        else if (array[8] == 'MX') select.options[14].selected = true;
+                        else if (array[8] == 'UK') select.options[15].selected = true;
+                        $('#abitazionefatturazione').val(array[9]);
+                        $('#cittafatturazione').val(array[10]);
 
-                        $('#nomespedizione').val(array[10]);
-                        $('#cognomespedizione').val(array[11]);
-                        $('#aziendaspedizione').val(array[12]);
-                        $('#emailspedizione').val(array[13]);
-                        $('#telefonospedizione').val(array[14]);
-                        $('#indirizzospedizione').html(array[15]);
+                        $('#nomespedizione').val(array[11]);
+                        $('#cognomespedizione').val(array[12]);
+                        $('#aziendaspedizione').val(array[13]);
+                        $('#emailspedizione').val(array[14]);
+                        $('#telefonospedizione').val(array[15]);
+                        $('#indirizzospedizione').html(array[16]);
                         var select = document.getElementById("nazionespedizione");
-                        if (array[16] == 'USA') select.options[16].selected = true;
-                        else if (array[16] == 'AUS') select.options[1].selected = true;
-                        else if (array[16] == 'AF') select.options[2].selected = true;
-                        else if (array[16] == 'BGD') select.options[3].selected = true;
-                        else if (array[16] == 'BE') select.options[4].selected = true;
-                        else if (array[16] == 'BR') select.options[5].selected = true;
-                        else if (array[16] == 'CAN') select.options[6].selected = true;
-                        else if (array[16] == 'CN') select.options[7].selected = true;
-                        else if (array[16] == 'DK') select.options[8].selected = true;
-                        else if (array[16] == 'EG') select.options[9].selected = true;
-                        else if (array[16] == 'EAU') select.options[10].selected = true;
-                        else if (array[16] == 'IND') select.options[11].selected = true;
-                        else if (array[16] == 'IRN') select.options[12].selected = true;
-                        else if (array[16] == 'IL') select.options[13].selected = true;
-                        else if (array[16] == 'MX') select.options[14].selected = true;
-                        else if (array[16] == 'UK') select.options[15].selected = true;
-                        $('#abitazionespedizione').val(array[17]);
-                        $('#cittaspedizione').val(array[18]);
+                        if (array[17] == 'USA') select.options[16].selected = true;
+                        else if (array[17] == 'AUS') select.options[1].selected = true;
+                        else if (array[17] == 'AF') select.options[2].selected = true;
+                        else if (array[17] == 'BGD') select.options[3].selected = true;
+                        else if (array[17] == 'BE') select.options[4].selected = true;
+                        else if (array[17] == 'BR') select.options[5].selected = true;
+                        else if (array[17] == 'CAN') select.options[6].selected = true;
+                        else if (array[17] == 'CN') select.options[7].selected = true;
+                        else if (array[17] == 'DK') select.options[8].selected = true;
+                        else if (array[17] == 'EG') select.options[9].selected = true;
+                        else if (array[17] == 'EAU') select.options[10].selected = true;
+                        else if (array[17] == 'IND') select.options[11].selected = true;
+                        else if (array[17] == 'IRN') select.options[12].selected = true;
+                        else if (array[17] == 'IL') select.options[13].selected = true;
+                        else if (array[17] == 'MX') select.options[14].selected = true;
+                        else if (array[17] == 'UK') select.options[15].selected = true;
+                        $('#abitazionespedizione').val(array[18]);
+                        $('#cittaspedizione').val(array[19]);
                     }
                 }, error:function(){
                     alert("Error");
@@ -610,125 +667,177 @@
         var cittaspedizione = $('#cittaspedizione').val();
 
         if (nomefatturazione == '') {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z ]+$/.test(nomefatturazione)) {
 
         } else {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Nome non valido</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Nome non valido</strong></font>");
             return false;
         }
         if (cognomefatturazione == '') {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z ]+$/.test(cognomefatturazione)) {
 
         } else {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Cognome non valido</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Cognome non valido</strong></font>");
             return false;
         }
         if (emailfatturazione == '') {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailfatturazione)) {
 
         } else {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Indirizzo email non valido</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Indirizzo email non valido</strong></font>");
             return false;
         }
         if (telefonofatturazione == '') {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test(telefonofatturazione)) {
 
         } else {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Numero di telefono non valido</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Numero di telefono non valido</strong></font>");
             return false;
         }
         if (indirizzofatturazione == '') {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z0-9\s,'-]*$/.test(indirizzofatturazione)) {
 
         } else {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Indirizzo non valido</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Indirizzo non valido</strong></font>");
             return false;
         }
         if (cittafatturazione == '') {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z ]+$/.test(cittafatturazione)) {
 
         } else {
-            $('#fatturazione').append('<font color=#000000><strong>&nbsp;&nbsp;**Città non valida</strong></font>');
+            $('#fatturazione').append("<font color='red'><strong>&nbsp;&nbsp;**Città non valida</strong></font>");
             return false;
         }
         if (nomespedizione == '') {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z ]+$/.test(nomespedizione)) {
 
         } else {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Nome non valido</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Nome non valido</strong></font>");
             return false;
         }
         if (cognomespedizione == '') {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z ]+$/.test(cognomespedizione)) {
 
         } else {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Cognome non valido</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Cognome non valido</strong></font>");
             return false;
         }
         if (emailspedizione == '') {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailspedizione)) {
 
         } else {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Indirizzo email non valido</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Indirizzo email non valido</strong></font>");
             return false;
         }
         if (telefonospedizione == '') {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test(telefonospedizione)) {
 
         } else {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Numero di telefono non valido</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Numero di telefono non valido</strong></font>");
             return false;
         }
         if (indirizzospedizione == '') {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z0-9\s,'-]*$/.test(indirizzospedizione)) {
 
         } else {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Indirizzo non valido</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Indirizzo non valido</strong></font>");
             return false;
         }
         if (cittaspedizione == '') {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Compila i campi obbligatori</strong></font>");
             return false;
         }
         if (/^[a-zA-Z ]+$/.test(cittaspedizione)) {
 
         } else {
-            $('#spedizione').append('<font color=#000000><strong>&nbsp;&nbsp;**Città non valida</strong></font>');
+            $('#spedizione').append("<font color='red'><strong>&nbsp;&nbsp;**Città non valida</strong></font>");
             return false;
         }
+        return true;
+    });
+
+    //Validazione dati pagina account
+    $('#data_validate').click( function () {
+        $('#info_nome').empty();
+        $('#info_cognome').empty();
+        $('#info_indirizzo').empty();
+        $('#info_citta').empty();
+        $('#info_telefono').empty();
+
+        var nome = $('#nome').val();
+        var cognome = $('#cognome').val();
+        var telefono = $('#telefono').val();
+        var indirizzo = $('#indirizzo').val();
+        var citta = $('#citta').val();
+
+        if (/^[a-zA-Z ]+$/.test(nome)) {
+
+        } else {
+            $('#info_nome').append("<font color='red'><strong>**Nome non valido</strong></font>");
+            return false;
+        }
+
+        if (/^[a-zA-Z ]+$/.test(cognome)) {
+
+        } else {
+            $('#info_cognome').append("<font color='red'><strong>**Cognome non valido</strong></font>");
+            return false;
+        }
+
+        if (/^[a-zA-Z0-9\s,'-]*$/.test(indirizzo)) {
+
+        } else {
+            $('#info_indirizzo').append("<font color='red'><strong>**Indirizzo non valido</strong></font>");
+            return false;
+        }
+
+        if (/^[a-zA-Z ]+$/.test(citta)) {
+
+        } else {
+            $('#info_citta').append("<font color='red'><strong>**Città non valida</strong></font>");
+            return false;
+        }
+
+        if (/^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test(telefono)) {
+
+        } else {
+            $('#info_telefono').append("<font color='red'><strong>**Numero di telefono non valido</strong></font>");
+            return false;
+        }
+
         return true;
     });
 
@@ -761,12 +870,141 @@
         });
     });
 
-    //Agiungi al carrello
+    //Agiungi al carrello **product-detail
     $(document).on('click', "a.aggiungicarrello", function() {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Errore',
-            text: 'Questo prodotto è già nella tua wishlist.',
+        var product = 1;
+        var quantita = $("#prod-quantity").val();
+        if (quantita == '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Errore',
+                text: 'Momentaneamente non ci sono pezzi disponibili per la tua selezione.',
+            });
+            return false;
+        }
+        var id = $(this).data('id').idphoto;
+        var taglia = $('#tagliaSelected').val();
+        var colore = $('#coloreSelected').val();
+        $.ajax({
+            type:'get',
+            async: false,
+            url:'/ProgettoTdWpersonale/public/add-cart',
+            data: {id : id, quantita : quantita, taglia : taglia, colore : colore, page : product},
+            success:function(resp){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successo',
+                    text: 'Il prodotto è stato inserito nel carrello!',
+                });
+                $('#box_carrello').html(resp);
+            }, error:function(){
+                alert("Error");
+            }
+        });
+    });
+
+    //Check conferma password
+    $(document).on('click', "#password_validate", function() {
+        var pwd = $("#new_password").val();
+        var confirm_pwd = $("#confirm_password").val();
+        if (pwd != confirm_pwd) {
+            $("#confirmPwd").html("<font color='red'><strong>**Le Password inserite non fanno match</strong></font>")
+            return false;
+        }
+    });
+
+    //Elimina lo span di avviso
+    $("#confirm_password").keyup(function(){
+        var val = $("#confirmPwd").text();
+        if (val != '') $("#confirmPwd").empty();
+    });
+    $("#new_password").keyup(function(){
+        var val = $("#confirmPwd").text();
+        if (val != '') $("#confirmPwd").empty();
+    });
+
+    //Check password
+    $("#current_password").keyup(function(){
+        var current_pwd = $("#current_password").val();
+        if (current_pwd == '') {
+            $("#chkPwd").empty();
+        } else {
+            $.ajax({
+                type:'get',
+                url:'/ProgettoTdWpersonale/public/check-pwd',
+                data:{current_pwd : current_pwd},
+                success:function(resp){
+                    if (resp == "false") {
+                        $("#chkPwd").html("<font color='red'><strong>**La Password corrente non è corretta</strong></font>")
+                    } else {
+                        if (resp == "true") {
+                            $("#chkPwd").html("<font color='green'><strong>**La Password corrente è corretta</strong></font>")
+                        }
+                    }
+                }, error:function(){
+                    alert("Error");
+                }
+            });
+        }
+    });
+
+    //Seleziona nazione in account
+    $( document ).ready(function() {
+        if (window.location.href.indexOf("account") > -1) {
+            var val = $('#nazione').val();
+            var select = document.getElementById("nazionefatturazione");
+            if (val == 'USA') select.options[16].selected = true;
+            else if (val == 'AUS') select.options[1].selected = true;
+            else if (val == 'AF') select.options[2].selected = true;
+            else if (val == 'BGD') select.options[3].selected = true;
+            else if (val == 'BE') select.options[4].selected = true;
+            else if (val == 'BR') select.options[5].selected = true;
+            else if (val == 'CAN') select.options[6].selected = true;
+            else if (val == 'CN') select.options[7].selected = true;
+            else if (val == 'DK') select.options[8].selected = true;
+            else if (val == 'EG') select.options[9].selected = true;
+            else if (val == 'EAU') select.options[10].selected = true;
+            else if (val == 'IND') select.options[11].selected = true;
+            else if (val == 'IRN') select.options[12].selected = true;
+            else if (val == 'IL') select.options[13].selected = true;
+            else if (val == 'MX') select.options[14].selected = true;
+            else if (val == 'UK') select.options[15].selected = true;
+        }
+    });
+
+    //Agiungi al carrello **product e home
+    $(document).on('click', "#addCart", function() {
+        var product = 0;
+        if (window.location.href.indexOf("product") > -1) {
+            product = 1;
+        }
+        var quantita = $("#quantity").val();
+        if (quantita == '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Errore',
+                text: 'Momentaneamente non ci sono pezzi disponibili per la tua selezione.',
+            });
+            return false;
+        }
+        var id = $(this).attr("data-id");
+        var taglia = $('#size_select').val();
+        var colore = $('#colore_select').val();
+        $.ajax({
+            type:'get',
+            async: false,
+            url:'/ProgettoTdWpersonale/public/add-cart',
+            data: {id : id, quantita : quantita, taglia : taglia, colore : colore, page : product},
+            success:function(resp){
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successo',
+                    text: 'Il prodotto è stato inserito nel carrello!',
+                });
+                $('#box_carrello').html(resp);
+            }, error:function(){
+                alert("Error");
+            }
         });
     });
 
@@ -782,5 +1020,99 @@
             return false;
         }
     });
+
+    //Seleziona taglia carrello **productDetails
+    $( "#tagliaSelected" ).change( function() {
+        var val = $(this).val();
+        var id = $(this).data('id').id;
+        $.ajax({
+            type:'get',
+            url:'/ProgettoTdWpersonale/public/taglia-selected',
+            data:{valore : val, id : id},
+            success:function(resp){
+                $("#coloreSelected").empty();
+                $('#coloreSelected').append(resp);
+            }, error:function(){
+                alert("Error");
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: '/ProgettoTdWpersonale/public/get-quantita',
+            data: {taglia: val, id : id},
+            success: function (resp) {
+                $("#prod-quantity").empty();
+                $('#prod-quantity').append(resp);
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
+    //Seleziona colore carrello **productDetails
+    $( "#coloreSelected" ).change( function() {
+        var numero_taglia = $('#tagliaSelected').val();
+        var colore = $(this).val();
+        var id = $(this).data('id').id;
+        $.ajax({
+            type: 'get',
+            url: '/ProgettoTdWpersonale/public/get-quantita',
+            data: {colore: colore, id : id, numero_taglia : numero_taglia},
+            success: function (resp) {
+                $("#prod-quantity").empty();
+                $('#prod-quantity').append(resp);
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
+    //Seleziona taglia carrello **product e home
+    $( "#size_select" ).change( function() {
+        var val = $(this).val();
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type:'get',
+            url:'/ProgettoTdWpersonale/public/taglia-selected',
+            data:{valore : val, id : id},
+            success:function(resp){
+                $("#colore_select").empty();
+                $('#colore_select').append(resp);
+            }, error:function(){
+                alert("Error");
+            }
+        });
+        $.ajax({
+            type: 'get',
+            url: '/ProgettoTdWpersonale/public/get-quantita',
+            data: {taglia: val, id : id},
+            success: function (resp) {
+                $("#quantity").empty();
+                $('#quantity').append(resp);
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
+    //Seleziona colore carrello **product e home
+    $( "#colore_select" ).change( function() {
+        var numero_taglia = $('#size_select').val();
+        var colore = $(this).val();
+        var id = $(this).attr("data-id");
+        $.ajax({
+            type: 'get',
+            url: '/ProgettoTdWpersonale/public/get-quantita',
+            data: {colore: colore, id : id, numero_taglia : numero_taglia},
+            success: function (resp) {
+                $("#quantity").empty();
+                $('#quantity').append(resp);
+            }, error: function () {
+                alert("Error");
+            }
+        });
+    });
+
+
 
 })( jQuery );

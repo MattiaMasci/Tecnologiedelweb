@@ -46,8 +46,10 @@
                                         <td>{{ $collection->stato }}</td>
                                         <td>{{ $collection->foto }}</td>
                                         <td class="center">
+                                        @if ($collection->id != 1)
                                             <a href="{{ url("/admin/edit-collection/$collection->id") }}" class="btn btn-primary btn-mini" title="Edit Collection">Edit</a>
                                             <a rel="{{$collection->id}}" rel1="delete-collection" href="javascript:" class="btn btn-danger btn-mini deleteRecord" title="Delete Collection">Delete</a>
+                                        @endif
                                         </td>
                                     </tr>
                                 @endforeach

@@ -10,7 +10,7 @@
       <div class="aa-catg-head-banner-content">
         <h2>Contatti</h2>
         <ol class="breadcrumb">
-          <li><a href="index.html">Home</a></li>
+          <li><a href="{{url('home')}}">Home</a></li>
           <li class="active">Contatti</li>
         </ol>
       </div>
@@ -26,7 +26,7 @@
          <div class="aa-contact-area">
            <div class="aa-contact-top">
              <h2>Ti aspettiamo nei nostri store...</h2>
-             <p>Per qualsiasi informazione scrivici e saremo lieti di aiutarti.</p>
+             <p>Per qualsiasi informazione scrivici e saremo lieti di aiutarti</p>
            </div>
            <!-- contact map -->
            <div class="aa-contact-map">

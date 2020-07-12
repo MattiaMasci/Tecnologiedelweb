@@ -14,16 +14,16 @@
     <div class="container-fluid">
         <div class="quick-actions_homepage">
             <ul class="quick-actions">
-                <li class="bg_lb"> <a href="index.html"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
-                <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-signal"></i> Charts</a> </li>
-                <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
-                <li class="bg_lo"> <a href="tables.html"> <i class="icon-th"></i> Tables</a> </li>
-                <li class="bg_ls"> <a href="grid.html"> <i class="icon-fullscreen"></i> Full width</a> </li>
-                <li class="bg_lo span3"> <a href="form-common.html"> <i class="icon-th-list"></i> Forms</a> </li>
-                <li class="bg_ls"> <a href="buttons.html"> <i class="icon-tint"></i> Buttons</a> </li>
-                <li class="bg_lb"> <a href="interface.html"> <i class="icon-pencil"></i>Elements</a> </li>
-                <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
-                <li class="bg_lr"> <a href="error404.html"> <i class="icon-info-sign"></i> Error</a> </li>
+                <li class="bg_lb"> <a href="javascript:void(0);"> <i class="icon-dashboard"></i> <span class="label label-important">20</span> My Dashboard </a> </li>
+                <li class="bg_lg span3"> <a href="javascript:void(0);"> <i class="icon-signal"></i> Charts</a> </li>
+                <li class="bg_ly"> <a href="javascript:void(0);"> <i class="icon-inbox"></i><span class="label label-success">101</span> Widgets </a> </li>
+                <li class="bg_lo"> <a href="javascript:void(0);"> <i class="icon-th"></i> Tables</a> </li>
+                <li class="bg_ls"> <a href="javascript:void(0);"> <i class="icon-fullscreen"></i> Full width</a> </li>
+                <li class="bg_lo span3"> <a href="javascript:void(0);"> <i class="icon-th-list"></i> Forms</a> </li>
+                <li class="bg_ls"> <a href="javascript:void(0);"> <i class="icon-tint"></i> Buttons</a> </li>
+                <li class="bg_lb"> <a href="javascript:void(0);"> <i class="icon-pencil"></i>Elements</a> </li>
+                <li class="bg_lg"> <a href="javascript:void(0);"> <i class="icon-calendar"></i> Calendar</a> </li>
+                <li class="bg_lr"> <a href="javascript:void(0);"> <i class="icon-info-sign"></i> Error</a> </li>
 
             </ul>
         </div>
@@ -67,19 +67,19 @@
                             <li>
                                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{ asset('img/Backend.img/demo/av1.jpg') }}"> </div>
                                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                                    <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
+                                    <p><a href="javascript:void(0);">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                                 </div>
                             </li>
                             <li>
                                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{ asset('img/Backend.img/demo/av2.jpg') }}"> </div>
                                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                                    <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
+                                    <p><a href="javascript:void(0);">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                                 </div>
                             </li>
                             <li>
                                 <div class="user-thumb"> <img width="40" height="40" alt="User" src="{{ asset('img/Backend.img/demo/av4.jpg') }}"> </div>
                                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                                    <p><a href="#">This is a much longer one that will go on for a few lines.Itaffle to pad out the comment.</a> </p>
+                                    <p><a href="javascript:void(0);">This is a much longer one that will go on for a few lines.Itaffle to pad out the comment.</a> </p>
                                 </div>
                             <li>
                                 <button class="btn btn-warning btn-mini">View All</button>
@@ -96,23 +96,23 @@
                             <ul>
                                 <li class="clearfix">
                                     <div class="txt"> Luanch This theme on Themeforest <span class="by label">Alex</span></div>
-                                    <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                                    <div class="pull-right"> <a class="tip" href="javascript:void(0);" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="javascript:void(0);" title="Delete"><i class="icon-remove"></i></a> </div>
                                 </li>
                                 <li class="clearfix">
                                     <div class="txt"> Manage Pending Orders <span class="date badge badge-warning">Today</span> </div>
-                                    <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                                    <div class="pull-right"> <a class="tip" href="javascript:void(0);" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="javascript:void(0);" title="Delete"><i class="icon-remove"></i></a> </div>
                                 </li>
                                 <li class="clearfix">
                                     <div class="txt"> MAke your desk clean <span class="by label">Admin</span></div>
-                                    <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                                    <div class="pull-right"> <a class="tip" href="javascript:void(0);" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="javascript:void(0);" title="Delete"><i class="icon-remove"></i></a> </div>
                                 </li>
                                 <li class="clearfix">
                                     <div class="txt"> Today we celebrate the theme <span class="date badge badge-info">08.03.2013</span> </div>
-                                    <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                                    <div class="pull-right"> <a class="tip" href="javascript:void(0);" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="javascript:void(0);" title="Delete"><i class="icon-remove"></i></a> </div>
                                 </li>
                                 <li class="clearfix">
                                     <div class="txt"> Manage all the orders <span class="date badge badge-important">12.03.2013</span> </div>
-                                    <div class="pull-right"> <a class="tip" href="#" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="#" title="Delete"><i class="icon-remove"></i></a> </div>
+                                    <div class="pull-right"> <a class="tip" href="javascript:void(0);" title="Edit Task"><i class="icon-pencil"></i></a> <a class="tip" href="javascript:void(0);" title="Delete"><i class="icon-remove"></i></a> </div>
                                 </li>
                             </ul>
                         </div>
@@ -153,13 +153,13 @@
                     </div>
                     <div class="widget-content nopadding updates collapse in" id="collapseG3">
                         <div class="new-update clearfix"><i class="icon-ok-sign"></i>
-                            <div class="update-done"><a title="" href="#"><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong></a> <span>dolor sit amet, consectetur adipiscing eli</span> </div>
+                            <div class="update-done"><a title="" href="javascript:void(0);"><strong>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</strong></a> <span>dolor sit amet, consectetur adipiscing eli</span> </div>
                             <div class="update-date"><span class="update-day">20</span>jan</div>
                         </div>
-                        <div class="new-update clearfix"> <i class="icon-gift"></i> <span class="update-notice"> <a title="" href="#"><strong>Congratulation Maruti, Happy Birthday </strong></a> <span>many many happy returns of the day</span> </span> <span class="update-date"><span class="update-day">11</span>jan</span> </div>
-                        <div class="new-update clearfix"> <i class="icon-move"></i> <span class="update-alert"> <a title="" href="#"><strong>Maruti is a Responsive Admin theme</strong></a> <span>But already everything was solved. It will ...</span> </span> <span class="update-date"><span class="update-day">07</span>Jan</span> </div>
-                        <div class="new-update clearfix"> <i class="icon-leaf"></i> <span class="update-done"> <a title="" href="#"><strong>Envato approved Maruti Admin template</strong></a> <span>i am very happy to approved by TF</span> </span> <span class="update-date"><span class="update-day">05</span>jan</span> </div>
-                        <div class="new-update clearfix"> <i class="icon-question-sign"></i> <span class="update-notice"> <a title="" href="#"><strong>I am alwayse here if you have any question</strong></a> <span>we glad that you choose our template</span> </span> <span class="update-date"><span class="update-day">01</span>jan</span> </div>
+                        <div class="new-update clearfix"> <i class="icon-gift"></i> <span class="update-notice"> <a title="" href="javascript:void(0);"><strong>Congratulation Maruti, Happy Birthday </strong></a> <span>many many happy returns of the day</span> </span> <span class="update-date"><span class="update-day">11</span>jan</span> </div>
+                        <div class="new-update clearfix"> <i class="icon-move"></i> <span class="update-alert"> <a title="" href="javascript:void(0);"><strong>Maruti is a Responsive Admin theme</strong></a> <span>But already everything was solved. It will ...</span> </span> <span class="update-date"><span class="update-day">07</span>Jan</span> </div>
+                        <div class="new-update clearfix"> <i class="icon-leaf"></i> <span class="update-done"> <a title="" href="javascript:void(0);"><strong>Envato approved Maruti Admin template</strong></a> <span>i am very happy to approved by TF</span> </span> <span class="update-date"><span class="update-day">05</span>jan</span> </div>
+                        <div class="new-update clearfix"> <i class="icon-question-sign"></i> <span class="update-notice"> <a title="" href="javascript:void(0);"><strong>I am alwayse here if you have any question</strong></a> <span>we glad that you choose our template</span> </span> <span class="update-date"><span class="update-day">01</span>jan</span> </div>
                     </div>
                 </div>
 
@@ -176,11 +176,11 @@
                             </div>
                             <div class="panel-content nopadding">
                                 <ul class="contact-list">
-                                    <li id="user-Alex" class="online"><a href=""><img alt="" src="{{ asset ('img/Backend.img/demo/av1.jpg') }}" /> <span>Alex</span></a></li>
-                                    <li id="user-Linda"><a href=""><img alt="" src="{{ asset ('img/Backend.img/demo/av2.jpg') }}" /> <span>Linda</span></a></li>
-                                    <li id="user-John" class="online new"><a href=""><img alt="" src="{{ asset ('img/Backend.img/demo/av3.jpg') }}" /> <span>John</span></a><span class="msg-count badge badge-info">3</span></li>
-                                    <li id="user-Mark" class="online"><a href=""><img alt="" src="{{ asset ('img/Backend.img/demo/av4.jpg') }}" /> <span>Mark</span></a></li>
-                                    <li id="user-Maxi" class="online"><a href=""><img alt="" src="{{ asset ('img/Backend.img/demo/av5.jpg') }}" /> <span>Maxi</span></a></li>
+                                    <li id="user-Alex" class="online"><a href="javascript:void(0);"><img alt="" src="{{ asset ('img/Backend.img/demo/av1.jpg') }}" /> <span>Alex</span></a></li>
+                                    <li id="user-Linda"><a href="javascript:void(0);"><img alt="" src="{{ asset ('img/Backend.img/demo/av2.jpg') }}" /> <span>Linda</span></a></li>
+                                    <li id="user-John" class="online new"><a href="javascript:void(0);"><img alt="" src="{{ asset ('img/Backend.img/demo/av3.jpg') }}" /> <span>John</span></a><span class="msg-count badge badge-info">3</span></li>
+                                    <li id="user-Mark" class="online"><a href="javascript:void(0);"><img alt="" src="{{ asset ('img/Backend.img/demo/av4.jpg') }}" /> <span>Mark</span></a></li>
+                                    <li id="user-Maxi" class="online"><a href="javascript:void(0);"><img alt="" src="{{ asset ('img/Backend.img/demo/av5.jpg') }}" /> <span>Maxi</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -279,7 +279,6 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab1">Tab1</a></li>
                             <li><a data-toggle="tab" href="#tab2">Tab2</a></li>
-                            <li><a data-toggle="tab" href="#tab3">Tab3</a></li>
                         </ul>
                     </div>
                     <div class="widget-content tab-content">
@@ -289,9 +288,6 @@
                         <div id="tab2" class="tab-pane"> <img src="{{ asset('img/Backend.img/demo/demo-image2.jpg') }}" alt="demo-image"/>
                             <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment.</p>
                         </div>
-                        <div id="tab3" class="tab-pane">
-                            <p>And is full of waffle to It has multiple paragraphs and is full of waffle to pad out the comment. Usually, you just wish these sorts of comments would come to an end.multiple paragraphs and is full of waffle to pad out the comment. </p>
-                            <img src="{{ asset('img/Backend.img/demo/demo-image3.jpg" alt="demo-image') }}"/></div>
                     </div>
                 </div>
             </div>

@@ -18,8 +18,9 @@ class CreateCollezioneTable extends Migration
             $table->string('nome', 20);
             $table->string('reference', 20);
             $table->tinyInteger('stato');
-            $table->binary('foto')->nullable();
+            //$table->binary('foto')->nullable();
         });
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE collezione ADD foto  LONGBLOB");
     }
 
     /**

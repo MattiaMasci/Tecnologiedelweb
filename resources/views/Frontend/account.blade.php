@@ -8,10 +8,10 @@
     <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>Pagina Account</h2>
+        <h2>Registrazione</h2>
         <ol class="breadcrumb">
           <li><a href="{{url('home')}}">Home</a></li>
-          <li class="active">Account</li>
+          <li class="active">Registrati</li>
         </ol>
       </div>
      </div>

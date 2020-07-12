@@ -8,7 +8,7 @@
    <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>Pagina della lista dei desideri</h2>
+        <h2>Lista dei desideri</h2>
         <ol class="breadcrumb">
           <li><a href="{{url('home')}}">Home</a></li>
           <li class="active">Lista dei desideri</li>
@@ -43,11 +43,11 @@
                     @foreach ($wish as $wishlist)
                       <tr>
                           <td><a rel="{{$wishlist->modello_id}}" rel1="delete-wishlist" href="javascript:" class="remove deleteRecord"><fa class="fa fa-close"></fa></a></td>
-                        <td><a href="{{url("product-detail/$wishlist->genere&&$wishlist->idphoto")}}"><img src="{{url('store-image/fetch-image')}}/{{ $wishlist->idphoto }}" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="{{url("product-detail/$wishlist->genere&&$wishlist->idphoto")}}">{{$wishlist->modello_nome}}</a></td>
+                        <td><a href="{{url("product-details/$wishlist->genere&&$wishlist->idphoto")}}"><img src="{{url('store-image/fetch-image')}}/{{ $wishlist->idphoto }}" alt="img"></a></td>
+                        <td><a class="aa-cart-title" href="{{url("product-details/$wishlist->genere&&$wishlist->idphoto")}}">{{$wishlist->modello_nome}}</a></td>
                         <td>${{$wishlist->prezzo}}</td>
                         <td>{{$wishlist->stock}}</td>
-                        <td><a href="#" class="aa-add-to-cart-btn">Add To Cart</a></td>
+                        <td><a href="{{url("product-details/$wishlist->genere&&$wishlist->idphoto")}}" class="aa-add-to-cart-btn">Vedi Dettagli</a></td>
                       </tr>
                       @endforeach
                       </tbody>

@@ -15,13 +15,12 @@ class CreateModelloTable extends Migration
     {
         Schema::create('modello', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome',30);
+            $table->string('nome',65);
             $table->text('descrizione');
-            $table->text('descrizione1');
+            //$table->text('descrizione1');
             $table->date('datauscita');
             $table->float('mediavoto')->nullable();
-            $table->unsignedBigInteger('collezione_id');
-            $table->foreign('collezione_id')->references('id')->on('collezione');
+            $table->integer('collezione_id');
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categoria');
             $table->unsignedBigInteger('marca_id');

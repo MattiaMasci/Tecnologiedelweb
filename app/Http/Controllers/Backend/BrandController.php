@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Altre;
+use App\Carrello;
+use App\Foto;
+use App\Generehasmodello;
 use App\Http\Controllers\Controller;
 use App\Marca;
+use App\Modello;
+use App\Preferito;
+use App\Quantita;
+use App\Recensione;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Input;
@@ -35,7 +43,7 @@ class BrandController extends Controller
                     if ($brand->stato == 1) $attivi += 1;
                 }
                 if ($attivi > 4) return redirect()->back()->with('flash_message_error', 'The maximum number of active Brands has been reached, deactivate a Brand to activate this.');
-            }
+            } else  if ($data['main'] == 'On') return redirect()->back()->with('flash_message_error', 'Only enabled Brand can be shown on the main position.');
 
             if ($data['main'] == 'On') {
                 $marca = Marca::all();
@@ -122,7 +130,7 @@ class BrandController extends Controller
                         if ($mar->stato == 1 && $mar->id != $data['brand_id']) $attivi += 1;
                 }
                 if ($attivi > 4) return redirect()->back()->with('flash_message_error', 'The maximum number of active Brands has been reached, deactivate a Brand to activate this.');
-            }
+            } else  if ($data['main'] == 'On') return redirect()->back()->with('flash_message_error', 'Only enabled Brand can be shown on the main position.');
 
             if ($data['main'] == 'On') {
                 $marca = Marca::all();
@@ -194,6 +202,19 @@ class BrandController extends Controller
         else {
             return redirect('/admin')->with('flash_message_error', 'Please login to access');
         }
+
+        $modello = Modello::where('marca_id', $id)->get();
+        foreach ($modello as $item) {
+            Recensione::where('modello_id', $item->id)->delete();
+            Quantita::where('modello_id', $item->id)->delete();
+            Carrello::where('modello_id', $item->id)->delete();
+            Preferito::where('modello_id', $item->id)->delete();
+            $photo = Foto::where('modello_id', $item->id)->first();
+            if (!empty($photo)) Altre::where('foto_id', $photo->id)->delete();
+            Foto::where('modello_id', $item->id)->delete();
+            Generehasmodello::where('modello_id', $item->id)->delete();
+        }
+        Modello::where('marca_id', $id)->delete();
 
         Marca::where(['id' => $id])->delete();
 

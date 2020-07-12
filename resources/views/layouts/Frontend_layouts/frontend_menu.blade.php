@@ -15,30 +15,30 @@
                 <div class="navbar-collapse collapse">
                     <!-- Left nav -->
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Uomo<span class="caret"></span></a>
+                        <li><a href="javascript:void(0);">Uomo<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 @foreach($uomo as $man)
                                 <li><a href="{{url("product/Uomo&&$man->reference")}}">{{$man->name}}</a></li>
                                 @endforeach
                             </ul>
                         </li>
-                        <li><a href="#">Donna<span class="caret"></span></a>
+                        <li><a href="javascript:void(0);">Donna<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 @foreach($donna as $woman)
                                     <li><a href="{{url("product/Donna&&$woman->reference")}}">{{$woman->name}}</a></li>
                                 @endforeach
                             </ul>
                         </li>
-                        <li><a href="#">Bambini<span class="caret"></span></a>
+                        <li><a href="javascript:void(0);">Bambini<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Bambino<span class="caret"></span></a>
+                                <li><a href="javascript:void(0);">Bambino<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         @foreach($bambino as $boy)
                                             <li><a href="{{url("product/Bambino&&$boy->reference")}}">{{$boy->name}}</a></li>
                                         @endforeach
                                     </ul>
                                 </li>
-                                <li><a href="#">Bambina<span class="caret"></span></a>
+                                <li><a href="javascript:void(0);">Bambina<span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         @foreach($bambina as $girl)
                                             <li><a href="{{url("product/Bambina&&$girl->reference")}}">{{$girl->name}}</a></li>

@@ -11,7 +11,7 @@
           <div class="aa-error-area">
             <h2>404</h2>
             <span>Page Not Found</span>
-            <p>Non possiamo reperire ciò che è stato richiesto!</p>
+            <p>Non possiamo fornire ciò che è stato richiesto!</p>
             <a href="{{url('home')}}">Vai all'homepage</a>
           </div>
         </div>

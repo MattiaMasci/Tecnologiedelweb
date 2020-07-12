@@ -47,6 +47,8 @@ class ProductController extends Controller
                 'ThirdImage' => 'required|image'
             ]);
 
+            if (strlen($data['product_name']) > 65) return redirect()->back()->with('flash_message_error', 'Product name too long');
+
             $product = new Modello;
             if(empty($data['category_id'])){
                 return redirect()->back()->with('flash_message_error', 'Category is missing!');
@@ -76,8 +78,7 @@ class ProductController extends Controller
             }
 
             $product->stile_id = $data['style_id'];
-            $product->descrizione = $data['brief_description'];
-            $product->descrizione1 = $data['description'];
+            $product->descrizione = $data['description'];
             $product->nome = $data['product_name'];
             $newDate = date("Y-m-d");
             $product->datauscita = $newDate;
@@ -343,7 +344,7 @@ class ProductController extends Controller
         foreach($products as $key => $val){
             $category_name = Categoria::where(['id' => $val->categoria_id])->first();
             $products[$key]->categoria_nome = $category_name->name;
-            $collection_name = Collezione::where(['id' => $val->collezione_id])->first();
+            $collection_name = Collezione::find($val->collezione_id);
             $products[$key]->collezione_nome = $collection_name->nome;
             $style_name = Stile::where(['id' => $val->stile_id])->first();
             $products[$key]->stile_nome = $style_name->nome;
@@ -375,6 +376,8 @@ class ProductController extends Controller
                 'AdultsPrice' => 'nullable|numeric',
                 'ChildrenPrice' => 'nullable|numeric'
             ]);
+
+            if (strlen($data['product_name']) > 65) return redirect()->back()->with('flash_message_error', 'Product name too long');
 
             if (!empty($request->MainImage)) {
                 $request->validate([
@@ -506,8 +509,7 @@ class ProductController extends Controller
                 else $flash_message_error .= "<br>Children Genders haven't a Price registered, so the Children Discount has not been entered!";
             }
 
-            Modello::where(['id' => $id])->update(['nome' => $data['product_name'], 'descrizione' => $data['brief_description'],
-                'descrizione1' => $data['description'],'categoria_id' => $data['category_id'],
+            Modello::where(['id' => $id])->update(['nome' => $data['product_name'], 'descrizione' => $data['description'],'categoria_id' => $data['category_id'],
                 'collezione_id' => $data['collection_id'], 'stile_id' => $data['style_id'],
                 'marca_id' => $data['brand_id']]);
 
@@ -520,7 +522,11 @@ class ProductController extends Controller
                     'data' => $image
                 );
                 $photo = Foto::where('modello_id', $id)->first();
-                Foto::where('modello_id', $id)->update($form_data);
+                if (empty($photo)) {
+                    Foto::create($form_data);
+                    $photo = Foto::where('modello_id', $id)->first();
+                }
+                else Foto::where('modello_id', $id)->update($form_data);
 
                 for($i=0;$i<2;$i++) {
                     $image_file = $request->MainImage;
@@ -756,7 +762,7 @@ class ProductController extends Controller
             return redirect('/admin')->with('flash_message_error', 'Please login to access');
         }
 
-        //Con ordine e reso come si fa?
+        //Ordine e reso rimangono intatti
         Recensione::where('modello_id', $id)->delete();
         Quantita::where('modello_id', $id)->delete();
         Carrello::where('modello_id', $id)->delete();
@@ -789,13 +795,22 @@ class ProductController extends Controller
 
             if (count($data['size']) < count($data['color'])) return redirect()->back()->with('flash_message_error', 'Size is missing!');
 
-            foreach($data['size'] as $key => $val ){
-                $quantita = new Quantita;
-                $quantita->modello_id = $data['product_id'];
-                $quantita->colore_id = $data['color'][$key];
-                $quantita->taglia_id = $val;
-                $quantita->quantita = $data['quantity'][$key];
-                $quantita->save();
+            $exist = Quantita::where('taglia_id', $data['size'])
+                ->where('modello_id', $data['product_id'])
+                ->where('colore_id', $data['color'])
+                ->first();
+            if (empty($exist)) {
+                foreach($data['size'] as $key => $val ){
+                    $quantita = new Quantita;
+                    $quantita->modello_id = $data['product_id'];
+                    $quantita->colore_id = $data['color'][$key];
+                    $quantita->taglia_id = $val;
+                    $quantita->quantita = $data['quantity'][$key];
+                    $quantita->save();
+                }
+            } else {
+                $quantita = $exist->quantita + $data['quantity'][0];
+                $exist->update(['quantita' => $quantita]);
             }
 
             return redirect('admin/add-pieces/'.$data['product_id'])->with('flash_message_success', 'Pieces of Product Added Successfully!');
@@ -870,7 +885,13 @@ class ProductController extends Controller
             ->with(compact('productDetails'));
     }
 
-    public function deletePieces($id = null){
+    public function deletePieces ($id = null) {
+        if (Session::has('adminSession')){
+            //Ok
+        }
+        else {
+            return redirect('/admin')->with('flash_message_error', 'Please login to access');
+        }
         Quantita::find($id)->delete();
         return redirect()->back()->with('flash_message_success', 'Product Pieces Deleted Successfully!');
     }

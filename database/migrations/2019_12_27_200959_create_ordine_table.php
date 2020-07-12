@@ -15,17 +15,9 @@ class CreateOrdineTable extends Migration
     {
         Schema::create('ordine', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('users_id');
-            $table->foreign('users_id')->references('id')->on('users');
-            $table->unsignedBigInteger('modello_id');
-            $table->foreign('modello_id')->references('id')->on('modello');
-            $table->unsignedBigInteger('taglia_id');
-            $table->foreign('taglia_id')->references('id')->on('taglia');
-            $table->unsignedBigInteger('colore_id');
-            $table->foreign('colore_id')->references('id')->on('colore');
-            $table->integer('quantita');
+            $table->integer('users_id');
             $table->string('pagamento');
-            //$table->integer('totale');
+            $table->float('totale');
             $table->date('dataordine');
             $table->date('dataaccettazione');
             $table->date('dataspedizione');

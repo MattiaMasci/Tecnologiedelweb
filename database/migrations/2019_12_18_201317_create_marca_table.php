@@ -20,8 +20,9 @@ class CreateMarcaTable extends Migration
             $table->tinyInteger('top');
             $table->string('sesso')->nullable();
             $table->tinyInteger('stato');
-            $table->binary('foto')->nullable();
+            //$table->binary('foto')->nullable();
         });
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE marca ADD foto  LONGBLOB");
     }
 
     /**

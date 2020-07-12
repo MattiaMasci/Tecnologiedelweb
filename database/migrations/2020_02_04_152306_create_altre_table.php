@@ -22,7 +22,7 @@ class CreateAltreTable extends Migration
             $table->foreign('foto_id')->references('id')->on('foto');
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE altre ADD data  MEDIUMBLOB");
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE altre ADD data  MEDIUMBLOB");
     }
 
     /**

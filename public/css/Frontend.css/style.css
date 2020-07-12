@@ -2577,6 +2577,32 @@ img {
   margin-bottom: 15px;
   float: left;
 }
+.aa-account-single-bill {
+    display: inline;
+    width: 100%;
+    margin-bottom: 15px;
+    float: left;
+}
+.aa-account-single-bill input {
+    border: 1px solid #ccc;
+    height: 40px;
+    padding: 10px;
+    width: 100%;
+}
+.aa-account-single-bill textarea {
+    border: 1px solid #ccc;
+    color: #999;
+    height: 150px;
+    padding: 10px;
+    width: 100%;
+}
+.aa-account-single-bill select {
+    border: 1px solid #ccc;
+    color: #999;
+    height: 40px;
+    padding: 10px;
+    width: 100%;
+}
 #checkout .checkout-area .checkout-left .panel-group .aa-checkout-billaddress .aa-checkout-single-bill input {
   border: 1px solid #ccc;
   height: 40px;

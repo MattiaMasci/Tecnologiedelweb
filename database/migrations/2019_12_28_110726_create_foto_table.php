@@ -15,11 +15,12 @@ class CreateFotoTable extends Migration
     {
         Schema::create('foto', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->binary('data');
+            //$table->binary('data');
             $table->unsignedBigInteger('modello_id');
             $table->foreign('modello_id')->references('id')->on('modello');
             $table->timestamps();
         });
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE foto ADD data  MEDIUMBLOB");
     }
 
     /**

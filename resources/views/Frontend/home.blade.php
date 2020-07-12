@@ -96,10 +96,17 @@
                                   <li>
                                       <figure>
                                           <!--"img/women/girl-1.png"-->
-                                          <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                          <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                          <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                          <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
+                                             data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                           <figcaption>
-                                              <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                              <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                               <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                           </figcaption>
                                       </figure>
@@ -107,11 +114,11 @@
                                           @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                           @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                           <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                             data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
                                              data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                       </div>
@@ -127,10 +134,17 @@
                                   <li>
                                       <figure>
                                           <!--"img/women/girl-1.png"-->
-                                          <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                          <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                          <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                          <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
+                                             data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                           <figcaption>
-                                              <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                              <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                               <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                           </figcaption>
                                       </figure>
@@ -138,11 +152,11 @@
                                           @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                           @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                           <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                             data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
                                              data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                       </div>
@@ -158,10 +172,17 @@
                                   <li>
                                       <figure>
                                           <!--"img/women/girl-1.png"-->
-                                          <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                          <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                          <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                          <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
+                                            data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                           <figcaption>
-                                              <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                              <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                               <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                           </figcaption>
                                       </figure>
@@ -169,11 +190,11 @@
                                           @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                           @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                           <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                             data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
                                              data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                       </div>
@@ -189,10 +210,17 @@
                                   <li>
                                       <figure>
                                           <!--"img/women/girl-1.png"-->
-                                          <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                          <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                          <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                          <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
+                                            data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                           <figcaption>
-                                              <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                              <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                               <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                           </figcaption>
                                       </figure>
@@ -200,11 +228,11 @@
                                           @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                           @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                           <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                             data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                             data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"{{$product->name_cat}}" }'
                                              data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                       </div>
@@ -233,16 +261,16 @@
                                                       </div>
                                                   </div>
                                                   <div class="simpleLens-thumbnails-container">
-                                                      <a href="#" class="simpleLens-thumbnail-wrapper"
+                                                      <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                                          id="foto1">
                                                           <img id="thumbnail1">
                                                       </a>
-                                                      <a href="#" class="simpleLens-thumbnail-wrapper"
+                                                      <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                                          id="foto2">
                                                           <img id="thumbnail2">
                                                       </a>
 
-                                                      <a href="#" class="simpleLens-thumbnail-wrapper"
+                                                      <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                                          id="foto3">
                                                           <img id="thumbnail3">
                                                       </a>
@@ -258,10 +286,14 @@
                                               </div>
                                               <p id="descrizione"></p>
                                               <h4>Taglia</h4>
-                                              <div class="aa-prod-view-size" id="size_select">
+                                              <div class="aa-prod-quantity">
+                                                  <select id="size_select" style="width:100px;"></select>
                                               </div>
                                               <h4>Colore</h4>
-                                              <div class="aa-color-tag" id="colore_select">
+                                              <div class="aa-prod-quantity">
+                                                  <div class="aa-color-tag">
+                                                      <select id="colore_select" style="width:100px;"></select>
+                                                  </div>
                                               </div>
                                               <div class="aa-prod-quantity">
                                                   <form action="">
@@ -273,8 +305,8 @@
                                                   </p>
                                               </div>
                                               <div class="aa-prod-view-bottom">
-                                                  <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
-                                                  <a href="#" class="aa-add-to-cart-btn">Visualizza dettagli</a>
+                                                  <a href="javascript:void(0);" id="addCart" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                                  <a href="#" id="show_details" class="aa-add-to-cart-btn">Visualizza dettagli</a>
                                               </div>
                                           </div>
                                       </div>
@@ -299,7 +331,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="aa-banner-area">
-            <a href="#"><img src="{{ asset('img/Frontend.img/fashion-banner.jpg') }}" alt="fashion banner img"></a>
+            <a href="javascript:void(0);"><img src="{{ asset('img/Frontend.img/fashion-banner.jpg') }}" alt="fashion banner img"></a>
           </div>
           </div>
         </div>
@@ -329,10 +361,17 @@
                           <li>
                               <figure>
                                   <!--"img/women/girl-1.png"-->
-                                  <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                  <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                  <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                  <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                     data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"Popolari" }'
+                                     data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                   <figcaption>
-                                      <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                      <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                       <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                   </figcaption>
                               </figure>
@@ -340,11 +379,11 @@
                                   @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                   @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                   <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                     data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                     data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"Popolari" }'
                                      data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                               </div>
@@ -363,10 +402,17 @@
                          <li>
                              <figure>
                                  <!--"img/women/girl-1.png"-->
-                                 <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                 <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                 <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                 <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                    data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"Occasioni" }'
+                                    data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                  <figcaption>
-                                     <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                     <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                      <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                  </figcaption>
                              </figure>
@@ -374,11 +420,11 @@
                                  @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                  @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                  <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                    data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                    data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"Occasioni" }'
                                     data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                              </div>
@@ -397,10 +443,17 @@
                           <li>
                               <figure>
                                   <!--"img/women/girl-1.png"-->
-                                  <a class="aa-product-img" href="{{url("product-detail/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                                  <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                  <a class="aa-product-img" href="{{url("product-details/$product->genere&&$product->identificativo")}}"><img src="../public/store-image/fetch-image/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                                  <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                                     data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                          "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"Ultimi arrivi" }'
+                                     data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                                   <figcaption>
-                                      <h4 class="aa-product-title"><a href="{{url("product-detail/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
+                                      <h4 class="aa-product-title"><a href="{{url("product-details/$product->genere&&$product->identificativo")}}">{{ $product->nome }}</a></h4>
                                       <span class="aa-product-price">${{ $product->prezzo }}</span>{!! $product->prezzo_normale !!}
                                   </figcaption>
                               </figure>
@@ -408,11 +461,11 @@
                                   @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                                   @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $product->genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                                   <a href="#" id="aprimodale" data-toggle2="tooltip"
-                                     data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
+                                     data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../public/store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../public/store-image/fetch-altre/{{ $product->slid1 }}",
                           "slider2":"../public/store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../public/store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../public/store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../public/store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../public/store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../public/store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../public/store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$product->genere}}", "nome":"{{$product->nome}}", "categoria":"Ultimi arrivi" }'
                                      data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                               </div>

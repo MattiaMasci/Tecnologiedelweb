@@ -20,7 +20,7 @@ class MarcaTableSeeder extends Seeder {
             ],
             [
                 'nome' => 'Ralph Loren',
-                'reference' => 'ralph loren',
+                'reference' => 'ralph-loren',
                 'top' => '0',
                 'stato' => '1',
                 'sesso' => 'Uomo',

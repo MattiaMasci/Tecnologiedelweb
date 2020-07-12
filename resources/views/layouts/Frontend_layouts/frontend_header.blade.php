@@ -17,11 +17,13 @@
                         <!-- / header top left -->
                         <div class="aa-header-top-right">
                             <ul class="aa-head-top-nav-right">
-                                <!-- <li><a href="{{url('account')}}">Il mio account</a></li> -->
+                                @auth <li><a href="http://localhost/ProgettoTdWpersonale/public/account">Il mio account</a></li> @endauth
+                                @guest <li><a href="" id="accountcall" data-toggle="modal" data-target="#login-modal">Il mio account</a></li> @endguest
+                                @auth <li><a href="http://localhost/ProgettoTdWpersonale/public/order">I miei ordini</a></li> @endauth
+                                @guest <li><a href="" id="ordercall" data-toggle="modal" data-target="#login-modal">I miei ordini</a></li> @endguest
                                 @auth <li class="hidden-xs"><a href="http://localhost/ProgettoTdWpersonale/public/wishlist">Lista dei desideri</a></li> @endauth
                                 @guest <li class="hidden-xs"><a href="" id="wishlistcall" data-toggle="modal" data-target="#login-modal">Lista dei desideri</a></li> @endguest
                                 <li class="hidden-xs"><a href="{{url('cart')}}">Il mio carrello</a></li>
-                                <li class="hidden-xs"><a href="{{url('checkout')}}">Checkout</a></li>
                                 @guest <li><a href="" id="wishlistuncall" data-toggle="modal" data-target="#login-modal">Login</a></li> @endguest
                                 @auth <li><a href="http://localhost/ProgettoTdWpersonale/public/logout" >Logout</a></li> @endauth
                             </ul>
@@ -51,7 +53,7 @@
                         </div>
                         <!-- / logo  -->
                         <!-- cart box -->
-                        <div class="aa-cartbox">
+                        <div id="box_carrello" class="aa-cartbox">
                             <a class="aa-cart-link" href="{{ url('cart') }}">
                                 <span class="fa fa-shopping-basket"></span>
                                 <span class="aa-cart-title">CARRELLO</span>

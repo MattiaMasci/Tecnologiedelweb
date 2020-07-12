@@ -20,11 +20,11 @@
    <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>T-Shirt</h2>
+        <h2>Dettagli Prodotto</h2>
         <ol class="breadcrumb">
           <li><a href="{{url('home')}}">Home</a></li>
-          <li><a href="{{url("product/$genere&&$categoria->reference")}}">Product</a></li>
-          <li class="active">T-shirt</li>
+          <li><a href="{{url("product/$genere&&$categoria->reference")}}">{{ $categoria->name }}</a></li>
+          <li class="active">GX56H{{$product->id}}</li>
         </ol>
       </div>
      </div>
@@ -70,18 +70,20 @@
                       <span class="aa-product-view-price">${{$prezzo}}</span>
                       <p class="aa-product-avilability" id="stockparagraph">Disponibilità: <span>{{$stock}}</span></p>
                     </div>
-                    <p>{{$product->descrizione}}</p>
+                    <p>{{$marca->nome}}</p>
                     <h4>Taglia</h4>
-                    <div class="aa-prod-view-size">
-                        {!! $size !!}
-                    </div>
-                    <h4>Colore</h4>
-                    <div class="aa-color-tag">
-                        {!! $colore !!}
-                    </div>
+                      <div class="aa-prod-quantity">
+                          <select id="tagliaSelected" data-id='{ "id":"{{ $product->id }}" }' style="width:100px;">{!! $size !!}</select>
+                      </div>
+                      <h4>Colore</h4>
+                      <div class="aa-prod-quantity">
+                          <div class="aa-color-tag">
+                          <select id="coloreSelected" data-id='{ "id":"{{ $product->id }}", "genere":"{{$genere}}" }' style="width:100px;">{!! $colore !!}</select>
+                          </div>
+                      </div>
                     <div class="aa-prod-quantity">
                       <form action="">
-                        <select id="prod-quantity">
+                        <select id="prod-quantity" data-id='{ "id":"{{ $product->id }}" }'>
                         </select>
                       </form>
                       <p class="aa-prod-category">
@@ -90,7 +92,7 @@
                       </p>
                     </div>
                     <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn aggiungicarrello" id="add_cart" data-id='{ "idphoto":"{{ $id }}", "genere":"{{ $genere }}" }' href="javascript:void(0);">Aggiungi al carrello</a>
+                      <a class="aa-add-to-cart-btn aggiungicarrello" id="add_cart" data-id='{ "idphoto":"{{ $id }}"}' href="javascript:void(0);">Aggiungi al carrello</a>
                         @guest <a class="aa-add-to-cart-btn aggiungiwishlist" data-toggle="modal" data-target="#login-modal" href="">Lista dei desideri</a> @endguest
                         @auth <a class="aa-add-to-cart-btn aggiungiwishlist" id="add_wishlist"  data-id='{ "idphoto":"{{ $id }}", "genere":"{{ $genere }}" }' href="javascript:void(0);">Lista dei desideri</a> @endauth
                     </div>
@@ -107,7 +109,7 @@
               <!-- Tab panes -->
               <div class="tab-content">
                 <div class="tab-pane fade in active" id="description">
-                  <p>{{$product->descrizione1}}</p>
+                  <p>{!! $product->descrizione !!}</p>
                 </div>
                 <div class="tab-pane fade" id="review">
                  <div class="aa-product-review-area">
@@ -137,7 +139,7 @@
                      <a href="javascript:void(0);" data-id="5"><span id="span5" class="fa fa-star-o"></span></a>
                    </div>
                    <!-- review form -->
-                   <form method="post" action="{{ url("/product-detail/$genere&&$id") }}" class="aa-review-form" id="add_review" name="add_review">
+                   <form method="post" action="{{ url("/product-details/$genere&&$id") }}" class="aa-review-form" id="add_review" name="add_review">
                        @csrf
                        <input type="hidden" name="rating" id="rating">
                       <div class="form-group">
@@ -163,10 +165,17 @@
                   @foreach($product_related as $prodotto)
                 <li>
                   <figure>
-                    <a class="aa-product-img" href="{{url("product-detail/$genere&&$prodotto->photoid")}}"><img src="../store-image/fetch-image/{{ $prodotto->photoid }}" alt="polo shirt img"></a>
-                    <a class="aa-add-card-btn" href="{{url("product-detail/$genere&&$$prodotto->photoid")}}"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                    <a class="aa-product-img" href="{{url("product-details/$genere&&$prodotto->photoid")}}"><img src="../store-image/fetch-image/{{ $prodotto->photoid }}" alt="polo shirt img"></a>
+                    <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                       data-id='{"idphoto":"{{ $prodotto->photoid }}", "idmodello":"{{ $prodotto->id }}", "id":"../store-image/fetch-image/{{ $prodotto->photoid }}", "slider1":"../store-image/fetch-altre/{{ $prodotto->slid1 }}",
+                          "slider2":"../store-image/fetch-altre/{{ $prodotto->slid2 }}", "slider3":"../store-image/fetch-altre/{{ $prodotto->slid3 }}",
+                           "thumbnail1":"../store-image/fetch-altre/{{ $prodotto->thumb1 }}", "thumbnail2":"../store-image/fetch-altre/{{ $prodotto->thumb2 }}",
+                            "thumbnail3":"../store-image/fetch-altre/{{ $prodotto->thumb3 }}", "normal2":"../store-image/fetch-altre/{{ $prodotto->norm2 }}",
+                             "normal3":"../store-image/fetch-altre/{{ $prodotto->norm3 }}", "prezzo":"{{ $prodotto->prezzo }}", "descrizione":"{{ $prodotto->marca }}",
+                              "stock":"{{ $prodotto->stock }}", "nome":"{{$prodotto->nome}}", "genere":"{{$genere}}", "categoria":"{{$categoria->name}}" }'
+                       data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                      <figcaption>
-                      <h4 class="aa-product-title"><a href="{{url("product-detail/$genere&&$prodotto->photoid")}}">{{$prodotto->nome}}</a></h4>
+                      <h4 class="aa-product-title"><a href="{{url("product-details/$genere&&$prodotto->photoid")}}">{{$prodotto->nome}}</a></h4>
                       <span class="aa-product-price">${{$prodotto->prezzo}}</span>{!! $prodotto->prezzo_normale !!}
                     </figcaption>
                   </figure>
@@ -174,11 +183,11 @@
                       @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                       @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $prodotto->photoid }}", "genere":"{{ $genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                       <a href="#" id="aprimodale" data-toggle2="tooltip"
-                         data-id='{"idphoto":"{{ $prodotto->photoid }}", "id":"../store-image/fetch-image/{{ $prodotto->photoid }}", "slider1":"../store-image/fetch-altre/{{ $prodotto->slid1 }}",
+                         data-id='{"idphoto":"{{ $prodotto->photoid }}", "idmodello":"{{ $prodotto->id }}", "id":"../store-image/fetch-image/{{ $prodotto->photoid }}", "slider1":"../store-image/fetch-altre/{{ $prodotto->slid1 }}",
                           "slider2":"../store-image/fetch-altre/{{ $prodotto->slid2 }}", "slider3":"../store-image/fetch-altre/{{ $prodotto->slid3 }}",
                            "thumbnail1":"../store-image/fetch-altre/{{ $prodotto->thumb1 }}", "thumbnail2":"../store-image/fetch-altre/{{ $prodotto->thumb2 }}",
                             "thumbnail3":"../store-image/fetch-altre/{{ $prodotto->thumb3 }}", "normal2":"../store-image/fetch-altre/{{ $prodotto->norm2 }}",
-                             "normal3":"../store-image/fetch-altre/{{ $prodotto->norm3 }}", "prezzo":"{{ $prodotto->prezzo }}", "descrizione":"{{ $prodotto->descr }}",
+                             "normal3":"../store-image/fetch-altre/{{ $prodotto->norm3 }}", "prezzo":"{{ $prodotto->prezzo }}", "descrizione":"{{ $prodotto->marca }}",
                               "stock":"{{ $prodotto->stock }}", "nome":"{{$prodotto->nome}}", "genere":"{{$genere}}", "categoria":"{{$categoria->name}}" }'
                          data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                   </div>
@@ -206,16 +215,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="simpleLens-thumbnails-container">
-                                                    <a href="#" class="simpleLens-thumbnail-wrapper"
+                                                    <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                                        id="foto1">
                                                         <img id="thumbnail1">
                                                     </a>
-                                                    <a href="#" class="simpleLens-thumbnail-wrapper"
+                                                    <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                                        id="foto2">
                                                         <img id="thumbnail2">
                                                     </a>
 
-                                                    <a href="#" class="simpleLens-thumbnail-wrapper"
+                                                    <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                                        id="foto3">
                                                         <img id="thumbnail3">
                                                     </a>
@@ -231,10 +240,14 @@
                                             </div>
                                             <p id="descrizione"></p>
                                             <h4>Taglia</h4>
-                                            <div class="aa-prod-view-size" id="size_select">
+                                            <div class="aa-prod-quantity">
+                                                <select id="size_select" style="width:100px;"></select>
                                             </div>
                                             <h4>Colore</h4>
-                                            <div class="aa-color-tag" id="colore_select">
+                                            <div class="aa-prod-quantity">
+                                                <div class="aa-color-tag">
+                                                    <select id="colore_select" style="width:100px;"></select>
+                                                </div>
                                             </div>
                                             <div class="aa-prod-quantity">
                                                 <form action="">
@@ -246,8 +259,8 @@
                                                 </p>
                                             </div>
                                             <div class="aa-prod-view-bottom">
-                                                <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
-                                                <a href="#" class="aa-add-to-cart-btn">Visualizza dettagli</a>
+                                                <a href="javascript:void(0);" id="addCart" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                                                <a href="#" id="show_details" class="aa-add-to-cart-btn">Visualizza dettagli</a>
                                             </div>
                                         </div>
                                     </div>
@@ -274,7 +287,7 @@
                 <div class="col-md-12">
                     <div class="aa-subscribe-area">
                         <h3>Iscriviti alla nostra newsletter</h3>
-                        <form method="post" action="{{ url("/product-detail/$genere&&$id") }}" id="add_subscribe" name="add_subscribe" class="aa-subscribe-form">
+                        <form method="post" action="{{ url("/product-details/$genere&&$id") }}" id="add_subscribe" name="add_subscribe" class="aa-subscribe-form">
                             @csrf
                             <input type="email" name="emailsubscriber" id="emailsubscriber" placeholder="Inserisci la tua Email" required>
                             <input type="submit" value="Iscriviti">

@@ -15,7 +15,7 @@
                                         <li><a href="{{url('contact')}}">Contattaci</a></li>
                                         <li><a href="{{url('registration')}}">Registrati</a></li>
                                         <li><a href="{{url('contact')}}">Mappa del Sito</a></li>
-                                        <li><a href="#">FAQ</a></li>
+                                        <li><a href="javascript:void(0);">FAQ</a></li>
                                     </ul>
                                 </div>
                             </div>

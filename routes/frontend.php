@@ -16,7 +16,7 @@ Route::match(['get', 'post'], '/collezione/{collezione}', 'FrontController@produ
 
 Route::match(['get', 'post'], '/brand/{genere}&&{brand}', 'FrontController@product')->name('product');
 
-Route::match(['get', 'post'], '/product-detail/{genere}&&{id}', 'FrontController@productdetail');
+Route::match(['get', 'post'], '/product-details/{genere}&&{id}', 'FrontController@productdetail');
 
 Route::get('/registration', 'FrontController@account');
 
@@ -26,6 +26,15 @@ Route::match(['get', 'post'], '/error', 'FrontController@error');
 
 Route::match(['get', 'post'], '/checkout', 'FrontController@checkout');
 
+Route::match(['get', 'post'], '/account', 'FrontController@profile');
+
+Route::get('/order', 'FrontController@order');
+
+Route::get('/order/{id}', 'FrontController@orderdetail');
+
+//Check password
+Route::get('/check-pwd', 'FrontController@chkPassword');
+
 //Cancella elemento nel carrello
 Route::get('/delete-cart/{modello}', 'FrontController@deleteCart');
 
@@ -33,7 +42,7 @@ Route::get('/delete-cart/{modello}', 'FrontController@deleteCart');
 Route::get('/delete-wishlist/{modello}', 'FrontController@deleteWishlist');
 
 //Ajax per ordinare
-Route::get('/order', 'FrontController@orderproducts');
+Route::get('/order-products', 'FrontController@orderproducts');
 
 //Ajax per filtrare per prezzo
 Route::get('/filter', 'FrontController@filterproducts');
@@ -53,9 +62,20 @@ Route::get('/sizeselect', 'FrontController@sizeSelect');
 //Ajax per aggiungere elemento alla wishlist
 Route::get('/add-wishlist', 'FrontController@addWishlist');
 
+//Ajax per aggiungere elemento al carrello
+Route::get('/add-cart', 'FrontController@addCart');
+
 //Ajax per elenco categorie
 Route::get('/elencocategorie', 'FrontController@elencoCategorie');
 
-//Ajax per wishlist
+//Ajax per seleziona taglia per carrello
+Route::get('/taglia-selected', 'FrontController@tagliaSelected');
+
+//Ajax per seleziona quantità carrello
+Route::get('/get-quantita', 'FrontController@getQuantita');
+
+//Ajax per wishlist, account e ordini
+Route::get('/ordercall', 'FrontController@orderCall');
+Route::get('/accountcall', 'FrontController@accountCall');
 Route::get('/wishlistcall', 'FrontController@wishlistCall');
 Route::get('/wishlistuncall', 'FrontController@wishlistUncall');

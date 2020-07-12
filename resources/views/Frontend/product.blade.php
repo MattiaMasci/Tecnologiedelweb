@@ -56,23 +56,30 @@
                   <li>
                     <figure>
                       <!--"img/women/girl-1.png"-->
-                      <a class="aa-product-img" href="{{url("product-detail/$genere&&$product->identificativo")}}"><img src="{{url('store-image/fetch-image')}}/{{ $product->identificativo }}" alt="polo shirt img"></a>
-                      <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                      <a class="aa-product-img" href="{{url("product-details/$genere&&$product->identificativo")}}"><img src="{{url('store-image/fetch-image')}}/{{ $product->identificativo }}" alt="polo shirt img"></a>
+                      <a class="aa-add-card-btn" href="#" id="aprimodale" data-toggle2="tooltip"
+                         data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../store-image/fetch-image/{{ $product->identificativo }}",
+                         "slider1":"../store-image/fetch-altre/{{ $product->slid1 }}", "slider2":"../store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../store-image/fetch-altre/{{ $product->slid3 }}",
+                           "thumbnail1":"../store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../store-image/fetch-altre/{{ $product->thumb2 }}",
+                            "thumbnail3":"../store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../store-image/fetch-altre/{{ $product->norm2 }}",
+                             "normal3":"../store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
+                             "stock":"{{ $product->stock }}", "genere":"{{$genere}}", "nome":"{{$product->nome}}", "categoria":"{{$categoria}}" }'
+                         data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
                       <figcaption>
-                        <h4 class="aa-product-title"><a href="{{url("product-detail/$genere&&$product->identificativo")}}">{{$product->nome}}</a></h4>
+                        <h4 class="aa-product-title"><a href="{{url("product-details/$genere&&$product->identificativo")}}">{{$product->nome}}</a></h4>
                         <span class="aa-product-price">${{$product->prezzo}}</span>{!! $product->prezzo_normale !!}
-                        <p class="aa-product-descrip">{{$product->descrizione}}</p>
+                        <p class="aa-product-descrip">{{$product->marca}}</p>
                       </figcaption>
                     </figure>
                     <div class="aa-product-hvr-content">
                         @guest <a class="aggiungiwishlist" data-tooltip="tooltip" href="" data-toggle="modal" data-target="#login-modal" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endguest
                         @auth <a class="aggiungiwishlist" data-id='{ "idphoto":"{{ $product->identificativo }}", "genere":"{{ $genere }}" }' href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="Aggiungi alla lista dei desideri"><span class="fa fa-heart-o"></span></a> @endauth
                       <a href="#" id="aprimodale" data-toggle2="tooltip"
-                         data-id='{"idphoto":"{{ $product->identificativo }}", "id":"../store-image/fetch-image/{{ $product->identificativo }}", "slider1":"../store-image/fetch-altre/{{ $product->slid1 }}",
-                          "slider2":"../store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../store-image/fetch-altre/{{ $product->slid3 }}",
+                         data-id='{"idphoto":"{{ $product->identificativo }}", "idmodello":"{{ $product->id }}", "id":"../store-image/fetch-image/{{ $product->identificativo }}",
+                         "slider1":"../store-image/fetch-altre/{{ $product->slid1 }}", "slider2":"../store-image/fetch-altre/{{ $product->slid2 }}", "slider3":"../store-image/fetch-altre/{{ $product->slid3 }}",
                            "thumbnail1":"../store-image/fetch-altre/{{ $product->thumb1 }}", "thumbnail2":"../store-image/fetch-altre/{{ $product->thumb2 }}",
                             "thumbnail3":"../store-image/fetch-altre/{{ $product->thumb3 }}", "normal2":"../store-image/fetch-altre/{{ $product->norm2 }}",
-                             "normal3":"../store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->descrizione }}",
+                             "normal3":"../store-image/fetch-altre/{{ $product->norm3 }}", "prezzo":"{{ $product->prezzo }}", "descrizione":"{{ $product->marca }}",
                              "stock":"{{ $product->stock }}", "genere":"{{$genere}}", "nome":"{{$product->nome}}", "categoria":"{{$categoria}}" }'
                          data-placement="top" title="Dai un'occhiata" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                     </div>
@@ -100,16 +107,16 @@
                                   </div>
                               </div>
                               <div class="simpleLens-thumbnails-container">
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
+                                  <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                      id="foto1">
                                       <img id="thumbnail1">
                                   </a>
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
+                                  <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                      id="foto2">
                                       <img id="thumbnail2">
                                   </a>
 
-                                  <a href="#" class="simpleLens-thumbnail-wrapper"
+                                  <a href="javascript:void(0);" class="simpleLens-thumbnail-wrapper"
                                      id="foto3">
                                       <img id="thumbnail3">
                                   </a>
@@ -124,12 +131,16 @@
                             <div class="aa-price-block" id="prezzo">
                             </div>
                             <p id="descrizione"></p>
-                            <h4>Taglia</h4>
-                            <div class="aa-prod-view-size" id="size_select">
-                            </div>
-                            <h4>Colore</h4>
-                            <div class="aa-color-tag" id="colore_select">
-                            </div>
+                              <h4>Taglia</h4>
+                              <div class="aa-prod-quantity">
+                                  <select id="size_select" style="width:100px;"></select>
+                              </div>
+                              <h4>Colore</h4>
+                              <div class="aa-prod-quantity">
+                                  <div class="aa-color-tag">
+                                      <select id="colore_select" style="width:100px;"></select>
+                                  </div>
+                              </div>
                             <div class="aa-prod-quantity">
                               <form action="">
                                 <select name="" id="quantity">
@@ -140,8 +151,8 @@
                               </p>
                             </div>
                             <div class="aa-prod-view-bottom">
-                              <a href="#" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
-                              <a href="#" class="aa-add-to-cart-btn">Visualizza dettagli</a>
+                              <a href="javascript:void(0);" id="addCart" class="aa-add-to-cart-btn"><span class="fa fa-shopping-cart"></span>Aggiungi al carrello</a>
+                              <a href="#" id="show_details" class="aa-add-to-cart-btn">Visualizza dettagli</a>
                             </div>
                           </div>
                         </div>
@@ -207,18 +218,18 @@
             <div class="aa-sidebar-widget">
               <h3>Filtra per colore</h3>
               <div class="aa-color-tag">
-                <a class="aa-color-green" id="filtrapercolore" data-id="Green" href="javascript:void(0);"></a>
-                <a class="aa-color-yellow" id="filtrapercolore" data-id="Yellow" href="javascript:void(0);"></a>
-                <a class="aa-color-pink" id="filtrapercolore" data-id="Pink" href="javascript:void(0);"></a>
-                <a class="aa-color-purple" id="filtrapercolore" data-id="Purple" href="javascript:void(0);"></a>
-                <a class="aa-color-blue" id="filtrapercolore" data-id="Blue" href="javascript:void(0);"></a>
-                <a class="aa-color-orange" id="filtrapercolore" data-id="Orange" href="javascript:void(0);"></a>
-                <a class="aa-color-gray" id="filtrapercolore" data-id="Gray" href="javascript:void(0);"></a>
-                <a class="aa-color-black" id="filtrapercolore" data-id="Black" href="javascript:void(0);"></a>
-                <a class="aa-color-white" id="filtrapercolore" data-id="White" href="javascript:void(0);"></a>
-                <a class="aa-color-cyan" id="filtrapercolore" data-id="Cyan" href="javascript:void(0);"></a>
-                <a class="aa-color-olive" id="filtrapercolore" data-id="Olive" href="javascript:void(0);"></a>
-                <a class="aa-color-orchid" id="filtrapercolore" data-id="Orchid" href="javascript:void(0);"></a>
+                <a class="aa-color-green" id="filtrapercolore" data-id="Verde" href="javascript:void(0);"></a>
+                <a class="aa-color-yellow" id="filtrapercolore" data-id="Giallo" href="javascript:void(0);"></a>
+                <a class="aa-color-pink" id="filtrapercolore" data-id="Rosa" href="javascript:void(0);"></a>
+                <a class="aa-color-purple" id="filtrapercolore" data-id="Viola" href="javascript:void(0);"></a>
+                <a class="aa-color-blue" id="filtrapercolore" data-id="Blu" href="javascript:void(0);"></a>
+                <a class="aa-color-orange" id="filtrapercolore" data-id="Arancione" href="javascript:void(0);"></a>
+                <a class="aa-color-gray" id="filtrapercolore" data-id="Grigio" href="javascript:void(0);"></a>
+                <a class="aa-color-black" id="filtrapercolore" data-id="Nero" href="javascript:void(0);"></a>
+                <a class="aa-color-white" id="filtrapercolore" data-id="Bianco" href="javascript:void(0);"></a>
+                <a class="aa-color-cyan" id="filtrapercolore" data-id="Ciano" href="javascript:void(0);"></a>
+                <a class="aa-color-olive" id="filtrapercolore" data-id="Oliva" href="javascript:void(0);"></a>
+                <a class="aa-color-orchid" id="filtrapercolore" data-id="Orchidea" href="javascript:void(0);"></a>
               </div>
             </div>
             <!-- single sidebar -->
@@ -228,9 +239,9 @@
                 <ul>
                 @foreach($votato as $bestproduct)
                   <li>
-                    <a href="{{url("product-detail/$genere&&$bestproduct->foto")}}" class="aa-cartbox-img"><img alt="img" src="../store-image/fetch-image/{{ $bestproduct->foto }}" style="width:75px;height:90px;"></a>
+                    <a href="{{url("product-details/$genere&&$bestproduct->foto")}}" class="aa-cartbox-img"><img alt="img" src="../store-image/fetch-image/{{ $bestproduct->foto }}" style="width:75px;height:90px;"></a>
                     <div class="aa-cartbox-info">
-                      <h4><a href="{{url("product-detail/$genere&&$bestproduct->foto")}}">{{$bestproduct->nome}}</a></h4>
+                      <h4><a href="{{url("product-details/$genere&&$bestproduct->foto")}}">{{$bestproduct->nome}}</a></h4>
                       <p>${{$bestproduct->prezzo}}</p>
                     </div>
                   </li>

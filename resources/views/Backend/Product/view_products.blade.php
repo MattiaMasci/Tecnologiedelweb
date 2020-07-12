@@ -80,8 +80,7 @@
                                                 <p>Style ID: {{ $product->stile_id }}</p>
                                                 <p>Product Name: {{ $product->nome }}</p>
                                                 <p>Date: {{ $product->datauscita }}</p>
-                                                <p>Brief Description: {{ $product->descrizione }}</p>
-                                                <p>Description: {{ $product->descrizione1 }}</p>
+                                                <p>Description: {{ $product->descrizione }}</p>
                                                 <p>[...]</p>
                                             </div>
                                         </div>

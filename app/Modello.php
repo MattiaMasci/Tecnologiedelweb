@@ -10,7 +10,7 @@ class Modello extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['mediavoto'];
+    protected $fillable = ['mediavoto', 'collezione_id'];
 
     public $timestamps = false;
 }

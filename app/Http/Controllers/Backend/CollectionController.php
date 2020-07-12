@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Collezione;
 use App\Http\Controllers\Controller;
+use App\Modello;
 use Illuminate\Http\Request;
 use Session;
 use Illuminate\Support\Facades\Input;
@@ -40,7 +41,7 @@ class CollectionController extends Controller
             $nome = $data['collection_name'];
 
             $image_file = $request->MainImage;
-            $image = Image::make($image_file)->resize(1280, 600);
+            $image = Image::make($image_file)->resize(1920, 700);
             Response::make($image->encode('jpeg'));
 
             if ($data['enable'] == 'On') $stato = 1;
@@ -118,7 +119,7 @@ class CollectionController extends Controller
                 else $stato = 0;
 
                 $image_file = $request->MainImage;
-                $image = Image::make($image_file)->resize(1280, 600);
+                $image = Image::make($image_file)->resize(1920, 700);
                 Response::make($image->encode('jpeg'));
 
                 $form_data = array(
@@ -157,6 +158,12 @@ class CollectionController extends Controller
         }
         else {
             return redirect('/admin')->with('flash_message_error', 'Please login to access');
+        }
+
+        //Setto ogni modello su 'Nessuna Collezione'
+        $modello = Modello::where('collezione_id', $id)->get();
+        foreach ($modello as $item) {
+            $item->update(['collezione_id' => '1']);
         }
 
         Collezione::where(['id' => $id])->delete();

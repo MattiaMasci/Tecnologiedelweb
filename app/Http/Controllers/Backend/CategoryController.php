@@ -6,6 +6,7 @@ use App\Categoria;
 use App\Genere;
 use App\Generehascategoria;
 use App\Http\Controllers\Controller;
+use App\Modello;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -147,7 +148,7 @@ class CategoryController extends Controller
             return redirect('/admin')->with('flash_message_error', 'Please login to access');
         }
         if (!empty($id)) {
-            //Cancello tutti i modelli collegati?
+            Modello::where('categoria_id', $id)->delete();
             Generehascategoria::where('categoria_id', $id)->delete();
             Categoria::where(['id' => $id])->delete();
             return redirect()->back()->with('flash_message_success', 'Category Deleted Successfully!');

@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call('ModelloTableSeeder');
         $this->call('CarrelloTableSeeder');
         //$this->call('FotoTableSeeder');
-        $this->call('OrdineTableSeeder');
+        //$this->call('OrdineTableSeeder');
         $this->call('PreferitoTableSeeder');
         $this->call('QuantitaTableSeeder');
         $this->call('ResoTableSeeder');
@@ -39,5 +39,6 @@ class DatabaseSeeder extends Seeder
         $this->call('GenerehascategoriaTableSeeder');
         //$this->call('CouponTableSeeder');
         //$this->call('AltreTableSeeder');
+        //$this->call('ProdottoordinatoTableSeeder');
     }
 }

@@ -45,11 +45,13 @@
                       <tr>
                           <td><a rel="{{$cart->modello_id}}" rel1="delete-cart" href="javascript:" class="remove deleteRecord"><fa class="fa fa-close"></fa></a></td>
                         <input type="hidden" name="modelloid[]" value="{{$cart->modello_id}}">
-                        <td><a href="{{url("product-detail/$cart->genere&&$cart->idfoto")}}"><img src="{{url('store-image/fetch-image')}}/{{ $cart->idfoto }}" alt="img"></a></td>
-                        <td><a class="aa-cart-title" href="{{url("product-detail/$cart->genere&&$cart->idfoto")}}">{{$cart->modello_nome}}</a></td>
-                        <td>{{$cart->prezzo}}</td>
-                        <td><input class="aa-cart-quantity" name="quantity[]" type="number" value="{{$cart->quantita}}"></td>
-                        <td>{{$cart->prezzo_totale}}</td>
+                        <input type="hidden" name="tagliaid[]" value="{{$cart->taglia_id}}">
+                        <input type="hidden" name="coloreid[]" value="{{$cart->colore_id}}">
+                        <td><a href="{{url("product-details/$cart->genere&&$cart->idfoto")}}"><img src="{{url('store-image/fetch-image')}}/{{ $cart->idfoto }}" alt="img"></a></td>
+                        <td><a class="aa-cart-title" href="{{url("product-details/$cart->genere&&$cart->idfoto")}}">{{$cart->modello_nome}}</a></td>
+                        <td>${{$cart->prezzo}}</td>
+                        <td><input class="aa-cart-quantity" name="quantity[]" type="number" min="1" value="{{$cart->quantita}}"></td>
+                        <td>${{$cart->prezzo_totale}}</td>
                       </tr>
                     @endforeach
                       <tr>

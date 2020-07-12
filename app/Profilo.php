@@ -10,5 +10,7 @@ class Profilo extends Model
 
     protected $primaryKey = 'id';
 
+    protected $fillable = ['nomefatturazione', 'cognomefatturazione', 'emailfatturazione'];
+
     public $timestamps = false;
 }

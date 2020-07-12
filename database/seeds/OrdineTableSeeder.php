@@ -11,12 +11,8 @@ class OrdineTableSeeder extends Seeder {
 
         DB::table('ordine')->insert([
             'users_id' => '2',
-            'modello_id' => '3',
-            'taglia_id' => '2',
-            'colore_id' => '2',
-            'quantita' => '1',
             'pagamento' => 'paypal',
-            //'totale' => 50,
+            'totale' => 50,
             'dataordine' => '2022-12-20',
             'dataaccettazione' => '2022-12-21',
             'dataspedizione' => '2022-12-23',
@@ -39,7 +35,7 @@ class OrdineTableSeeder extends Seeder {
             'nazionespedizione' => '',
             'abitazionespedizione' => '',
             'cittaspedizione' => '',
-            'notespedizione' => '',
+            'notespedizione' => ''
         ]);
     }
 
