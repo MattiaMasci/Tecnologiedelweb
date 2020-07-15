@@ -31,48 +31,6 @@
     </div>
   </section>
   <!-- / slider -->
-  <!-- Start Promo section -->
-  <section id="aa-promo">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="aa-promo-area">
-                      <div class="row">
-                          <!-- promo left -->
-                          <div class="col-md-5 no-padding">
-                              <div class="aa-promo-left">
-                                  <div class="aa-promo-banner">
-                                      <img src="../public/store-image/fetch-brand-image/{{ $topBrand->id }}" alt="img">
-                                      <div class="aa-prom-content">
-                                          <h4><a href="{{url("brand/$topBrand->sesso&&$topBrand->reference")}}">{{ $topBrand->nome }}</a></h4>
-                                          <span>{{ $topBrand->sesso }}</span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <!-- promo right -->
-                          <div class="col-md-7 no-padding">
-                              <div class="aa-promo-right">
-                                  @foreach ($brands as $brand)
-                                  <div class="aa-single-promo-right">
-                                      <div class="aa-promo-banner">
-                                          <img src="../public/store-image/fetch-brand-image/{{ $brand->id }}" alt="img">
-                                          <div class="aa-prom-content">
-                                              <h4><a href="{{url("brand/$brand->sesso&&$brand->reference ")}}">{{ $brand->nome }}</a></h4>
-                                              <span>{{ $brand->sesso }}</span>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  @endforeach
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  <!-- / Promo section -->
   <!-- Products section -->
   <section id="aa-product">
     <div class="container">
@@ -81,7 +39,8 @@
           <div class="row">
             <div class="aa-product-area">
               <div class="aa-product-inner">
-                <!-- start prduct navigation -->
+                <!-- start product navigation -->
+                  <br>
                  <ul class="nav nav-tabs aa-products-tab">
                      @foreach($active_cat as $cat)
                          {!! $cat->stampa !!}
@@ -89,6 +48,7 @@
                   </ul>
                   <!-- Tab panes -->
                   <div class="tab-content">
+                      @if($home_one != null)
                       <div class="tab-pane fade in active" id="{{$stampa_categorie[0]}}">
                           <ul class="aa-product-catg aa-{{$stampa_categorie[0]}}-slider">
                               <!-- start single product item -->
@@ -127,6 +87,8 @@
                               @endforeach
                           </ul>
                       </div>
+                      @endif
+                      @if($home_two != null)
                       <div class="tab-pane fade" id="{{$stampa_categorie[1]}}">
                           <ul class="aa-product-catg aa-{{$stampa_categorie[1]}}-slider">
                               <!-- start single product item -->
@@ -165,6 +127,8 @@
                               @endforeach
                           </ul>
                       </div>
+                      @endif
+                      @if($home_three != null)
                       <div class="tab-pane fade" id="{{$stampa_categorie[2]}}">
                           <ul class="aa-product-catg aa-{{$stampa_categorie[2]}}-slider">
                               <!-- start single product item -->
@@ -203,6 +167,8 @@
                               @endforeach
                           </ul>
                       </div>
+                      @endif
+                      @if($home_four != null)
                       <div class="tab-pane fade" id="{{$stampa_categorie[3]}}">
                           <ul class="aa-product-catg aa-{{$stampa_categorie[3]}}-slider">
                               <!-- start single product item -->
@@ -242,6 +208,7 @@
                           </ul>
                       </div>
                   </div>
+                    @endif
                   <!-- Dai un'occhiata modal -->
                   <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
@@ -331,7 +298,8 @@
         <div class="col-md-12">
           <div class="row">
             <div class="aa-banner-area">
-            <a href="javascript:void(0);"><img src="{{ asset('img/Frontend.img/fashion-banner.jpg') }}" alt="fashion banner img"></a>
+                @if(isset($home_foto_gen) && isset($home_foto_cat)) <a href="{{url("product/$home_foto_gen->tipo&&$home_foto_cat->reference")}}"><img src="../public/store-image/fetch-fotosito-image/{{ $home_foto->id }}" alt="fashion banner img"></a>
+                    @else <a href="javascript:void(0)"><img src="../public/store-image/fetch-fotosito-image/{{ $home_foto->id }}" alt="fashion banner img"></a>@endif
           </div>
           </div>
         </div>
@@ -483,10 +451,56 @@
     </div>
   </section>
   <!-- / popular section -->
+  <!-- Start Promo section -->
+  <section id="aa-promo">
+      <div class="container">
+          <center><strong><h1 style="font-family: FontAwesome 'Felix Titling'">MARCHE DI TENDENZA</h1></strong></center>
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="aa-promo-area">
+                      <div class="row">
+                      @if($topBrand != null)
+                          <!-- promo left -->
+                              <div class="col-md-5 no-padding">
+                                  <div class="aa-promo-left">
+                                      <div class="aa-promo-banner">
+                                          <img src="../public/store-image/fetch-brand-image/{{ $topBrand->id }}" alt="img">
+                                          <div class="aa-prom-content">
+                                              <h4><a href="{{url("brand/$topBrand->sesso&&$topBrand->reference")}}"></a></h4>
+                                              <!-- <span></span> -->
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                      @endif
+                      @if($brands != null)
+                          <!-- promo right -->
+                              <div class="col-md-7 no-padding">
+                                  <div class="aa-promo-right">
+                                      @foreach ($brands as $brand)
+                                          <div class="aa-single-promo-right">
+                                              <div class="aa-promo-banner">
+                                                  <img src="../public/store-image/fetch-brand-image/{{ $brand->id }}" alt="img">
+                                                  <div class="aa-prom-content">
+                                                      <h4><a href="{{url("brand/$brand->sesso&&$brand->reference ")}}"></a></h4>
+                                                      <!-- <span></span> -->
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      @endforeach
+                                  </div>
+                              </div>
+                          @endif
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- / Promo section -->
   <!-- Testimonial -->
   <section id="aa-testimonial">
-
-    <div class="container">
+      <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="aa-testimonial-area">

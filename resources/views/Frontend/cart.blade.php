@@ -4,14 +4,14 @@
 
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
-   <img src="{{ asset('img/Frontend.img/fashion/fashion-header-bg-8.jpg') }}" alt="fashion img">
+   <img src="../public/store-image/fetch-fotosito-image/{{ $cart_foto->id }}" alt="fashion img">
    <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>Carrello</h2>
+        <h2 style="color: black">Carrello</h2>
         <ol class="breadcrumb">
-          <li><a href="{{url('home')}}">Home</a></li>
-          <li class="active">Carello</li>
+          <li><a href="{{url('home')}}" style="color: black">Home</a></li>
+          <li class="active">Carrello</li>
         </ol>
       </div>
      </div>
@@ -43,7 +43,8 @@
                     <tbody>
                     @foreach($carrello as $cart)
                       <tr>
-                          <td><a rel="{{$cart->modello_id}}" rel1="delete-cart" href="javascript:" class="remove deleteRecord"><fa class="fa fa-close"></fa></a></td>
+                          @guest <td><a rel="{{$cart->modello_id}}" rel1="delete-session-cart" rel2="{{$cart->taglia_id}}" rel3="{{$cart->colore_id}}" href="javascript:" class="remove deleteRecord"><fa class="fa fa-close"></fa></a></td>@endguest
+                          @auth <td><a rel="{{$cart->modello_id}}" rel1="delete-cart" rel2="{{$cart->taglia_id}}" rel3="{{$cart->colore_id}}" href="javascript:" class="remove deleteRecord"><fa class="fa fa-close"></fa></a></td>@endauth
                         <input type="hidden" name="modelloid[]" value="{{$cart->modello_id}}">
                         <input type="hidden" name="tagliaid[]" value="{{$cart->taglia_id}}">
                         <input type="hidden" name="coloreid[]" value="{{$cart->colore_id}}">

@@ -43,6 +43,10 @@ Route::get('/view-brands', 'BrandController@viewBrands');
 Route::match(['get', 'post'], '/edit-brand/{id}', 'BrandController@editBrand');
 Route::get('/delete-brand/{id}', 'BrandController@deleteBrand');
 
+//Foto
+Route::match(['get', 'post'], '/edit-photo/{id}', 'PhotoController@editFoto');
+Route::get('/view-photos', 'PhotoController@viewFoto');
+
 //Quantità
 Route::match(['get', 'post'], '/add-pieces/{id}', 'ProductController@addPieces')->name('addpieces');
 Route::get('/delete-pieces/{id}', 'ProductController@deletePieces');

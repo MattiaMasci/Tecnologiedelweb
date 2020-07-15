@@ -6,6 +6,7 @@ use App\Carrello;
 use App\Collezione;
 use App\Colore;
 use App\Coupon;
+use App\Fotosito;
 use App\Generehascategoria;
 use App\Gruppo;
 use App\Http\Controllers\Controller;
@@ -56,6 +57,10 @@ class FrontController extends Controller
         if (session('warning_message')) {
             Alert::warning('Errore!', session('warning_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $active_cat = Categoria::where('stato', 1)->get();
 
@@ -134,6 +139,21 @@ class FrontController extends Controller
             else if ($i == 2) $home_three = $home_products;
             else $home_four = $home_products;
             $i = $i+1;
+        }
+        if (!isset($home_one)) {
+            $home_one = null;
+            $home_two = null;
+            $home_three = null;
+            $home_four = null;
+        } else if (!isset($home_two)) {
+            $home_two = null;
+            $home_three = null;
+            $home_four = null;
+        } else if (!isset($home_three)) {
+            $home_three = null;
+            $home_four = null;
+        } else if (!isset($home_four)) {
+            $home_four = null;
         }
 
         //Latest
@@ -362,7 +382,10 @@ class FrontController extends Controller
         $topBrand = Marca::where('stato', 1)->where('top', 1)->first();
         if (empty($topBrand)) {
             $topBrand = Marca::where('stato', 1)->first();
-            $brands = Marca::where('stato', 1)->where('id', '!=',  $topBrand->id)->get();
+            if (empty($topBrand)) {
+                $topBrand = null;
+                $brands = null;
+            } else $brands = Marca::where('stato', 1)->where('id', '!=',  $topBrand->id)->get();
         } else  $brands = Marca::where('stato', 1)->where('top', 0)->get();
 
 
@@ -420,9 +443,42 @@ class FrontController extends Controller
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $i = 0;
@@ -437,9 +493,13 @@ class FrontController extends Controller
             }
             $i = $i+1;
         }
+        if (!isset($stampa_categorie)) $stampa_categorie = null;
 
         $bodyclass = "";
         $title = "Home | Xenomod";
+        $home_foto = Fotosito::where('pagina', 'Home')->first();
+        $home_foto_gen = Genere::find($home_foto->genere_id);
+        $home_foto_cat = Categoria::find($home_foto->categoria_id);
 
         return view('Frontend.home')
             ->with(compact('uomo'))
@@ -462,7 +522,10 @@ class FrontController extends Controller
             ->with(compact('popular_products'))
             ->with(compact('occasioni_products'))
             ->with(compact('active_cat'))
-            ->with(compact('stampa_categorie'));
+            ->with(compact('stampa_categorie'))
+            ->with(compact('home_foto'))
+            ->with(compact('home_foto_gen'))
+            ->with(compact('home_foto_cat'));
     }
 
     public function orderproducts(Request $request) {
@@ -1468,6 +1531,10 @@ $product->sconto
         if (session('success_message')) {
             Alert::success('Successo!', session('success_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $url = $request->url();
 
@@ -1924,13 +1991,47 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $bodyclass = "productPage";
         $title = "Abbigliamento $genere Online | Xenomod";
+        $product_foto = Fotosito::where('pagina', 'Product')->first();
 
         if (empty($marca)) {
             $marca = null;
@@ -1957,6 +2058,7 @@ $product->sconto
             ->with(compact('carrello'))
             ->with(compact('genere'))
             ->with(compact('products'))
+            ->with(compact('product_foto'))
             ->with(compact('categoria'))
             ->with(compact('votato'))
             ->with(compact('marca'))
@@ -2019,6 +2121,10 @@ $product->sconto
         if (session('warning_message')) {
             Alert::warning('Errore!', session('warning_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $photo = Foto::find($id);
         if (empty($photo)) return redirect('/error');
@@ -2166,27 +2272,6 @@ $product->sconto
         }
         if ($size_select == "") $size_select = "<option value=\"null\" selected>Nessuna Taglia Disponibile</option>";
         if ($colore_select == "") $colore_select = "<option value=\"null\" selected>Nessun Colore Disponibile</option>";
-
-        /*
-        $colore_select = "";
-        if ($genere == 'Uomo' || $genere == 'Donna') {
-            $allrecord = Quantita::where('modello_id', $product->id)->where('taglia_id', '<', 5)->get();
-            foreach ($allrecord as $record) {
-                $colore = Colore::find($record->colore_id);
-                $color_name = strtolower($colore->nome);
-                if (strstr($colore_select, "<option class=\"aa-color-$color_name\" value=\"$colore->nome\">$colore->nome</option>") == false)  $colore_select .= "<option class=\"aa-color-$color_name\" value=\"$colore->nome\">$colore->nome</option>";
-            }
-        }
-        if ($genere == 'Bambino' || $genere == 'Bambina') {
-            $allrecord = Quantita::where('modello_id', $product->id)->where('taglia_id', '>', 4)->get();
-            foreach ($allrecord as $record) {
-                $colore = Colore::find($record->colore_id);
-                $color_name = strtolower($colore->nome);
-                if (strstr($colore_select, "<option class=\"aa-color-$color_name\" value=\"$colore->nome\">$colore->nome</option>") == false)  $colore_select .= "<option class=\"aa-color-$color_name\" value=\"$colore->nome\">$colore->nome</option>";
-            }
-        }
-        if ($colore_select == "") $colore_select = "<option value=\"null\" selected>Nessun Colore Disponibile</option>";
-        */
 
         if ($genere == 'Uomo' || $genere == 'Donna') {
             $quantita = Quantita::where('modello_id', $product->id)->where('taglia_id', '<', 5)->get();
@@ -2348,13 +2433,47 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $bodyclass = "";
         $title = "Abbigliamento $genere Online | Xenomod";
+        $product_details_foto = Fotosito::where('pagina', 'Product Details')->first();
 
         return view('Frontend.product-detail')
             ->with(compact('uomo'))
@@ -2362,6 +2481,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('product_details_foto'))
             ->with(compact('title'))
             ->with(compact('carrello'))
             ->with(compact('numero_prodotti'))
@@ -2405,18 +2525,39 @@ $product->sconto
                 //Utente loggato
                 if (Auth::check()) {
                     $iduser = Auth::id();
-                    //Cancello il coupon
-                    $session_coupon = Session::get('coupon');
-                    if (!empty($session_coupon)) {
-                        foreach ($session_coupon as $cou) {
-                            if ($cou['id'] == $iduser) session()->pull('coupon', $cou);
-                        }
-                    }
+
+                    if (empty($data['quantity'])) return redirect('/cart')->withWarningMessage('Il tuo carrello è vuoto!');
 
                     $quantita = $data['quantity'];
                     $idmodello = $data['modelloid'];
                     $taglia = $data['tagliaid'];
                     $colore = $data['coloreid'];
+
+                    $i = 0;
+                    $trovato = 0;
+                    foreach ($quantita as $item) {
+                        $carrello = Carrello::where('modello_id', $idmodello[$i])
+                            ->where('users_id', $iduser)
+                            ->where('taglia_id', $taglia[$i])
+                            ->where('colore_id', $colore[$i])
+                            ->first();
+                        if ($item != $carrello->quantita) $trovato = 1;
+                        $i = $i+1;
+                    }
+                    if ($trovato == 0)  return redirect('/cart')->withWarningMessage('Modifica i dati se vuoi aggiornare le quantità');
+
+                    //Cancello il coupon
+                    $session_coupon = Session::get('coupon');
+                    if (!empty($session_coupon)) {
+                        foreach ($session_coupon as $key => $val) {
+                            if ($val['id'] == $iduser) $indice = $key;
+                        }
+                        if (isset($trovato)) {
+                            unset($session_coupon[$indice]); // Unset the index you want
+                            Session::put('coupon', $session_coupon); // Set the array again
+                        }
+                    }
+
                     $i = 0;
                     $quantita_originale[0] = 0;
                     foreach ($quantita as $item) {
@@ -2453,16 +2594,56 @@ $product->sconto
                     return redirect('/cart')->withSuccessMessage('Operazione completata con Successo!');
                 } else {
                     //Utente non loggato
-                    //Forget coupon
-                    return redirect('/cart');
+                    if (empty($data['quantity'])) return redirect('/cart')->withWarningMessage('Il tuo carrello è vuoto!');
+
+                    $quantita = $data['quantity'];
+                    $idmodello = $data['modelloid'];
+                    $taglia = $data['tagliaid'];
+                    $colore = $data['coloreid'];
+
+                    $cart_session = Session::get('cart');
+                    $i = 0;
+                    $quantita_originale[0] = 0;
+                    foreach ($cart_session as $session) {
+                        $setquantita = (int)$quantita[$i];
+                        $check_quantita = Quantita::where('modello_id', $idmodello[$i])
+                            ->where('taglia_id', $taglia[$i])
+                            ->where('colore_id', $colore[$i])
+                            ->first();
+                        $quantita_originale[$i] = $session[3];
+                        if ($check_quantita->quantita < $setquantita) {
+                            $mod_name = Modello::where('id', $idmodello[$i])->first();
+                            return redirect('/cart')->withWarningMessage('La quantita che hai selezionato supera i pezzi attualmente a disposizione per ' . $mod_name->nome . '.');
+                        }
+                        $i = $i+1;
+                    }
+
+                    $i = 0;
+                    $trovato = 0;
+                    foreach ($cart_session as $sessione) {
+                        if ($sessione[0] == $idmodello[$i] && $sessione[1] == $taglia[$i] && $sessione[2] == $colore[$i]) {
+                            if ($sessione[3] != $quantita[$i]) {
+                                $trovato = 1;
+                                $sessione[3] = $quantita[$i];
+                            }
+                        }
+                        $i = $i + 1;
+                    }
+                    if ($trovato == 0) return redirect('/cart')->withWarningMessage('Modifica i dati se vuoi aggiornare le quantità');
+
+                    return redirect('/cart')->withSuccessMessage('Operazione completata con Successo!');
                 }
             } else {
                 $iduser = Auth::id();
                 //Cancello il coupon
                 $session_coupon = Session::get('coupon');
                 if (!empty($session_coupon)) {
-                    foreach ($session_coupon as $cou) {
-                        if ($cou['id'] == $iduser) session()->pull('coupon', $cou);
+                    foreach ($session_coupon as $key => $val) {
+                        if ($val['id'] == $iduser) $indice = $key;
+                    }
+                    if (isset($trovato)) {
+                        unset($session_coupon[$indice]); // Unset the index you want
+                        Session::put('coupon', $session_coupon); // Set the array again
                     }
                 }
 
@@ -2516,6 +2697,10 @@ $product->sconto
         if (session('warning_message')) {
             Alert::warning('Errore!', session('warning_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         //Utente loggato
         if (Auth::check()) {
@@ -2555,16 +2740,45 @@ $product->sconto
             if ($totale == 0) $totale = $parziale_totale;
         } else {
             //Utente non loggato
-            $carrello = (object) null;
             $parziale_totale = 0;
             $totale = 0;
-            $numero_prodotti = 0;
-            //Forget coupon
-
-            //if (session('importoCoupon')) {
-            //    $sconto_coupon = Session::get('importoCoupon');
-            //    $totale = $parziale_totale - $sconto_coupon;
-            //} else $totale = $parziale_totale;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $carrello[$i]->prezzo_totale = $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $parziale_totale += $carrello[$i]->prezzo_totale;
+                    $i = $i + 1;
+                }
+                $totale = $parziale_totale;
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $cod_uomo = Generehascategoria::where('genere_id', 1 )->get();
@@ -2594,7 +2808,7 @@ $product->sconto
 
         $bodyclass = "";
         $title = "Carrello | Xenomod";
-
+        $cart_foto = Fotosito::where('pagina', 'Cart')->first();
 
         return view('Frontend.cart')
             ->with(compact('uomo'))
@@ -2602,6 +2816,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('cart_foto'))
             ->with(compact('title'))
             ->with(compact('carrello'))
             ->with(compact('numero_prodotti'))
@@ -2609,22 +2824,39 @@ $product->sconto
             ->with(compact('totale'));
     }
 
-    public function deleteCart($modello) {
-        //Utente loggato
-        if (Auth::check()) {
-            $iduser = Auth::id();
-            //Cancello il coupon
-            $session_coupon = Session::get('coupon');
-            if (!empty($session_coupon)) {
-                foreach ($session_coupon as $cou) {
-                    if ($cou['id'] == $iduser) session()->pull('coupon', $cou);
-                }
+    public function deleteCart($modello, $taglia, $colore) {
+        $iduser = Auth::id();
+        //Cancello il coupon
+        $session_coupon = Session::get('coupon');
+        if (!empty($session_coupon)) {
+            foreach ($session_coupon as $key => $val) {
+                if ($val['id'] == $iduser) $indice = $key;
             }
-            $carrello = Carrello::where('modello_id', $modello)->where('users_id', $iduser)->first();
-            $carrello->delete();
-            return redirect()->back()->withSuccessMessage('Operazione completata con Successo!');
+            if (isset($trovato)) {
+                unset($session_coupon[$indice]); // Unset the index you want
+                Session::put('coupon', $session_coupon); // Set the array again
+            }
         }
-        //Utente non loggato
+        $carrello = Carrello::where('modello_id', $modello)
+            ->where('users_id', $iduser)
+            ->where('taglia_id', $taglia)
+            ->where('colore_id', $colore)
+            ->first();
+        $carrello->delete();
+        return redirect()->back()->withSuccessMessage('Operazione completata con Successo!');
+    }
+
+    public function deleteSessionCart($modello, $taglia, $colore) {
+        $sessioni = Session::get('cart');
+
+
+        foreach($sessioni as $key => $val) {
+            if ($val[0] == $modello && $val[1] == $taglia && $val[2] == $colore) $indice = $key;
+        }
+
+        unset($sessioni[$indice]); // Unset the index you want
+        Session::put('cart', $sessioni); // Set the array again
+
         return redirect()->back()->withSuccessMessage('Operazione completata con Successo!');
     }
 
@@ -2693,13 +2925,53 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
+
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $bodyclass = "";
         $title = "Password Dimenticata | Xenomod";
+        $request_pass_foto = Fotosito::where('pagina', 'Reset Password')->first();
+
 
         return view('Frontend.password')
             ->with(compact('uomo'))
@@ -2707,6 +2979,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('request_pass_foto'))
             ->with(compact('title'))
             ->with(compact('totale'))
             ->with(compact('numero_prodotti'))
@@ -2769,13 +3042,52 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
+
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $bodyclass = "";
         $title = "Nuova Password | Xenomod";
+        $reset_pass_foto = Fotosito::where('pagina', 'Reset Password')->first();
 
         return view('Frontend.reset-password')
             ->with(compact('uomo'))
@@ -2783,6 +3095,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('reset_pass_foto'))
             ->with(compact('title'))
             ->with(compact('carrello'))
             ->with(compact('totale'))
@@ -2800,9 +3113,6 @@ $product->sconto
                 if (Auth::check()) {
                     $iduser = Auth::id();
                     $carrello = Carrello::where('users_id', $iduser)->get();
-                    if ($carrello->isEmpty()) {
-                        return redirect('/checkout')->withWarningMessage('Il tuo Carrello è vuoto.');
-                    }
                     //Controllo se ci sono pezzi disponibili per ogni modello nel carrello
                     foreach ($carrello as $cart) {
                         $exist = Quantita::where('modello_id', $cart->modello_id)
@@ -2894,22 +3204,28 @@ $product->sconto
                     //Cancello il coupon
                     $session_coupon = Session::get('coupon');
                     if (!empty($session_coupon)) {
-                        foreach ($session_coupon as $cou) {
-                            if ($cou['id'] == $iduser) session()->pull('coupon', $cou);
+                        foreach ($session_coupon as $key => $val) {
+                            if ($val['id'] == $iduser) $indice = $key;
+                        }
+                        if (isset($trovato)) {
+                            unset($session_coupon[$indice]); // Unset the index you want
+                            Session::put('coupon', $session_coupon); // Set the array again
                         }
                     }
 
                     Carrello::where('users_id', $iduser)->delete();
-                } else {
-                    return redirect('/checkout')->withWarningMessage('Per completare il checkout devi effettuare il login!');
                 }
             } else {
                 $iduser = Auth::id();
                 //Cancello il coupon
                 $session_coupon = Session::get('coupon');
                 if (!empty($session_coupon)) {
-                    foreach ($session_coupon as $cou) {
-                        if ($cou['id'] == $iduser) session()->pull('coupon', $cou);
+                    foreach ($session_coupon as $key => $val) {
+                        if ($val['id'] == $iduser) $indice = $key;
+                    }
+                    if (isset($trovato)) {
+                        unset($session_coupon[$indice]); // Unset the index you want
+                        Session::put('coupon', $session_coupon); // Set the array again
                     }
                 }
 
@@ -2971,6 +3287,10 @@ $product->sconto
         if (session('warning_message')) {
             Alert::warning('Errore!', session('warning_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
 
         $cod_uomo = Generehascategoria::where('genere_id', 1 )->get();
@@ -3037,10 +3357,45 @@ $product->sconto
             if ($totale == 0) $totale = $parziale_totale;
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
-            $totale = 0;
             $parziale_totale = 0;
+            $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $carrello[$i]->prezzo_totale = $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $parziale_totale += $carrello[$i]->prezzo_totale;
+                    $i = $i + 1;
+                }
+                $totale = $parziale_totale;
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $temp = $parziale_totale * 0.22;
@@ -3053,6 +3408,7 @@ $product->sconto
 
         $bodyclass = "";
         $title = "Checkout | Xenomod";
+        $checkout_foto = Fotosito::where('pagina', 'Checkout')->first();
 
         return view('Frontend.checkout')
             ->with(compact('uomo'))
@@ -3060,6 +3416,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('checkout_foto'))
             ->with(compact('title'))
             ->with(compact('profilo'))
             ->with(compact('parziale_totale'))
@@ -3093,6 +3450,10 @@ $product->sconto
         if (session('success_message')) {
             Alert::success('Successo!', session('success_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $cod_uomo = Generehascategoria::where('genere_id', 1 )->get();
         $i = 0;
@@ -3149,13 +3510,47 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $bodyclass = "";
         $title = "Contattaci | Xenomod";
+        $contact_foto = Fotosito::where('pagina', 'Contact')->first();
 
 
         return view('Frontend.contact')
@@ -3164,6 +3559,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('contact_foto'))
             ->with(compact('title'))
             ->with(compact('totale'))
             ->with(compact('numero_prodotti'))
@@ -3226,13 +3622,52 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
+
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $bodyclass = "";
         $title = "Registrati | Xenomod";
+        $registration_foto = Fotosito::where('pagina', 'Registration')->first();
 
         return view('Frontend.account')
             ->with(compact('uomo'))
@@ -3240,6 +3675,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('registration_foto'))
             ->with(compact('title'))
             ->with(compact('totale'))
             ->with(compact('numero_prodotti'))
@@ -3276,13 +3712,6 @@ $product->sconto
                 return redirect('/account')->with('flash_message_success', 'Dati Aggiornati con Successo!');
             }
         }
-/*
-        if (session('success_message')) {
-            Alert::success('Successo!', session('success_message'));
-        }
-        if (session('warning_message')) {
-            Alert::warning('Errore!', session('warning_message'));
-        }*/
 
         $iduser = Auth::id();
         $profilo = Profilo::where('users_id', $iduser)->first();
@@ -3316,41 +3745,40 @@ $product->sconto
 
         //Carrello
         //Utente loggato
-        if (Auth::check()) {
-            $iduser = Auth::id();
-            $carrello = Carrello::where('users_id', $iduser)->get();
-            $numero_prodotti = count($carrello);
-            $totale = 0;
-            foreach ($carrello as $key => $val) {
-                $modello = Modello::find($val->modello_id);
-                $carrello[$key]->modello_nome = $modello->nome;
-                $carrello[$key]->modello_id = $modello->id;
-                $taglia = Taglia::find($val->taglia_id);
-                if ($taglia->adulto == 1) {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
-                } else {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
-                }
-                if ($generehasmodello->sconto > 0) {
-                    $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
-                    $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
-                }
-                else $carrello[$key]->prezzo = $generehasmodello->prezzo;
-                $foto = Foto::where('modello_id', $modello->id)->first();
-                $carrello[$key]->idfoto = $foto->id;
-                $gender = Genere::find($generehasmodello->genere_id);
-                $carrello[$key]->genere = $gender->tipo;
-                $totale += $carrello[$key]->prezzo * $val->quantita;
+        $iduser = Auth::id();
+        $carrello = Carrello::where('users_id', $iduser)->get();
+        $numero_prodotti = count($carrello);
+        $totale = 0;
+        foreach ($carrello as $key => $val) {
+            $modello = Modello::find($val->modello_id);
+            $carrello[$key]->modello_nome = $modello->nome;
+            $carrello[$key]->modello_id = $modello->id;
+            $taglia = Taglia::find($val->taglia_id);
+            if ($taglia->adulto == 1) {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
+            } else {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
             }
-        } else {
-            //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
-            $totale = 0;
+            if ($generehasmodello->sconto > 0) {
+                $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
+            }
+            else $carrello[$key]->prezzo = $generehasmodello->prezzo;
+            $foto = Foto::where('modello_id', $modello->id)->first();
+            $carrello[$key]->idfoto = $foto->id;
+            $gender = Genere::find($generehasmodello->genere_id);
+            $carrello[$key]->genere = $gender->tipo;
+            $totale += $carrello[$key]->prezzo * $val->quantita;
         }
+
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $bodyclass = "";
         $title = "Il Mio Account | Xenomod";
+        $profile_foto = Fotosito::where('pagina', 'Profile')->first();
 
         return view('Frontend.profile')
             ->with(compact('uomo'))
@@ -3358,6 +3786,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('profile_foto'))
             ->with(compact('title'))
             ->with(compact('totale'))
             ->with(compact('numero_prodotti'))
@@ -3425,41 +3854,40 @@ $product->sconto
 
         //Carrello
         //Utente loggato
-        if (Auth::check()) {
-            $iduser = Auth::id();
-            $carrello = Carrello::where('users_id', $iduser)->get();
-            $numero_prodotti = count($carrello);
-            $totale = 0;
-            foreach ($carrello as $key => $val) {
-                $modello = Modello::find($val->modello_id);
-                $carrello[$key]->modello_nome = $modello->nome;
-                $carrello[$key]->modello_id = $modello->id;
-                $taglia = Taglia::find($val->taglia_id);
-                if ($taglia->adulto == 1) {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
-                } else {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
-                }
-                if ($generehasmodello->sconto > 0) {
-                    $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
-                    $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
-                }
-                else $carrello[$key]->prezzo = $generehasmodello->prezzo;
-                $foto = Foto::where('modello_id', $modello->id)->first();
-                $carrello[$key]->idfoto = $foto->id;
-                $gender = Genere::find($generehasmodello->genere_id);
-                $carrello[$key]->genere = $gender->tipo;
-                $totale += $carrello[$key]->prezzo * $val->quantita;
+        $iduser = Auth::id();
+        $carrello = Carrello::where('users_id', $iduser)->get();
+        $numero_prodotti = count($carrello);
+        $totale = 0;
+        foreach ($carrello as $key => $val) {
+            $modello = Modello::find($val->modello_id);
+            $carrello[$key]->modello_nome = $modello->nome;
+            $carrello[$key]->modello_id = $modello->id;
+            $taglia = Taglia::find($val->taglia_id);
+            if ($taglia->adulto == 1) {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
+            } else {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
             }
-        } else {
-            //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
-            $totale = 0;
+            if ($generehasmodello->sconto > 0) {
+                $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
+            }
+            else $carrello[$key]->prezzo = $generehasmodello->prezzo;
+            $foto = Foto::where('modello_id', $modello->id)->first();
+            $carrello[$key]->idfoto = $foto->id;
+            $gender = Genere::find($generehasmodello->genere_id);
+            $carrello[$key]->genere = $gender->tipo;
+            $totale += $carrello[$key]->prezzo * $val->quantita;
         }
+
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $bodyclass = "";
         $title = "I Miei Ordini | Xenomod";
+        $order_foto = Fotosito::where('pagina', 'Order')->first();
 
         return view('Frontend.order')
             ->with(compact('uomo'))
@@ -3467,6 +3895,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('order_foto'))
             ->with(compact('title'))
             ->with(compact('totale'))
             ->with(compact('numero_prodotti'))
@@ -3517,41 +3946,40 @@ $product->sconto
 
         //Carrello
         //Utente loggato
-        if (Auth::check()) {
-            $iduser = Auth::id();
-            $carrello = Carrello::where('users_id', $iduser)->get();
-            $numero_prodotti = count($carrello);
-            $totale = 0;
-            foreach ($carrello as $key => $val) {
-                $modello = Modello::find($val->modello_id);
-                $carrello[$key]->modello_nome = $modello->nome;
-                $carrello[$key]->modello_id = $modello->id;
-                $taglia = Taglia::find($val->taglia_id);
-                if ($taglia->adulto == 1) {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
-                } else {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
-                }
-                if ($generehasmodello->sconto > 0) {
-                    $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
-                    $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
-                }
-                else $carrello[$key]->prezzo = $generehasmodello->prezzo;
-                $foto = Foto::where('modello_id', $modello->id)->first();
-                $carrello[$key]->idfoto = $foto->id;
-                $gender = Genere::find($generehasmodello->genere_id);
-                $carrello[$key]->genere = $gender->tipo;
-                $totale += $carrello[$key]->prezzo * $val->quantita;
+        $iduser = Auth::id();
+        $carrello = Carrello::where('users_id', $iduser)->get();
+        $numero_prodotti = count($carrello);
+        $totale = 0;
+        foreach ($carrello as $key => $val) {
+            $modello = Modello::find($val->modello_id);
+            $carrello[$key]->modello_nome = $modello->nome;
+            $carrello[$key]->modello_id = $modello->id;
+            $taglia = Taglia::find($val->taglia_id);
+            if ($taglia->adulto == 1) {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
+            } else {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
             }
-        } else {
-            //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
-            $totale = 0;
+            if ($generehasmodello->sconto > 0) {
+                $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
+            }
+            else $carrello[$key]->prezzo = $generehasmodello->prezzo;
+            $foto = Foto::where('modello_id', $modello->id)->first();
+            $carrello[$key]->idfoto = $foto->id;
+            $gender = Genere::find($generehasmodello->genere_id);
+            $carrello[$key]->genere = $gender->tipo;
+            $totale += $carrello[$key]->prezzo * $val->quantita;
         }
+
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $bodyclass = "";
         $title = "Dettaglio Ordini | Xenomod";
+        $order_details_foto = Fotosito::where('pagina', 'Order Details')->first();
 
         return view('Frontend.order-detail')
             ->with(compact('uomo'))
@@ -3559,6 +3987,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('order_details_foto'))
             ->with(compact('title'))
             ->with(compact('totale'))
             ->with(compact('numero_prodotti'))
@@ -3618,6 +4047,10 @@ $product->sconto
         if (session('warning_message')) {
             Alert::warning('Errore!', session('warning_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $cod_uomo = Generehascategoria::where('genere_id', 1 )->get();
         $i = 0;
@@ -3646,41 +4079,35 @@ $product->sconto
 
         //Carrello
         //Utente loggato
-        if (Auth::check()) {
-            $iduser = Auth::id();
-            $carrello = Carrello::where('users_id', $iduser)->get();
-            $numero_prodotti = count($carrello);
-            $totale = 0;
-            foreach ($carrello as $key => $val) {
-                $modello = Modello::find($val->modello_id);
-                $carrello[$key]->modello_nome = $modello->nome;
-                $carrello[$key]->modello_id = $modello->id;
-                $taglia = Taglia::find($val->taglia_id);
-                if ($taglia->adulto == 1) {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
-                } else {
-                    $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
-                }
-                if ($generehasmodello->sconto > 0) {
-                    $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
-                    $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
-                }
-                else $carrello[$key]->prezzo = $generehasmodello->prezzo;
-                $foto = Foto::where('modello_id', $modello->id)->first();
-                $carrello[$key]->idfoto = $foto->id;
-                $gender = Genere::find($generehasmodello->genere_id);
-                $carrello[$key]->genere = $gender->tipo;
-                $totale += $carrello[$key]->prezzo * $val->quantita;
+        $iduser = Auth::id();
+        $carrello = Carrello::where('users_id', $iduser)->get();
+        $numero_prodotti = count($carrello);
+        $totale = 0;
+        foreach ($carrello as $key => $val) {
+            $modello = Modello::find($val->modello_id);
+            $carrello[$key]->modello_nome = $modello->nome;
+            $carrello[$key]->modello_id = $modello->id;
+            $taglia = Taglia::find($val->taglia_id);
+            if ($taglia->adulto == 1) {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
+            } else {
+                $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
             }
-        } else {
-            //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
-            $totale = 0;
+            if ($generehasmodello->sconto > 0) {
+                $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                $carrello[$key]->prezzo = number_format((float)$temp, 2, '.', '');
+            }
+            else $carrello[$key]->prezzo = $generehasmodello->prezzo;
+            $foto = Foto::where('modello_id', $modello->id)->first();
+            $carrello[$key]->idfoto = $foto->id;
+            $gender = Genere::find($generehasmodello->genere_id);
+            $carrello[$key]->genere = $gender->tipo;
+            $totale += $carrello[$key]->prezzo * $val->quantita;
         }
 
         $bodyclass = "";
         $title = "La Tua Lista Desideri | Xenomod";
+        $wishlist_foto = Fotosito::where('pagina', 'Wishlist')->first();
 
         return view('Frontend.wishlist')
             ->with(compact('uomo'))
@@ -3688,6 +4115,7 @@ $product->sconto
             ->with(compact('bambino'))
             ->with(compact('bambina'))
             ->with(compact('bodyclass'))
+            ->with(compact('wishlist_foto'))
             ->with(compact('title'))
             ->with(compact('wish'))
             ->with(compact('totale'))
@@ -3709,6 +4137,10 @@ $product->sconto
         if (session('success_message')) {
             Alert::success('Successo!', session('success_message'));
         }
+        if (session('Carrello_Errore')) {
+            Alert::warning('<h6 style="color: black; font-size:0.575em;">Non è stato possibile inserire alcuni prodotti nel Carrello!</h6>', session('warning_message'));
+        }
+        session()->forget('Carrello_Errore');
 
         $cod_uomo = Generehascategoria::where('genere_id', 1 )->get();
         $i = 0;
@@ -3765,9 +4197,42 @@ $product->sconto
             }
         } else {
             //Utente non loggato
-            $numero_prodotti = 0;
-            $carrello = (object) null;
             $totale = 0;
+            $cart_session = Session::get('cart');
+            if (!empty($cart_session)) {
+                $numero_prodotti = count($cart_session);
+                $carrello[0] = (object) null;
+                $i = 0;
+                foreach ($cart_session as $session) {
+                    $carrello[$i] = (object) null;
+                    $cart_modello = Modello::where('id', $session[0])->first();
+                    $cart_foto = Foto::where('modello_id', $cart_modello->id)->first();
+                    $carrello[$i]->modello_nome = $cart_modello->nome;
+                    if ($session[1] < 5) {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '<', 3)->first();
+                    } else {
+                        $generehasmodello = Generehasmodello::where('modello_id', $cart_modello->id)->where('genere_id', '>', 2)->first();
+                    }
+                    if ($generehasmodello->sconto > 0) {
+                        $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                        $carrello[$i]->prezzo = number_format((float)$temp, 2, '.', '');
+                    }
+                    else $carrello[$i]->prezzo = $generehasmodello->prezzo;
+                    $carrello[$i]->idfoto = $cart_foto->id;
+                    $cart_genere = Genere::where('id', $generehasmodello->genere_id)->first();
+                    $carrello[$i]->genere = $cart_genere->tipo;
+                    $carrello[$i]->modello_id = $cart_modello->id;
+                    $carrello[$i]->quantita = $session[3];
+                    $carrello[$i]->taglia_id = $session[1];
+                    $carrello[$i]->colore_id = $session[2];
+                    $totale += $carrello[$i]->prezzo * $carrello[$i]->quantita;
+                    $i = $i + 1;
+                }
+            }
+            else {
+                $numero_prodotti = 0;
+                $carrello = (object) null;
+            }
         }
 
         $bodyclass = "";
@@ -4286,6 +4751,16 @@ $product->sconto
         echo 'Si';
     }
 
+    public function checkAuth() {
+        if (Auth::check())  {
+            $iduser = Auth::id();
+            $carrello = Carrello::where('users_id', $iduser)->first();
+            if (!empty($carrello)) echo 'Si';
+            else echo 'Vuoto';
+        }
+        else echo 'No';
+    }
+
     public function tagliaSelected(Request $request) {
         $data = $request->all();
 
@@ -4410,7 +4885,7 @@ $product->sconto
         $foto = Foto::find($data['id']);
         $taglia = Taglia::where('numero', $data['taglia'])->first();
         $colore = Colore::where('nome', $data['colore'])->first();
-        $prodotto = Modello::find($foto->modello_id);
+        $prodotto = Modello::where('id', $foto->modello_id)->first();
 
         if (Auth::check()) {
             //Utente loggato
@@ -4418,8 +4893,12 @@ $product->sconto
             //Cancello il coupon
             $session_coupon = Session::get('coupon');
             if (!empty($session_coupon)) {
-                foreach ($session_coupon as $cou) {
-                    if ($cou['id'] == $iduser) session()->pull('coupon', $cou);
+                foreach ($session_coupon as $key => $val) {
+                    if ($val['id'] == $iduser) $indice = $key;
+                }
+                if (isset($trovato)) {
+                    unset($session_coupon[$indice]); // Unset the index you want
+                    Session::put('coupon', $session_coupon); // Set the array again
                 }
             }
             $exist = Carrello::where('users_id', $iduser)
@@ -4428,8 +4907,17 @@ $product->sconto
                 ->where('colore_id', $colore->id)->first();
             if (!empty($exist)) {
                 $quantita = $data['quantita'] + $exist->quantita;
+                //Controllo se la quantità è disponibile
+                $check_quantita = Quantita::where('modello_id', $prodotto->id)
+                    ->where('taglia_id', $taglia->id)
+                    ->where('colore_id', $colore->id)->first();
+                if ($check_quantita->quantita < $quantita) {
+                    echo 'No';
+                    die;
+                }
                 $exist->update(['quantita' => $quantita]);
             } else {
+                //Non mi serve controllare se la quantità è disponibile
                 $carrello = new Carrello;
                 $carrello->users_id = $iduser;
                 $carrello->modello_id = $prodotto->id;
@@ -4440,7 +4928,6 @@ $product->sconto
             }
             $cart = Carrello::where('users_id', $iduser)->get();
             $numero_prodotti = count($cart);
-            $parziale_totale = 0;
             $totale = 0;
             foreach ($cart as $key => $val) {
                 $modello = Modello::find($val->modello_id);
@@ -4448,6 +4935,7 @@ $product->sconto
                 $cart[$key]->modello_id = $modello->id;
                 $taglia = Taglia::find($val->taglia_id);
                 if ($taglia->adulto == 1) {
+                    //Prendo il primo perché non metto prodotti unisex
                     $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '<', 3)->first();
                 } else {
                     $generehasmodello = Generehasmodello::where('modello_id', $modello->id)->where('genere_id', '>', 2)->first();
@@ -4462,25 +4950,69 @@ $product->sconto
                 $genere = Genere::find($generehasmodello->genere_id);
                 $cart[$key]->genere = $genere->tipo;
                 $cart[$key]->prezzo_totale = $cart[$key]->prezzo * $val->quantita;
-                $parziale_totale += $val->prezzo_totale;
+                $totale += $val->prezzo_totale;
             }
-            $coupon = Session::get('coupon');
-            if (!empty($coupon)) {
-                foreach ($coupon as $cop) {
-                    if ($cop['id'] == $iduser) $totale = $parziale_totale - $cop['importo'];
-                }
-            } else $totale = $parziale_totale;
-            if ($totale == 0) $totale = $parziale_totale;
         } else {
             //Utente non loggato
+            $trovato = 0;
+            $first_session = Session::get('cart');
+            if (!empty($first_session)) {
+                foreach ($first_session as $sessione) {
+                    if ($sessione[0] == $prodotto->id && $sessione[1] == $taglia->id && $sessione[2] == $colore->id) {
+                        //Controllo se la quantità è disponibile
+                        $check_quantita = Quantita::where('modello_id', $prodotto->id)
+                            ->where('taglia_id', $taglia->id)
+                            ->where('colore_id', $colore->id)->first();
+                        if ($check_quantita->quantita < ($sessione[3] + $data['quantita'])) {
+                            echo 'No';
+                            die;
+                        }
+                        $sessione[3] += $data['quantita'];
+                        $trovato = 1;
+                    }
+                }
+            }
+            if ($trovato == 0) {
+                //Non mi serve controllare se la quantità è disponibile
+                $product = collect([$prodotto->id, $taglia->id, $colore->id, $data['quantita']]);
+                Session::push('cart', $product);
+            }
+
+            $second_session = Session::get('cart');
+            $numero_prodotti = count($second_session);
+            $i = 0;
+            $totale = 0;
+            foreach ($second_session as $sessione) {
+                if ($sessione[1] < 5) {
+                    $generehasmodello = Generehasmodello::where('modello_id', $sessione[0])->where('genere_id', '<', 3)->first();
+                } else {
+                    $generehasmodello = Generehasmodello::where('modello_id', $sessione[0])->where('genere_id', '>', 2)->first();
+                }
+                if ($generehasmodello->sconto > 0) {
+                    $temp = $generehasmodello->prezzo - (($generehasmodello->prezzo / 100) * $generehasmodello->sconto);
+                    $prezzo[$i] = number_format((float)$temp, 2, '.', '');
+                }
+                else $prezzo[$i] = $generehasmodello->prezzo;
+                $mod = Modello::where('id', $sessione[0])->first();
+                $modello_nome[$i] = $mod->nome;
+                $modello_id[$i] = $mod->id;
+                $foto = Foto::where('modello_id', $sessione[0])->first();
+                $idfoto[$i] = $foto->id;
+                $genere = Genere::find($generehasmodello->genere_id);
+                $genere_tipo[$i] = $genere->tipo;
+                $quantita[$i] = $sessione[3];
+                $prezzo_totale[$i] = $prezzo[$i] * $sessione[3];
+                $totale += $prezzo_totale[$i];
+                $i = $i + 1;
+            }
         }
 
         if ($data['page'] == 1)
             $link1 = '../cart';
         else $link1 = '../public/cart';
 
-
-        $resp = "<a class=\"aa-cart-link\" href=\"../cart\">
+        if (isset($second_session)) {
+            $resp = "<a class=\"aa-cart-link\" href=\"$link1\">
                 <span class=\"fa fa-shopping-basket\"></span>
                 <span class=\"aa-cart-title\">CARRELLO</span>
                 <span class=\"aa-cart-notify\">$numero_prodotti</span>
@@ -4488,37 +5020,81 @@ $product->sconto
                 <div class=\"aa-cartbox-summary\">
                 <ul>";
 
-        foreach ($cart as $item) {
-            if ($data['page'] == 1) {
-                $link2 = "../product-details/$item->genere&&$item->idfoto";
-                $link3 = "../store-image/fetch-image/$item->idfoto";
-                $link4 = "../product-details/$item->genere&&$item->idfoto";
-                $link5 = "../checkout";
-            }
-            else {
-                $link2 = "../public/product-details/$item->genere&&$item->idfoto";
-                $link3 = "../public/store-image/fetch-image/$item->idfoto";
-                $link4 = "../public/product-details/$item->genere&&$item->idfoto";
-                $link5 = "../public/checkout";
+            $i = 0;
+            foreach ($second_session as $item) {
+                if ($data['page'] == 1) {
+                    $link2 = "../product-details/$genere_tipo[$i]&&$idfoto[$i]";
+                    $link3 = "../store-image/fetch-image/$idfoto[$i]";
+                    $link4 = "../product-details/$genere_tipo[$i]&&$idfoto[$i]";
+                    $link5 = "../checkout";
+                }
+                else {
+                    $link2 = "../public/product-details/$genere_tipo[$i]&&$idfoto[$i]";
+                    $link3 = "../public/store-image/fetch-image/$idfoto[$i]";
+                    $link4 = "../public/product-details/$genere_tipo[$i]&&$idfoto[$i]";
+                    $link5 = "../public/checkout";
+                }
+
+                $resp .= "<li>
+                <a class=\"aa-cartbox-img\" href=\"$link2\"><img src=\"$link3\" alt=\"img\"></a>
+                <div class=\"aa-cartbox-info\">
+                <h4><a href=\"$link4\">$modello_nome[$i]</a></h4>
+                <p>$quantita[$i] x $$prezzo[$i]</p>
+                </div>
+                <a rel=\"$modello_id[$i]\" rel1=\"delete-session-cart\" rel2=\"$item[1]\" rel3=\"$item[2]\" href=\"javascript:\" class=\"aa-remove-product deleteRecord\"><span class=\"fa fa-times\"></span></a>
+                </li>";
+
+                $i = $i + 1;
             }
 
             $resp .= "<li>
-                <a class=\"aa-cartbox-img\" href=\"$link2\"><img src=\"$link3\" alt=\"img\"></a>
-                <div class=\"aa-cartbox-info\">
-                <h4><a href=\"$link4\">$item->modello_nome</a></h4>
-                <p>$item->quantita x $$item->prezzo</p>
-                </div>
-                <a rel=\"$item->modello_id\" rel1=\"delete-cart\" href=\"javascript:\" class=\"aa-remove-product deleteRecord\"><span class=\"fa fa-times\"></span></a>
-                </li>";
-        }
-
-        $resp .= "<li>
             <span class=\"aa-cartbox-total-title\">Totale</span>
             <span class=\"aa-cartbox-total-price\">$$totale</span>
             </li>
             </ul>
             <a class=\"aa-cartbox-checkout aa-primary-btn\" href=\"$link5\">Checkout</a>
             </div>";
+        } else {
+            $resp = "<a class=\"aa-cart-link\" href=\"$link1\">
+                <span class=\"fa fa-shopping-basket\"></span>
+                <span class=\"aa-cart-title\">CARRELLO</span>
+                <span class=\"aa-cart-notify\">$numero_prodotti</span>
+                </a>
+                <div class=\"aa-cartbox-summary\">
+                <ul>";
+
+            foreach ($cart as $item) {
+                if ($data['page'] == 1) {
+                    $link2 = "../product-details/$item->genere&&$item->idfoto";
+                    $link3 = "../store-image/fetch-image/$item->idfoto";
+                    $link4 = "../product-details/$item->genere&&$item->idfoto";
+                    $link5 = "../checkout";
+                }
+                else {
+                    $link2 = "../public/product-details/$item->genere&&$item->idfoto";
+                    $link3 = "../public/store-image/fetch-image/$item->idfoto";
+                    $link4 = "../public/product-details/$item->genere&&$item->idfoto";
+                    $link5 = "../public/checkout";
+                }
+
+                $resp .= "<li>
+                <a class=\"aa-cartbox-img\" href=\"$link2\"><img src=\"$link3\" alt=\"img\"></a>
+                <div class=\"aa-cartbox-info\">
+                <h4><a href=\"$link4\">$item->modello_nome</a></h4>
+                <p>$item->quantita x $$item->prezzo</p>
+                </div>
+                <a rel=\"$item->modello_id\" rel1=\"delete-cart\" rel2=\"$item->taglia_id\" rel3=\"$item->colore_id\" href=\"javascript:\" class=\"aa-remove-product deleteRecord\"><span class=\"fa fa-times\"></span></a>
+                </li>";
+            }
+
+            $resp .= "<li>
+            <span class=\"aa-cartbox-total-title\">Totale</span>
+            <span class=\"aa-cartbox-total-price\">$$totale</span>
+            </li>
+            </ul>
+            <a class=\"aa-cartbox-checkout aa-primary-btn\" href=\"$link5\">Checkout</a>
+            </div>";
+        }
 
         echo $resp;
     }

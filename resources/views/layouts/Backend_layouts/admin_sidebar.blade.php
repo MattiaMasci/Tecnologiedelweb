@@ -32,6 +32,11 @@
                 <li><a href="{{ url('/admin/view-coupons') }}">View Coupons</a></li>
             </ul>
         </li>
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Photos</span> <span class="label label-important">1</span></a>
+            <ul>
+                <li><a href="{{ url('/admin/view-photos') }}">View Photos</a></li>
+            </ul>
+        </li>
         <!--
         <li> <a href="charts.html"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
         <li> <a href="widgets.html"><i class="icon icon-inbox"></i> <span>Widgets</span></a> </li>

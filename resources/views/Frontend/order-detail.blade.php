@@ -4,14 +4,14 @@
 
     <!-- catg header banner section -->
     <section id="aa-catg-head-banner">
-        <img src="{{ asset('img/Frontend.img/fashion/fashion-header-bg-8.jpg') }}" alt="fashion img">
+        <img src="../store-image/fetch-fotosito-image/{{ $order_details_foto->id }}" alt="fashion img">
         <div class="aa-catg-head-banner-area">
             <div class="container">
                 <div class="aa-catg-head-banner-content">
-                    <h2>Dettaglio Ordine</h2>
+                    <h2 style="color: black">Dettagli Ordine</h2>
                     <ol class="breadcrumb">
-                        <li><a href="{{url('home')}}">Home</a></li>
-                        <li><a href="{{url('order')}}">Ordini</a></li>
+                        <li><a href="{{url('home')}}" style="color: black">Home</a></li>
+                        <li><a href="{{url('order')}}" style="color: black">Ordini</a></li>
                         <li class="active">{{ $id }}</li>
                     </ol>
                 </div>

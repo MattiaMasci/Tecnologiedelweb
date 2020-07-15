@@ -32,11 +32,17 @@ Route::get('/order', 'FrontController@order');
 
 Route::get('/order/{id}', 'FrontController@orderdetail');
 
+//Controlla se loggato
+Route::get('/check-auth', 'FrontController@checkAuth');
+
 //Check password
 Route::get('/check-pwd', 'FrontController@chkPassword');
 
 //Cancella elemento nel carrello
-Route::get('/delete-cart/{modello}', 'FrontController@deleteCart');
+Route::get('/delete-cart/{modello}&&{taglia}&&{colore}', 'FrontController@deleteCart');
+
+//Cancella prodotto in sessione
+Route::get('/delete-session-cart/{modello}&&{taglia}&&{colore}', 'FrontController@deleteSessionCart');
 
 //Cancella elemento nella wishlist
 Route::get('/delete-wishlist/{modello}', 'FrontController@deleteWishlist');

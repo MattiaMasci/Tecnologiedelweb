@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Carrello;
+use App\Quantita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -44,6 +46,39 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
+        if (Auth::check()) {
+            $iduser = Auth::id();
+            if (Session::has('cart')) {
+                $session = Session::get('cart');
+                //echo "<pre>"; print_r($session); die;
+                foreach ($session as $item) {
+                    $check_exist = Carrello::where('users_id', $iduser)
+                        ->where('modello_id', $item[0])
+                        ->where('taglia_id', $item[1])
+                        ->where('colore_id', $item[2])->first();
+                    if (!empty($check_exist)) {
+                        $check_quantity = Quantita::where('modello_id', $item[0])
+                            ->where('taglia_id', $item[1])
+                            ->where('colore_id', $item[2])->first();
+                        if ($check_quantity->quantita < ($check_exist->quantita + $item[3])) {
+                            Session::put('Carrello_Errore', 'Pezzi non disponibili');
+                        } else {
+                            $quantita = $check_exist->quantita + $item[3];
+                            $check_exist->update(['quantita' => $quantita]);
+                        }
+                    } else {
+                        $carrello = new Carrello;
+                        $carrello->users_id = $iduser;
+                        $carrello->modello_id = $item[0];
+                        $carrello->colore_id = $item[2];
+                        $carrello->taglia_id = $item[1];
+                        $carrello->quantita = $item[3];
+                        $carrello->save();
+                    }
+                }
+                session()->forget('cart');
+            }
+        }
         if (Session::has('wishlistcall')) {
             Session::put('url.intended', '/wishlist');
             session()->forget('wishlistcall');

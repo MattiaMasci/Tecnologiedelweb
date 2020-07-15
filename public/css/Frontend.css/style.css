@@ -1480,7 +1480,7 @@ img {
 
 #aa-testimonial {
   background-attachment: fixed;
-  background-image: url("http://localhost/ProgettoTdWpersonale/public/img/Frontend.img/testimonial-bg-1.jpg");
+  background-image: url("http://localhost/ProgettoTdWpersonale/public/img/Frontend.img/NewTestimonial.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   display: inline;
@@ -1812,7 +1812,7 @@ img {
   width: 100%;
 }
 #aa-catg-head-banner .aa-catg-head-banner-area {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0);
   bottom: 0;
   left: 0;
   position: absolute;

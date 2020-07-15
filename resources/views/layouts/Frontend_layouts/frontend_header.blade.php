@@ -68,7 +68,8 @@
                                             <h4><a href="{{url("product-detail/$cart->genere&&$cart->idfoto")}}">{{$cart->modello_nome}}</a></h4>
                                             <p>{{$cart->quantita}} x ${{$cart->prezzo}}</p>
                                         </div>
-                                        <a rel="{{$cart->modello_id}}" rel1="delete-cart" href="javascript:" class="aa-remove-product deleteRecord"><span class="fa fa-times"></span></a>
+                                        @guest <a rel="{{$cart->modello_id}}" rel1="delete-session-cart" rel2="{{$cart->taglia_id}}" rel3="{{$cart->colore_id}}" href="javascript:" class="aa-remove-product deleteRecord"><span class="fa fa-times"></span></a>@endguest
+                                        @auth <a rel="{{$cart->modello_id}}" rel1="delete-cart" rel2="{{$cart->taglia_id}}" rel3="{{$cart->colore_id}}" href="javascript:" class="aa-remove-product deleteRecord"><span class="fa fa-times"></span></a>@endauth
                                     </li>
                                     @endforeach
                                     <li>

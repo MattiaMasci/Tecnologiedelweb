@@ -4,11 +4,11 @@
 
   <!-- catg header banner section -->
   <section id="aa-catg-head-banner">
-   <img src="{{ asset('img/Frontend.img/fashion/fashion-header-bg-8.jpg') }}" alt="fashion img">
+   <img src="../public/store-image/fetch-fotosito-image/{{ $contact_foto->id }}" alt="fashion img">
    <div class="aa-catg-head-banner-area">
      <div class="container">
       <div class="aa-catg-head-banner-content">
-        <h2>Contatti</h2>
+        <!-- <h2>Contatti</h2> -->
         <ol class="breadcrumb">
           <li><a href="{{url('home')}}">Home</a></li>
           <li class="active">Contatti</li>

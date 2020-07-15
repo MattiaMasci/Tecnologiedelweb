@@ -546,6 +546,37 @@
     });
 
     //Delete
+    $(document).on('click', '.deleteRecord', function() {
+        var id = $(this).attr('rel');
+        var deleteFunction = $(this).attr('rel1');
+        var par1 = $(this).attr('rel2');
+        var par2 = $(this).attr('rel3');
+        Swal.fire({
+            title: 'Sei sicuro?',
+            text: "Il contenuto andrà perso definitivamente!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, cancella!',
+            cancelButtonText: 'No, annulla!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value == true) {
+                if (window.location.href.indexOf("product") > -1) {
+                    if(par1 == null) window.location.href = "../" + deleteFunction + "/" + id;
+                    else window.location.href = "../" + deleteFunction + "/" + id + "&&" + par1 + "&&" + par2;
+                } else {
+                    if(par1 == null) window.location.href = "../public/" + deleteFunction + "/"+ id;
+                    else window.location.href = "../public/" + deleteFunction + "/"+ id + "&&" + par1 + "&&" + par2;
+                }
+            }
+        });
+
+        return false;
+    });
+
+    /*
     $(".deleteRecord").click(function(){
         var id = $(this).attr('rel');
         var deleteFunction = $(this).attr('rel1');
@@ -569,6 +600,7 @@
 
         return false;
     });
+    */
 
     //Carica info checkout
     $( document ).ready(function() {
@@ -647,6 +679,32 @@
     });
 
     $('#effettua_ordine').click( function () {
+        var exit = 0;
+        $.ajax({
+            type:'get',
+            async: false,
+            url:'/ProgettoTdWpersonale/public/check-auth',
+            success:function(resp){
+                if (resp == 'No')  {
+                    exit = 1;
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Errore',
+                        text: 'Devi autenticarti per effettuare il checkout!',
+                    });
+                } else if (resp == 'Vuoto')  {
+                    exit = 1;
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Errore',
+                        text: 'Il tuo Carrello è vuoto!',
+                    });
+                }
+            }, error:function(){
+                alert("Error");
+            }
+        });
+        if (exit == 1) return false;
 
         $('#fatturazione').empty();
         $('#spedizione').empty();
@@ -891,12 +949,20 @@
             url:'/ProgettoTdWpersonale/public/add-cart',
             data: {id : id, quantita : quantita, taglia : taglia, colore : colore, page : product},
             success:function(resp){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Successo',
-                    text: 'Il prodotto è stato inserito nel carrello!',
-                });
-                $('#box_carrello').html(resp);
+                if (resp == 'No') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Errore',
+                        text: 'Momentaneamente non ci sono pezzi disponibili per la tua selezione.',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successo',
+                        text: 'Il prodotto è stato inserito nel carrello!',
+                    });
+                    $('#box_carrello').html(resp);
+                }
             }, error:function(){
                 alert("Error");
             }
@@ -996,12 +1062,20 @@
             url:'/ProgettoTdWpersonale/public/add-cart',
             data: {id : id, quantita : quantita, taglia : taglia, colore : colore, page : product},
             success:function(resp){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Successo',
-                    text: 'Il prodotto è stato inserito nel carrello!',
-                });
-                $('#box_carrello').html(resp);
+                if (resp == 'No') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Errore',
+                        text: 'Momentaneamente non ci sono pezzi disponibili per la tua selezione.',
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successo',
+                        text: 'Il prodotto è stato inserito nel carrello!',
+                    });
+                    $('#box_carrello').html(resp);
+                }
             }, error:function(){
                 alert("Error");
             }
